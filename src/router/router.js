@@ -3,13 +3,13 @@
 
 import Vue from "vue"
 import VueRouter from "vue-router"
-import NotFound from "@/components/NotFound.vue"
+//import NotFound from "@/components/NotFound.vue"
 import http from "@/api/http"
 
 Vue.use(VueRouter)
 
 const routes = []; //menu.getRouteView();
-routes.push({ path: "/notfound", name: "NotFound", component: NotFound, props: { msg: "no page" } })
+//routes.push({ path: "/notfound", name: "NotFound", component: NotFound, props: { msg: "no page" } })
 
 
 let _storage = window.sessionStorage
@@ -42,7 +42,7 @@ router.beforeEach((to, from, next) => {
 		if(to.meta.access === true) {// 인증되어 있으면(여기선 true) 이동
 			next();
 		} else {// 인증되어 있지 않으면 인증 요구
-			next("/notfound")// 첫화면으로
+//			next("/notfound")// 첫화면으로
 		}
 	} else {
 		next()

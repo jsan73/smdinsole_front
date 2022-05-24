@@ -1,9 +1,9 @@
 import Vue from "vue";
 import router from "@/router/router";
 import menuList from "@/menu";
-import LayerLayout from "@/components/layout/LayerLayout";
-import {mapState, mapMutations, mapActions} from "vuex";
-
+// import LayerLayout from "@/components/layout/LayerLayout";
+//import {mapState, mapMutations, mapActions} from "vuex";
+//import mapState from "vuex"
 
 function loadView(path, view) {
 	if(view === undefined) return null;
@@ -15,11 +15,6 @@ export default {
 	name: "App",
 	data() {
 		return {
-			accessList: null,
-			accessFuncList: null,
-			menuGlobal: [],
-			accessMenuId: {},
-			accessFunc: {},
 			menulist: [],
 			tabMenu: [],
 			firstPage: "",
@@ -30,11 +25,11 @@ export default {
 	},
 	watch:{
 		"$route"(){
-			this.classClean();
+//			this.classClean();
 		}
 	},
 	computed: {
-		...mapState('loadStore', ['loading']),
+		//...mapState('loadStore', ['loading']),
 		layout() {
 			return ((this.$route.meta.layout === "Main" || this.$route.path === "/main" || this.$route.path === "/") ? "Main" : "Default-Layout");
 		},
@@ -42,26 +37,26 @@ export default {
 	components: {
 	},
 	methods: {
-		...mapActions('authStore', ['COMMIT_USERTOKEN', 'COMMIT_ACCESS_FUNC', 'COMMIT_TABMENU_FUNC']),
-		...mapActions('activeStore', ['GET_PUSH_MSG_CNT']),
-		...mapMutations('loadStore', ['SET_LOADING']),
-		makeAccessMenu() {
-			let itemLength = this.accessList?.length === undefined ? 0 : this.accessList.length || 0;
-
-			this.accessMenuId = {};
-			for(let i = 0; i < itemLength; i++) {
-				let menu = this.accessList[i];
-				this.accessMenuId[menu.menuId] = true;
-			}
-		},
-		makeAccessFunc() {
-			let itemLength = this.accessFuncList?.length === undefined ? 0 : this.accessFuncList.length;
-			this.accessFunc = {};
-			for(let i = 0; i < itemLength; i++) {
-				let func = this.accessFuncList[i];
-				this.accessFunc[func.funcId] = func;
-			}
-		},
+		// ...mapActions('authStore', ['COMMIT_USERTOKEN', 'COMMIT_ACCESS_FUNC', 'COMMIT_TABMENU_FUNC']),
+		// ...mapActions('activeStore', ['GET_PUSH_MSG_CNT']),
+		// ...mapMutations('loadStore', ['SET_LOADING']),
+		// makeAccessMenu() {
+		// 	let itemLength = this.accessList?.length === undefined ? 0 : this.accessList.length || 0;
+		//
+		// 	this.accessMenuId = {};
+		// 	for(let i = 0; i < itemLength; i++) {
+		// 		let menu = this.accessList[i];
+		// 		this.accessMenuId[menu.menuId] = true;
+		// 	}
+		// },
+		// makeAccessFunc() {
+		// 	let itemLength = this.accessFuncList?.length === undefined ? 0 : this.accessFuncList.length;
+		// 	this.accessFunc = {};
+		// 	for(let i = 0; i < itemLength; i++) {
+		// 		let func = this.accessFuncList[i];
+		// 		this.accessFunc[func.funcId] = func;
+		// 	}
+		// },
 		makeRouteView() {
 			let data = JSON.parse(JSON.stringify(menuList.list));
 
@@ -86,20 +81,25 @@ export default {
 					meta: meta,
 				};
 
-				if(el.modal) {
-					data[i] = {
-						...data[i],
-						component: LayerLayout,
-						props: {
-							component: loadView(el.pagePath, el.componentName),
-						},
-					};
-				} else {
-					data[i] = {
-						...data[i],
-						component: loadView(el.pagePath, el.componentName),
-					};
-				}
+				// if(el.modal) {
+				// 	data[i] = {
+				// 		...data[i],
+				// 		component: LayerLayout,
+				// 		props: {
+				// 			component: loadView(el.pagePath, el.componentName),
+				// 		},
+				// 	};
+				// } else {
+				// 	data[i] = {
+				// 		...data[i],
+				// 		component: loadView(el.pagePath, el.componentName),
+				// 	};
+				// }
+
+				data[i] = {
+					...data[i],
+					component: loadView(el.pagePath, el.componentName),
+				};
 
 				// Router Redirect 추가
 				if(el.redirect !== undefined) {
@@ -144,123 +144,7 @@ export default {
 		getRouteView() {
 			return this.menuGlobal || [];
 		},
-		makePageView() {
-			let data = JSON.parse(JSON.stringify(menuList.list));
-			//if (!data || !data.length) return [];
-			this.titleMap = new Map();
 
-			this.pageGlobal = [];
-			let records = {};
-			let itemLength = data.length;
-			for(let i = 0; i < itemLength; i++) {
-				let el = data[i];
-				let hidden = el.popup;
-				let tabmenu = el.tabmenu;
-				let meta = el?.meta === undefined ? {} : el.meta;
-				// if (hidden !== true && el.tabmenu === true) {
-				//     hidden = true;
-				// }
-				if(hidden !== true && meta.authority === true && this.accessMenuId[el.menuId] === undefined) {
-					hidden = true;
-				}
-				data[i] = {
-					menuid: el.menuId,
-					header: el.menuName,
-					path: el.url,
-					icon: el.icon,
-					pid: el.parentId,
-					tabmenu: tabmenu,
-					hidden: hidden,
-					active: false,
-					bg: el.icon,
-					temp: el.tempmenu,
-					category: el.category || "",
-				};
-				records[data[i].menuid] = data[i];
-
-			}
-			this.menurecords = JSON.parse(JSON.stringify(records));
-
-			for(let i = 0; i < itemLength; i++) {
-				let currentData = data[i];
-				// if(currentData.hidden) {
-				// 	continue;
-				// }
-
-				if(currentData.tabmenu) {
-					// 페이지별 탭메뉴 설정
-
-					let parentData = records[currentData.pid];
-
-					let parentTabMenu = this.tabMenu[currentData.pid] || [];
-					// if(parentTabMenu.length == 0) {
-					// 	currentData.path = parentData.path;
-					// }
-					parentTabMenu.push(currentData);
-					this.tabMenu[currentData.pid] = parentTabMenu;
-
-					parentData.children = parentData.children || [];
-					parentData.children.push(currentData);
-
-					//TITLE
-					if(currentData.path?.toString().indexOf("/ui") !== 0) {
-						this.titleMap.set(currentData.path, parentData.header);
-					}
-
-				} else {
-					// 일반 메뉴 정보 (상단 메뉴)
-					let parentData = records[currentData.pid];
-					// if(this.firstPage === currentData.menuid && !currentData.hidden) {
-					// 	currentData.path = "/";
-					// }
-					if(!parentData) {
-						//TITLE
-						if(currentData.path?.toString().indexOf("/ui") !== 0) {
-							this.titleMap.set(currentData.path, currentData.header);
-						}
-
-						this.pageGlobal.push(currentData);
-						continue;
-					}
-
-					if(currentData.hidden) {
-						continue;
-					}
-
-					//TITLE
-					if(currentData.path?.toString().indexOf("/ui") !== 0) {
-						let ppData = records[parentData.pid];
-						if(ppData) {
-							this.titleMap.set(currentData.path, parentData.header);
-						} else {
-							this.titleMap.set(currentData.path, currentData.header);
-						}
-					}
-
-					parentData.items = parentData.items || [];
-					// if(parentData.items.length === 0) {
-					// 	if(parentData.path === undefined) {
-					// 		parentData.path = currentData.path;
-					// 		parentData.name = currentData.menuid;
-					// 	}
-					// 	//else currentData.path = parentData.path;
-					// }
-					parentData.items.push(currentData);
-				}
-			}
-			//Navigation Menu
-			this.menulist = this.pageGlobal.filter(val => {
-				return val?.temp === undefined && !val.hidden && val.category !== "";
-			});
-
-			Vue.prototype._menulist = this.menulist;
-			Vue.prototype._pagelist = this.pageGlobal;
-			Vue.prototype._title = this.titleMap;
-
-			this.COMMIT_TABMENU_FUNC({
-				"tabMenu": this.tabMenu, "menurecords": this.menurecords
-			});
-		},
 
 		//UI확인용
 		openGnb() {
@@ -313,7 +197,6 @@ export default {
 		}
 
 		this.makeRouteView();
-		this.makePageView();
 
 		// 개발모드
 		if(process.env.VUE_APP_MODE === "dev") {

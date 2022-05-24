@@ -8,9 +8,13 @@ import jsonp from "jsonp";
 
 export default {
 
+	login(body) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/token`, body)
+	},
+
 	getToken() {
 		console.log(process.env.VUE_APP_AUTHM_PJT)
-		return http.post(process.env.VUE_APP_AUTHM_PJT + `/api/get/token`)
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/token`)
 	},
 
 

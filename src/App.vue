@@ -1,26 +1,38 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <router-view v-if="layout === 'Main' || isSkipToken"></router-view>
+    <component :is="layout" v-else></component>
+    <template v-if="!isSkipToken">
+      <portal-target name="modal"/>
+      <!-- 로딩 공통 -->
+      <div class="loading_wrap" v-if="loading">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </template>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import app from "./app";
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+export default app;
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+//@import "@/assets/scss/rion.scss";
+
+.pagelist {
+  position: fixed;
+  bottom: 5rem;
+  left: 0;
+  vertical-align: middle;
+  padding: 1rem;
+  //background-color: $bdc_main_light2;
+  //color: $tc_white;
+  z-index: 999;
+  pointer-events: auto;
 }
 </style>

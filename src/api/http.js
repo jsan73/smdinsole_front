@@ -156,53 +156,7 @@ export default {
 		})
 	},
 
-	//IRIS
-	postIris(url, body) {
 
-		let irisHeader = JSON.parse(JSON.stringify(defaultHeader));
-		irisHeader["X-AUTH-TOKEN"] = _sotrage.getItem(process.env.VUE_APP_IRIS_TOKEN_KEY);
-
-		return axios.post(url, body, {
-			headers   : {
-				...irisHeader
-			}, timeout: 600000 // 10분
-		})
-	},
-
-	postIrisFileDn(url, body) {
-
-		let irisHeader = JSON.parse(JSON.stringify(defaultHeader));
-		irisHeader["X-AUTH-TOKEN"] = _sotrage.getItem(process.env.VUE_APP_IRIS_TOKEN_KEY);
-
-		return axios.post(url, body, {
-
-			headers       : {
-				...irisHeader,
-				"Response-Type": 'arraybuffer'
-				//"addType":"addData"
-			}
-			, responseType: 'blob'
-			, timeout     : 600000 // 10분
-		})
-	},
-
-	postParamIrisFileDn(url, params) {
-
-		let irisHeader = JSON.parse(JSON.stringify(defaultHeader));
-		irisHeader["X-AUTH-TOKEN"] = _sotrage.getItem(process.env.VUE_APP_IRIS_TOKEN_KEY);
-
-		return axios.post(url, {}, {
-
-			headers       : {
-				...irisHeader,
-				"Response-Type": 'arraybuffer'
-				//"addType":"addData"
-			}
-			, responseType: 'blob'
-			, timeout     : 600000 // 10분
-			, params      : params
-		})
-	},
 
 
 }

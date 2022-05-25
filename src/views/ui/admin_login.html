@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kokasin 입장하기</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/admin.css" /> 
+</head>
+<body>	
+    <div class="wrap ">
+        <div class="fixed-top" style="top:20%; left:20%;" ><img src="../../../public/static/images/ktkokasin_logoB.png" alt="ktkokasin" /></div>
+        <div class="img_item">
+            <form name='loginForm' id="loginForm" action="/j_security_check" method='POST' onsubmit="checkValidate(); return false;">
+                <div id="login-box">
+                    <div class="login_form">
+                        <div class="login_area">
+                            <ul>
+                                <li class="login_te">ID</li>
+                                <li class="login_bar"><input type='text' class="input_txt" id="id" name='username' value='' /></li>
+                                <li class="login_te">Password</li>
+                                <li class="login_bar"><input type='password' class="input_txt" id="password" name='password' /></li>
+                                <li class="login_radio">                            
+                                    <label>
+                                        <input type="radio" name="logintype" value="admin" checked class="form-check-input"> 담당자
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="logintype" value="organization" class="form-check-input ms-5"> 기관 관리자
+                                    </label>
+                                </li>
+                                <li><button type="submit" id="submit"  class="btn mt-4">로그인</button></li>
+                            </ul>
+                        </div>
+                    </div>                
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="login_copy">
+        Copyright ⓒ SmartMedicalDevice Co., Ltd. All Rights Reserved.　 |　 Phone : 070-7439-3207　Email : sales@smd21.com
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/bootstrap.bundle.min.js" ></script>
+
+</body>
+</html>

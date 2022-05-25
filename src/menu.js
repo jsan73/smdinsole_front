@@ -18,7 +18,7 @@ var menu = [
 	{ menuId: "Main", parentId: 0, menuName: "메인", icon: "description", componentName: "Home", url: "/"},
 	{ menuId: "Range", parentId: 0, menuName: "활동범위", icon: "description", componentName: "Range", url: "/range"},
 	{ menuId: "Location", parentId: 0, menuName: "현재위치", icon: "description", componentName: "Demo", url: "/loc"},
-	{ menuId: "Login", parentId: 0, menuName: "로그인", icon: "description",pagePath: "views/login",  componentName: "Login", url: "/login"},
+	{ menuId: "Login", parentId: 0, menuName: "로그인", icon: "description",pagePath: "views/login",  componentName: "Login", url: "/login", meta: { layout: 'Main' }},
 	// // { menuId: "MN70", parentId: 0, menuName: "콜팝업", icon: "description", pagePath: "views/ui/temp", componentName: "CallPopup", url: "/ui/callpopup", popup: true, meta: { layout: 'Popup' }, tempmenu: "temp" },
 	// // { menuId: "MN70", parentId: 0, menuName: "콜팝업", icon: "description", pagePath: "views/ui/temp", componentName: "CallPopup", url: "/ui/callpopup", popup: true, meta: { layout: 'Popup' }, tempmenu: "temp" },
 	//

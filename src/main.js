@@ -5,8 +5,10 @@ import router from "./router/router";
 import http from "@/api/http";
 import commonApi from "@/api/common";
 import store from "./store/index"
+import ui from "./components";
 
 Vue.use(Vuex);
+Vue.use(ui);
 Vue.config.productionTip = false;
 Vue.prototype.store = store;
 

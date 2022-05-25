@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOKASIN </title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/sidebars.css" />
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand py-0 text-center" style="width:16% ;" href="#"><img src="../../../public/static/images/ktkokasin_logo.png" alt="ktkokasin" /></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav nav-pills nav-fill me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" href="admin_home.html" id="dashboard">대시보드</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin_danger.html" id="danger">이력현황</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin_trace.html" id="trace">이동경로</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin_boundary.html" id="boundary">활동범위</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin_addBoundary.html" id="addBoundary">추가 활동범위</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin_shoesuser.html" id="shoesuser">사용자 관리</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin_protector.html" id="protector">보호자 관리</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin_shoes.html" id="shoes">신발관리</a></li>
+
+            </ul>           
+            <div class="tLogo_login">
+                <button type="button" class="btn btn-secondary btn-sm">                            
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                        <path fill-rule="evenodd"
+                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                    </svg>
+                </button>            
+            </div>            
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- left Navbar-->        
+        <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white p-0 col-md-3 col-lg-2 d-md-block shadow-sm bg-body" >
+            <!--search menu-->
+            <form class="d-flex py-3 px-2">
+                <input class="form-control me-2" type="search" id="searchUserName" placeholder="Search" aria-label="Search">
+                <button class="btn btn-primary" type="submit" onclick="javascript:getCurrentUserList(-1)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </button>
+            </form>
+            <!--// search menu-->
+            <div class="list-group list-group-flush border-bottom scrollarea border-top">
+                <a href="#" class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><span class="badge bg-secondary">1</span> 사용기기명</strong>
+                        <small>A001</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><span class="badge bg-secondary">2</span> 사용기기명</strong>
+                        <small>A002</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><span class="badge bg-secondary">3</span> 사용기기명</strong>
+                        <small>A003</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><span class="badge bg-secondary">4</span> 사용기기명</strong>
+                        <small>A004</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><span class="badge bg-secondary">1</span> 사용기기명</strong>
+                        <small>A001</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><span class="badge bg-secondary">2</span> 사용기기명</strong>
+                        <small>A002</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><span class="badge bg-secondary">3</span> 사용기기명</strong>
+                        <small>A003</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><span class="badge bg-secondary">4</span> 사용기기명</strong>
+                        <small>A004</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><span class="badge bg-secondary">1</span> 사용기기명</strong>
+                        <small>A001</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><span class="badge bg-secondary">2</span> 사용기기명</strong>
+                        <small>A002</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><span class="badge bg-secondary">3</span> 사용기기명</strong>
+                        <small>A003</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><span class="badge bg-secondary">4</span> 사용기기명</strong>
+                        <small>A004</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+            </div>
+        </div>
+        <!-- // left Navbar-->
+        <!-- 컨텐츠 영역 -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-0 d-block ">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 w-100 border-bottom bg-dark text-white" style="--bs-bg-opacity: .95;">
+                <form name="form1" method="post" action="" class="d-flex">
+                    <div class="total_count p-2 bd-highlight">
+                        <div class="noti_icon rh_total_area">
+                            총 : <span id="allCount" class="rh_total">0</span>명
+                        </div>
+                        <div class="noti_icon ">
+                            위험 <span class="rh_danger" id="dangerCount">0</span>
+                        </div>
+                        <div class="noti_icon ">
+                            경고 <span class="rh_warning" id="warningCount">0</span>
+                        </div>
+                        <div class="noti_icon ">
+                            주의 <span class="rh_atten" id="cautionCount">0</span>
+                        </div>
+                        <div class="noti_icon ">
+                            예외 <span class="rh_except" id="exceptCount">0</span>
+                        </div>
+                    </div>                                            
+                    <div class="value_tooltip m-auto text-white" style="margin: 0 0 0 1px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                        </svg>                            
+                        <div class="value_tootip_text">
+                            <p><span class="tool_icon tool_ex01"></span> 위험 : 활동 범위를 벗어난 상태</p>
+                            <p><span class="tool_icon tool_ex02"></span> 경고 : 활동 범위 95~100%의 범위에 있는 상태</p>
+                            <p><span class="tool_icon tool_ex03"></span> 주의 : 활동 범위 90~95%의 범위에 있는 상태</p>
+                            <p><span class="tool_icon tool_ex04"></span> 예외 : SNS 알림 예외 상태</p>
+                        </div>
+                    </div>
+                </form>                                    
+                <div class="d-flex mb-md-0 flex-wrap pe-2">
+                    <div id="refresh_time" class="">새로고침 중</div>                    
+                    <button type="button" class="btn btn-secondary btn-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z">
+                            </path>
+                            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z">
+                            </path>
+                        </svg>                           
+                    </button>
+                </div>                                
+            </div> 
+
+            <div class="d-block w-100" id="map" style="height: 500px;"></div>  
+
+        </main>
+        <!--// 컨텐츠 영역 -->
+    </div>
+</div>
+
+<!-- footer 영역-->
+    <!-- <div class="container-fluid py-4">
+        <footer class="footer py-4  ">
+            <div class="container-fluid">
+                <div class="row align-items-center justify-content-lg-between">
+                    <div class="col-lg-6 mb-lg-0 mb-4">
+                        <div class="copyright text-center text-sm text-muted text-lg-start">
+                            ©
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>
+                            <a href="https://www.kokasin.com" class="font-weight-bold" target="_blank">KOKASIN Co., Ltd.</a>
+                            All Rights Reserved.
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                            <li class="nav-item">
+                                <a href="https://www.kokasin.com" class="nav-link text-muted" target="_blank"> </a>
+                            </li>                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div> -->
+<!--// footer 영역 -->
+
+<!-- Scripts -->
+    <script src="js/bootstrap.bundle.min.js" ></script>
+    <script src="js/sidebars.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+    
+
+</body>
+</html>

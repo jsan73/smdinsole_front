@@ -29,12 +29,12 @@ module.exports = {
     sourceMap: active //브라우저 F12모드에서 scss파일 추척 활성화
   },
 
-  // lintOnSave: false,
+  lintOnSave: false,
   transpileDependencies: ["ansi-regex"],
 
   devServer: {
     https: false,
-    host: 'insole-local.smd21.com',
+    host: 'm-dev.kkokasin.com',
     // key: fs.readFileSync('pkey.star.smd21.com.keystore.pem'),
     // cert: fs.readFileSync('cert.star.smd21.com.keystore.pem')
   },

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대쉬보드</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" /> 
+    
+</head>
+
+<body class="d-flex flex-column h-100">        
+        <!-- bootstrap -->
+        <!-- main -->
+        <div class="pagetitle">
+            <h2 class="text-center">KT KOKASIN</h2>
+            <div class="iconL"><img src="../../../public/static/images/Pre_arr.svg" alt="pre" width=" " height=" " class=" flex-shrink-0"></div>
+        </div>
+        
+        <main class="container px-0 position-relative dash-map-h">
+            <div class="sticky-top shadow w-100">
+                <div class="list-group userlist">
+                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                        <img src="../../../public/static/images/GPS/OK.svg" alt="기지국" width="44" height="56" class=" flex-shrink-0">
+                        <div class="d-flex gap-2 w-100 justify-content-between">
+                            <div>
+                                <h4 class="mb-0">KKS01 <small class="opacity-75">A001</small></h4>
+                                <p class="mb-0 mt-1">활동범위 - 2km</p>
+                            </div>
+                        </div>
+                        <div class="battery"><img src="../../../public/static/images/battery/2.svg" alt="배터리2칸" width="32" height="32"></div>
+                    </a>
+                </div>
+            </div>
+        
+            <div id="find-location" class="container-fluid px-0 dash-map-h">
+                <div style="position: absolute; top:50%; left: 50%;">
+                    <a class="Gpoint_OK" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                        title="2021-03-09  13:36:23 </br> 경기도 일산동구 고봉로 32-19 40호1">
+                        4
+                    </a>
+        
+                    <!-- <a href="#" data-bs-toggle="tooltip" title="Some tooltip text!">Hover over me</a> -->
+        
+                </div>
+        
+                <div id="map" class="h-100">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d789.5919287307592!2d126.76617352924507!3d37.66406656036401!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c855b9bb7dda3%3A0x9dd8accf7a175f5b!2z7Yis7Lm07Y6YKDJUV09DQUZGRSk!5e0!3m2!1sko!2skr!4v1650868469212!5m2!1sko!2skr"
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+        
+        
+            </div>
+        
+        
+        
+        </main>
+    
+
+    <div class="fixed-bottom" style="background-color: #2CBBB6; z-index: 2000; min-height: 72px;">  
+        <ul class="d-flex ps-0 mb-0 justify-content-evenly">
+            <il class="col text-center pt-2">
+                <a>
+                    <img src="../../../public/static/images/radius-pin.svg" alt="">
+                    <p class="pt-1 text-white mb-2">활동범위</p>
+                </a>
+            </il>
+            <il class="col text-center pt-2">
+                <a>
+                    <img src="../../../public/static/images/refresh.svg" alt="">
+                    <p class="pt-1 text-white mb-2">현재위치</p>
+                </a>
+            </il>
+            <il class="col text-center pt-2">
+                <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                    <img src="../../../public/static/images/notifications.svg" alt="">
+                    <p class="pt-1 text-white mb-2">알림설정</p>
+                </a>
+            </il>
+            <il class="col text-center pt-2">
+                <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom2" aria-controls="offcanvasBottom2">
+                    <img src="../../../public/static/images/clock.svg" alt="">
+                    <p class="pt-1 text-white mb-2">위치기록</p>
+                </a>
+            </il>
+        </ul>
+    </div>  
+    
+    <div class="offcanvas offcanvas-bottom" data-bs-backdrop="false" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+        <div class="offcanvas-header">  
+            <h5 class="offcanvas-title" id="offcanvasBottomLabel">알림 설정</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!--
+            <ul class="offcanvas_List form-check">
+            <li><input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">내일 아침 9시까지 알림 해제</label></li>
+            <li>3시간 알림 해제</li> 
+            <li>6시간 알림 해제</li>
+            <li>12시간 알림 해제</li>
+            <li>다음 설정시까지 알림 해제</li>
+            </ul>
+            -->
+            <div class="form-check offcanvas_List">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                <label class="form-check-label" for="exampleRadios1">
+                    내일 아침 9시까지 알림 해제
+                </label>
+            </div>
+            <div class="form-check offcanvas_List">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                <label class="form-check-label" for="exampleRadios2">
+                    3시간 알림 해제
+                </label>
+            </div>
+            <div class="form-check offcanvas_List">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" >
+                <label class="form-check-label" for="exampleRadios3">
+                    6시간 알림 해제
+                </label>
+            </div>
+            <div class="form-check offcanvas_List">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4" value="option4" >
+                <label class="form-check-label" for="exampleRadios4">
+                    12시간 알림 해제
+                </label>
+            </div>
+            <div class="form-check offcanvas_List">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios5" value="option5" >
+                <label class="form-check-label" for="exampleRadios5">
+                    다음 설정시까지 알림 해제
+                </label>
+            </div>
+            
+
+
+
+        </div>
+        
+    </div>
+    <div class="offcanvas offcanvas-bottom" data-bs-backdrop="false" tabindex="-1" id="offcanvasBottom2" aria-labelledby="offcanvasBottomLabel2">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasBottomLabel2">위치기록 보기</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+<!--
+            <ul class="offcanvas_List">
+                <li class="">오늘</li>
+                <li class="">1일전</li>
+                <li class="">2일전</li>
+                <li class="">3일전</li>
+                <li class="">4일전</li>
+                <li class="">5일전</li>
+            </ul>
+-->
+            <div class="form-check offcanvas_List">
+                <input class="form-check-input" type="radio" name="locatonHistory" id="locatonHistory1" value="option1">
+                <label class="form-check-label" for="locatonHistory1">
+                오늘
+                </label>
+            </div>
+            <div class="form-check offcanvas_List">
+                <input class="form-check-input" type="radio" name="locatonHistory" id="locatonHistory2" value="option2">
+                <label class="form-check-label" for="locatonHistory2">
+                1일전
+                </label>
+            </div>
+            <div class="form-check offcanvas_List">
+                <input class="form-check-input" type="radio" name="locatonHistory" id="locatonHistory3" value="option3">
+                <label class="form-check-label" for="locatonHistory3">
+                2일전
+                </label>
+            </div>
+            <div class="form-check offcanvas_List">
+                <input class="form-check-input" type="radio" name="locatonHistory" id="locatonHistory4" value="option4">
+                <label class="form-check-label" for="locatonHistory4">
+                3일전
+                </label>
+            </div>
+            <div class="form-check offcanvas_List">
+                <input class="form-check-input" type="radio" name="locatonHistory" id="locatonHistory5" value="option5">
+                <label class="form-check-label" for="locatonHistory5">
+                    4일전
+                </label>
+            </div>
+            <div class="form-check offcanvas_List">
+                <input class="form-check-input" type="radio" name="locatonHistory" id="locatonHistory6" value="option6">
+                <label class="form-check-label" for="locatonHistory6">
+                    5일전
+                </label>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    
+
+    <!-- Scripts -->
+    <script src="js/bootstrap.bundle.min.js" ></script>
+    <script defer src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOKASIN </title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/sidebars.css" />
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand py-0 text-center" style="width:16% ;" href="#"><img src="../../../public/static/images/ktkokasin_logo.png" alt="ktkokasin" /></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav nav-pills nav-fill me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="admin_home.html" id="dashboard">대시보드</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin_danger.html" id="danger">이력현황</a></li>
+                <li class="nav-item"><a class="nav-link active" href="admin_trace.html" id="trace">이동경로</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin_boundary.html" id="boundary">활동범위</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin_addBoundary.html" id="addBoundary">추가 활동범위</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin_shoesuser.html" id="shoesuser">사용자 관리</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin_protector.html" id="protector">보호자 관리</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin_shoes.html" id="shoes">신발관리</a></li>
+            
+            </ul>           
+            <div class="tLogo_login">
+                <button type="button" class="btn btn-secondary btn-sm">                            
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                        <path fill-rule="evenodd"
+                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                    </svg>
+                </button>            
+            </div>            
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- left Navbar-->        
+        <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white p-0 col-md-3 col-lg-2 d-md-block shadow-sm bg-body" >
+            <!--search menu-->
+            <form class="d-flex py-3 px-2">
+                <input class="form-control me-2" type="search" id="searchUserName" placeholder="Search" aria-label="Search">
+                <button class="btn btn-primary" type="submit" onclick="javascript:getCurrentUserList(-1)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </button>
+            </form>
+            <!--// search menu-->
+                    
+            <div class="list-group list-group-flush border-bottom scrollarea border-top">
+                <a href="#" class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
+                    <div class="d-flex w-100 align-items-center justify-content-between">                        
+                        
+                        <strong class="mb-1"><span class="badge bg-secondary">1</span> 사용기기명</strong>
+                        <small>A001</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        
+                        <strong class="mb-1"><span class="badge bg-secondary">2</span> 사용기기명</strong>
+                        <small>A002</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        
+                        <strong class="mb-1"><span class="badge bg-secondary">3</span> 사용기기명</strong>
+                        <small>A003</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>                
+                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                
+                        <strong class="mb-1"><span class="badge bg-secondary">4</span> 사용기기명</strong>
+                        <small>A004</small>
+                    </div>
+                    <div class="col-10 mb-1 small">대표등록지명/직장- 1km</div>
+                </a>
+            </div>
+        </div>
+        <!-- // left Navbar-->
+        <!-- 컨텐츠 영역 -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-0 d-block ">
+            <div class="d-flex flex-wrap flex-md-nowrap align-items-center p-2 w-100 border-bottom bg-dark ps-3 " style="--bs-bg-opacity: .1;">
+                이동 시간　
+                <input name="textfield" type="text" id="startTime" class="form-control d-inline-flex" style="width: 135px;" />
+                &nbsp; ~ &nbsp;
+                <input name="textfield" type="text" id="endTime" class="form-control d-inline-flex" style="width: 135px;vertical-align: middle;" />
+                &nbsp;                
+                <button class="btn btn-secondary" type="submit" onclick="javascript:traceLocation()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </button>                               
+            </div> 
+
+            
+        </main>
+        <!--// 컨텐츠 영역 -->
+    </div>
+</div>
+
+<!-- Scripts -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/sidebars.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+
+</body>
+</html>

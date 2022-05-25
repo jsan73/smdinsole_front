@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOKASIN </title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/sidebars.css" />
+</head>
+
+<body>
+    <div class="m-4">
+        <div>
+            <h5 class="pb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"  fill="currentColor" class="bi bi-caret-right-square"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                    <path
+                        d="M5.795 12.456A.5.5 0 0 1 5.5 12V4a.5.5 0 0 1 .832-.374l4.5 4a.5.5 0 0 1 0 .748l-4.5 4a.5.5 0 0 1-.537.082z" />
+                </svg> 보호자 수정</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+                <tr>
+                    <th class="text-center align-middle bg-dark" style="--bs-bg-opacity: .05;" scope="col" width="20%">이메일</th>
+                    <td><input type="text" class="form-control d-inline-flex" id="userId" name="userId" readOnly></td>
+                </tr>
+                <tr>
+                    <th class="text-center align-middle bg-dark" style="--bs-bg-opacity: .05;" scope="col">이름</th>
+                    <td><input type="text" class="form-control d-inline-flex" id="userName" name="userName"></td>
+                </tr>
+                <tr>
+                    <th class="text-center align-middle bg-dark" style="--bs-bg-opacity: .05;" scope="col">전화번호</th>
+                    <td>
+                        <select id="protectorPhone1" name="protectorPhone1" class="form-select d-inline-flex" style="width: 100px;">
+                            <option value="true"> 010 </option>
+                            <option value="false">011</option>
+                            <option value="false">016</option>
+                            <option value="false">017</option>
+                            <option value="false">018</option>
+                            <option value="false">019</option>
+                        </select>
+                        - 
+                        <input type="text" id="protectorPhone2" name="protectorPhone2" class="form-control d-inline-flex" style="width: 100px;" maxlength="4">
+                        - 
+                        <input type="text" id="protectorPhone3" name="protectorPhone3" class="form-control d-inline-flex" style="width: 100px;" maxlength="4">
+
+                    </td>
+                </tr>                
+            </table>
+        </div>
+        <p style="text-align: right;">
+            <button class="btn btn-primary" style="margin: 0px 0px 8px 8px;" onclick="javascript:deleteUser()">보호자 삭제</button>
+            <button class="btn btn-primary" style="margin: 0px 0px 8px 8px;" onclick="javascript:modifyUser()">보호자 수정</button>
+        </p>
+    </div>
+    
+   
+                
+</body>
+</html>

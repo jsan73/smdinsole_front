@@ -8,8 +8,8 @@ import jsonp from "jsonp";
 
 export default {
 
-	login(body) {
-		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/token`, body)
+	login(param) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/token`, param)
 	},
 
 	getToken() {

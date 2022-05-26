@@ -1,0 +1,72 @@
+<template>
+
+  <!-- main -->
+  <main class="main">
+    <div class="pagetitle">
+      <h2 class="text-center">설정</h2>
+      <div class="iconL"><a href="#"><img src="/static/images/Pre_arr.svg" alt="pre" width=" " height=" " class=" flex-shrink-0"></a></div>
+      <div class="iconR"><a href="#"><img src="/static/images/logout.svg" alt="logout" width=" " height=" " class=" flex-shrink-0"></a></div>
+    </div>
+
+    <!-- bootstrap -->
+
+    <div class="userlistCheck">
+      <h3 class="pb-2">사용 단말기 목록</h3>
+
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+          <label class="form-check-label" for="exampleRadios1">
+          </label>
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">KKS insole <small class="opacity-75">MA001</small></div>
+            대표 활동범위명 - 1km
+          </div>
+          <span class="badge"><img src="/static/images/pen.svg" alt="수정" width="38" height="38"></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option2">
+          <label class="form-check-label" for="exampleRadios2">
+          </label>
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">KKS insole <small class="opacity-75">MA001</small></div>
+            대표 활동범위명 - 1km
+          </div>
+          <span class="badge"><img src="/static/images/pen.svg" alt="수정" width="38" height="38"></span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="d-flex w-100 justify-content-between border-bottom border-1 pt-3 pb-1">
+      <h3 class="ps-3">비밀번호 변경</h3>
+      <span class="pe-3">
+    <a href=""><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-chevron-right"
+                    viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+    </svg></a>
+    </span>
+    </div>
+    <div class="d-flex w-100 justify-content-between border-bottom border-1 pt-3 pb-1">
+      <h3 class="ps-3">보호자 관리</h3>
+      <span class="pe-3">
+        <a href=""><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-chevron-right"
+                        viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+        </svg></a>
+    </span>
+    </div>
+
+  </main>
+</template>
+
+<script>
+export default {
+  name: "ShoesList"
+}
+</script>
+
+<style scoped>
+
+</style>

@@ -3,9 +3,10 @@ import Vuex from 'vuex'
 import App from "./App.vue";
 import router from "./router/router";
 import http from "@/api/http";
-import commonApi from "@/api/common";
+import commonApi from "@/api/api";
 import store from "./store/index"
 import ui from "./components";
+import jwt from "vue-jwt-decode";
 
 Vue.use(Vuex);
 Vue.use(ui);
@@ -27,55 +28,25 @@ if(location.pathname === "/login" || location.pathname === "/termagree" || /\/al
 }
 
 if(!_skipToken) {
-    getToken()
-        .then(token =>
-            getUser(token).then(() => {
+    const token =_storage.getItem(_tokenKey);
+    try {
+        if (token) {
+            let decodeToken = jwt.decode(token);
+            if (decodeToken) {
+                let userData = JSON.stringify(decodeToken);
+                _storage.setItem(_userKey, userData);
+
                 start();
-            }),
-        )
-        .catch(() => {
-            // 로그인 화면으로 이동
+            }
+        }else{
             window.location.href = "/login";
-        });
+        }
+    }catch (err){
+        window.location.href = "/login";
+    }
 } else {
     start();
 }
-
-function getToken() {
-    return new Promise((resolve, reject) => {
-        commonApi.getToken().then(res => {
-            let tokenData = res.data.data.token
-            _storage.setItem(_tokenKey, tokenData)
-            resolve(tokenData)
-        }).catch(err => {
-            reject(err)
-        })
-    })
-}
-
-
-function getUser(token) {
-    return new Promise((resolve, reject) => {
-        http.setToken(token);
-        commonApi
-            .getUser()
-            .then(res => {
-                http.setIp(res.data.data?.clntIp)
-
-                let userData = JSON.stringify(res.data.data);
-                _storage.setItem(_userKey, userData);
-
-                console.log("getUser");
-
-                resolve();
-            })
-            .catch(err => {
-                alert(err);
-                reject(err);
-            });
-    });
-}
-
 
 function start() {
     new Vue({

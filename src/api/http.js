@@ -13,17 +13,10 @@ let defaultHeader = {
 	"Accept": "application/json",
 	"Access-Control-Allow-Origin": "*",
 	"X-AUTH-TOKEN": _tokenKey,
-	"X-SSCM-CD":process.env.VUE_APP_AUTH_KEY,
-	"X-MENU-ID": "",
-	"X-CLNT-IP": "",
+	// "X-SSCM-CD":process.env.VUE_APP_AUTH_KEY,
+	// "X-MENU-ID": "",
+	// "X-CLNT-IP": "",
 };
-
-// let jsonHeader = {
-// 	"Content-Type": "application/json",
-// 	"Accept": "application/json",
-// 	"Access-Control-Allow-Origin": "*",
-// 	"dataType" : "jsonp"
-// };
 
 export default {
 

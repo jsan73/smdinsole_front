@@ -20,11 +20,11 @@ module.exports = {
 
   css: {
     loaderOptions: {
-      sass: {
-        additionalData: `
-					@import "@/assets/scss/_base.scss";
-					`
-      }
+      // sass: {
+      //   additionalData: `
+		// 			@import "@/assets/scss/_base.scss";
+		// 			`
+      // }
     },
     sourceMap: active //브라우저 F12모드에서 scss파일 추척 활성화
   },

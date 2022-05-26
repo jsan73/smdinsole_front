@@ -167,30 +167,30 @@ export default {
 				var userInfo = JSON.parse(_storage.getItem(_userKey));
 				var token = _storage.getItem(process.env.VUE_APP_TOKEN_KEY);
 				//Start 하기전에 Native 호출.
-				_this._callNative({
-					"method": "sendDeviceInfo",
-					"loginId": userInfo?.loginId,
-					"token": token
-				});
+				// _this._callNative({
+				// 	"method": "sendDeviceInfo",
+				// 	"loginId": userInfo?.loginId,
+				// 	"token": token
+				// });
 			}, 1);
 
-			var auth = null;
-			try {
-				auth = JSON.parse(this.$getSession(process.env.VUE_APP_AUTH_KEY));
-			} catch(error) {
-				auth = null;
-			}
-
-			if(auth != null) {
-				this.accessList = auth.funcMenu;
-				this.accessFuncList = auth.funcItem;
-			}
-
-			this.makeAccessMenu();
-			this.makeAccessFunc();
-
-			this.GET_PUSH_MSG_CNT();
-			this.COMMIT_ACCESS_FUNC(this.getAccessFunc());
+			// var auth = null;
+			// try {
+			// 	auth = JSON.parse(this.$getSession(process.env.VUE_APP_AUTH_KEY));
+			// } catch(error) {
+			// 	auth = null;
+			// }
+			//
+			// if(auth != null) {
+			// 	this.accessList = auth.funcMenu;
+			// 	this.accessFuncList = auth.funcItem;
+			// }
+			//
+			// this.makeAccessMenu();
+			// this.makeAccessFunc();
+			//
+			// this.GET_PUSH_MSG_CNT();
+			// this.COMMIT_ACCESS_FUNC(this.getAccessFunc());
 
 		} else {
 			this.isSkipToken = true;

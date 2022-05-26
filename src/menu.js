@@ -15,7 +15,8 @@
 */
 
 var menu = [
-	{ menuId: "Main", parentId: 0, menuName: "메인", icon: "description", componentName: "Home", url: "/"},
+	{ menuId: "Root", parentId: 0, menuName: "메인", icon: "description", url:"/", redirect:"/shoes/dashboard" },
+	{ menuId: "Main", parentId: 0, menuName: "메인", icon: "description", componentName: "Dashboard", pagePath:"views/shoes", url: "/shoes/dashboard" },
 	{ menuId: "Range", parentId: 0, menuName: "활동범위", icon: "description", componentName: "Range", url: "/range"},
 	{ menuId: "Location", parentId: 0, menuName: "현재위치", icon: "description", componentName: "Demo", url: "/loc"},
 	{ menuId: "Login", parentId: 0, menuName: "로그인", icon: "description",pagePath: "views/login",  componentName: "Login", url: "/login", meta: { layout: 'Main' }},

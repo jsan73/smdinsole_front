@@ -29,12 +29,12 @@ router.beforeEach((to, from, next) => {
 		return o.funcId === process.env.VUE_APP_AUTH_KEY+"_10000";
 	})
 
-	http.setMenuId(to?.name);
+	//http.setMenuId(to?.name);
 
-	if(isAuth?.length <= 0 && to?.path != "/notauth" && to?.path != "/insuagree") {
+	if(isAuth?.length <= 0 && to?.path != "/login") {
 
 		// next("/notauth");
-		window.location.href = "/html/noauth.html";
+		window.location.href = "/login";
 
 	} else if(to?.meta?.access !== undefined) {// 이동할 router에 meta(여기선 requiresLogin)가 있을 때
 		//let isLogin = true;

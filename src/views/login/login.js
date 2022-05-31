@@ -1,4 +1,5 @@
 import api from '@/api/api';
+import http from '@/api/http';
 
 let _sotrage = window.sessionStorage
 
@@ -18,6 +19,7 @@ export default {
             if(res.data.status === "SUCCESS") {
                 let tokenData = res.data.data
                 _sotrage.setItem(process.env.VUE_APP_TOKEN_KEY, tokenData);
+                http.setToken(tokenData);
                 await this.$router.replace("/");
                 //window.location.href = "/shoes/list";
                 console.log("메인 이동");

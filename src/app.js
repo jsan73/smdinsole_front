@@ -31,7 +31,8 @@ export default {
 	computed: {
 		//...mapState('loadStore', ['loading']),
 		layout() {
-			return ((this.$route.meta.layout === "Main" || this.$route.path === "/main" || this.$route.path === "/") ? "Main" : "Default-Layout");
+			//return ((this.$route.meta.layout === "Main" || this.$route.path === "/main" || this.$route.path === "/") ? "Main" : "Default-Layout");
+			return ((this.$route.meta.layout === "Main") ? "Main" : "Default-Layout");
 		},
 	},
 	components: {

@@ -33,10 +33,13 @@ module.exports = {
   transpileDependencies: ["ansi-regex"],
 
   devServer: {
-    https: false,
+    https: true,
     host: 'm-dev.kkokasin.com',
-    // key: fs.readFileSync('pkey.star.smd21.com.keystore.pem'),
-    // cert: fs.readFileSync('cert.star.smd21.com.keystore.pem')
+    https: {
+      key: fs.readFileSync('kkokasin.com.key'),
+      cert: fs.readFileSync('kkokasin.com.crt'),
+      ca: fs.readFileSync('rootca.crt')
+    }
   },
 
   //한국어 날짜 표기 (다국어 제외)

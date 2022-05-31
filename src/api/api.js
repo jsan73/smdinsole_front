@@ -12,6 +12,10 @@ export default {
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/token`, param)
 	},
 
+	selShoesListesList() {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/dashboard/list')
+	},
+
 	getToken() {
 		console.log(process.env.VUE_APP_AUTHM_PJT)
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/token`)

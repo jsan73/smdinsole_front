@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    {{layout}}
-    <router-view v-if="layout === 'Main' || isSkipToken"></router-view>
+    <router-view v-if="layout === 'Main'"></router-view>
     <component :is="layout" v-else></component>
 <!--    <template v-if="!isSkipToken">-->
 <!--      <portal-target name="modal"/>-->

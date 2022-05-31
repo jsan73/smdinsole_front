@@ -7,9 +7,13 @@ import commonApi from "@/api/api";
 import store from "./store/index"
 import ui from "./components";
 import jwt from "vue-jwt-decode";
+import * as VueGoogleMaps from "vue2-google-maps";
 
 Vue.use(Vuex);
 Vue.use(ui);
+
+
+
 Vue.config.productionTip = false;
 Vue.prototype.store = store;
 
@@ -17,7 +21,18 @@ Vue.prototype.store = store;
 let _storage = window.sessionStorage;
 let _tokenKey = process.env.VUE_APP_TOKEN_KEY;
 let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
+let _gKey = process.env.VUE_APP_GOOGLE_MAP_KEY;
+console.log("===============");
+console.log(_gKey);
+console.log(_tokenKey);
 
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: _gKey,
+        library: "places",
+        region: "KR"
+    }
+});
 
 //Skip token Key for UI - 여기 변경해야 모바일 빌드가능
 var _skipToken = false;

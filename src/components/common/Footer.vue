@@ -5,7 +5,7 @@
       <li class="col text-center pt-2">
         <a>
           <img src="/static/images/radius-pin.svg" alt="">
-          <p class="pt-1 text-white mb-2" @click="move('/active')">활동범위</p>
+          <p class="pt-1 text-white mb-2" @click="move('/shoes/range')">활동범위</p>
         </a>
       </li>
       <li class="col text-center pt-2">
@@ -156,7 +156,8 @@ export default {
       if(path === "/main") {
         this.$router.push(url);
       } else {
-        this.$router.replace(url);
+        //this.$router.replace(url);
+        this.$router.push(url);
       }
     }
   }

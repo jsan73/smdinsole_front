@@ -1,5 +1,6 @@
 import api from '@/api/api';
 import http from '@/api/http';
+import {mapActions} from "vuex";
 
 let _sotrage = window.sessionStorage
 
@@ -12,6 +13,8 @@ export default {
         };
     },
     methods: {
+        ...mapActions("guardStore", ["commitGuardInfo"]),
+
         async login() {
             const params = {guardPhone: this.guardPhone, guardPwd: this.guardPwd};
             console.log(params);

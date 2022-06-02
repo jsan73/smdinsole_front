@@ -22,9 +22,7 @@ let _storage = window.sessionStorage;
 let _tokenKey = process.env.VUE_APP_TOKEN_KEY;
 let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
 let _gKey = process.env.VUE_APP_GOOGLE_MAP_KEY;
-console.log("===============");
-console.log(_gKey);
-console.log(_tokenKey);
+
 
 Vue.use(VueGoogleMaps, {
     load: {

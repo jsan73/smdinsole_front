@@ -16,6 +16,10 @@ export default {
 		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/dashboard/list')
 	},
 
+	selActiveRangeList(shoesNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/active/list/' + shoesNo);
+	},
+
 	getToken() {
 		console.log(process.env.VUE_APP_AUTHM_PJT)
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/token`)

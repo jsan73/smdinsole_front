@@ -145,16 +145,6 @@ export default {
 		getRouteView() {
 			return this.menuGlobal || [];
 		},
-
-
-		//UI확인용
-		openGnb() {
-			this.$refs.ui_gnb.$el.style.display = "block";
-		},
-
-		getAccessFunc() {
-			return this.accessFunc;
-		},
 	},
 	created: function () {
 		console.debug(this.layout);

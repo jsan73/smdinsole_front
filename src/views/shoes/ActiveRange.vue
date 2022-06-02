@@ -16,11 +16,12 @@
     </div>
 
     <!--활동범위 1-->
-    <div id="find-location" class="position-relative">
-      <div class="w-100 px-0 position-absolute">
+    <div v-for="range in rangeList" id="find-location" class="position-relative">
+      <div class="w-100 px-0">
+<!--        <div class="w-100 px-0 position-absolute">-->
         <div class="row bg-black opacity-75 mx-0">
           <div class="col">
-            <p class="text-white my-3">집</p>
+            <p class="text-white my-3">{{ range.rangeName }}</p>
           </div>
           <div class="col text-end my-1">
             <a href=""><img src="../../../public/static/images/Del.svg"></a>
@@ -28,16 +29,13 @@
           </div>
         </div>
       </div>
-      <div id="map" class="map-h">
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d789.5919287307592!2d126.76617352924507!3d37.66406656036401!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c855b9bb7dda3%3A0x9dd8accf7a175f5b!2z7Yis7Lm07Y6YKDJUV09DQUZGRSk!5e0!3m2!1sko!2skr!4v1650868469212!5m2!1sko!2skr"
-            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
+<!--      <div id="map" class="map-h">-->
+        <GoogleMap :center="{ lat: range.latitude, lng: range.longitude }" :markers="range.markers" />
+<!--      </div>-->
       <div class="w-100 mb-4">
         <ul class="radius_info">
-          <li class="radius_info_item"><img src="../../../public/static/images/location.svg"> 경기도 고양시 일산동구 고봉로 32-19</li>
-          <li class="radius_info_item"><img src="../../../public/static/images/Radius.svg"> 반경 : 1000m</li>
+          <li class="radius_info_item"><img src="../../../public/static/images/location.svg">{{range.rangeAddress}}</li>
+          <li class="radius_info_item"><img src="../../../public/static/images/Radius.svg"> 반경 : {{range.radius}}m</li>
         </ul>
       </div>
     </div>
@@ -77,8 +75,38 @@
 </template>
 
 <script>
+import api from "@/api/api";
+
 export default {
-  name: "ActiveRange"
+  name: "ActiveRange",
+  data() {
+    return {
+      rangeList: {
+        latitude: 0,
+        longitude: 0,
+        radius: 0,
+        rangeAddress: "",
+        rangeName: "",
+        shoesNo: 0
+      }
+    };
+  },
+  methods: {
+    async selActiveRangeList() {
+      let res = await api.selActiveRangeList(25);
+      if(res.data.status === "SUCCESS") {
+        this.rangeList = res.data.data
+
+        this.rangeList.forEach(range => {
+          let marker = [{position: { lat: range.latitude, lng: range.longitude }}];
+          range["markers"] = marker;
+        });
+      }
+    }
+  },
+  created() {
+    this.selActiveRangeList();
+  }
 }
 </script>
 

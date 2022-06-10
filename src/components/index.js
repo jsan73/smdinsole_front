@@ -5,6 +5,7 @@ import DefaultLayout from "./layout/DefaultLayout.vue"
 import Header from "./common/Header.vue"
 import Footer from "./common/Footer.vue"
 import GoogleMap from "./GoogleMap.vue"
+import Alert from "./common/Alert.vue"
 //import Gnb from "./common/Gnb.vue"
 
 
@@ -24,7 +25,7 @@ import GoogleMap from "./GoogleMap.vue"
 // import TabsRoute from "@/components/TabsRoute.vue"
 // import TabSlider from "@/components/TabSlider.vue"
 // import TabSliderRoute from "@/components/TabSliderRoute.vue"
-// import Popup from "@/components/Popup.vue"
+// import Popup from "@/components/Alert.vue"
 
 
 //외부 라이브러리
@@ -39,6 +40,7 @@ export default {
 		Vue.component("Header", Header);
 		Vue.component("Footer", Footer);
 		Vue.component("GoogleMap", GoogleMap);
+		Vue.component("Alert", Alert);
 //		Vue.component("Gnb", Gnb);
 
 		//Component

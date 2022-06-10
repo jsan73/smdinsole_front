@@ -1,0 +1,115 @@
+<template>
+  <!-- main -->
+  <main class="main">
+
+    <div class="pwModi" >
+      <div class="mb-4">
+        <label for="PhoneInput" class="form-label fw-bold">보호자 핸드폰번호</label>
+        <input type="text" v-model="guardPhone" class="form-control" id="PhoneInput" name="PhoneInput" placeholder="핸드폰번호 입력" >
+      </div>
+      <div class="mb-4">
+        <label for="PwdInput" class="form-label fw-bold">현재 비밀번호</label>
+        <input type="password" v-model="guardPwd" class="form-control" id="PwdInput" placeholder="****" >
+      </div>
+
+      <div class="mb-4">
+        <label for="RePwdInput" class="form-label kksColorPrimary fw-bold">변경 비밀번호</label>
+        <input type="password" v-model="newGuardPwd" class="form-control" id="RePwdInput" placeholder="**** ">
+      </div>
+      <div class="mb-4">
+        <label for="RePwdInputOk" class="form-label kksColorPrimary fw-bold">변경 비밀번호 확인</label>
+        <input type="password" v-model="newGuardPwdok" class="form-control" id="RePwdInputOk" placeholder="**** ">
+      </div>
+
+      <div  class="btn_wrap">
+        <div class="row">
+          <div class="col">
+            <button @click="cancel()" class="btn btn-style-1 btn-style-1-gray">취소</button>
+          </div>
+          <div class="col">
+            <button @click="change()" class="btn btn-style-1 ">저장</button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+  </main>
+
+</template>
+
+<script>
+import api from "@/api/api";
+import Popup from "@/components/common/Alert";
+
+let _storage = window.sessionStorage;
+let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
+
+export default {
+  name: "PasswordChange",
+  components: {Popup},
+  data() {
+    return {
+      userData: null,
+      guardPhone: '',
+      guardPwd: '',
+      newGuardPwd: '',
+      newGuardPwdok: '',
+
+    }
+  },
+  methods: {
+    cancel() {
+      //api.back();
+      this.$router.go(-1);
+    },
+    openPopup(msg, ok, cancel, doAction) {
+      let v= {
+        msg: msg,
+        btnO:ok,
+        btnC:cancel,
+        doAction: doAction
+      }
+      this.showAlert(v);
+    },
+    nextStep() {
+      this.hideAlert();
+      this.$router.go(-1);
+    },
+    // hideAlert() {
+    //   alert("하이드");
+    // },
+    async change() {
+      if(this.newGuardPwd != this.newGuardPwdok) {
+        this.openPopup('비밀번호 확인이 상이합니다.', true, false, {});
+        return false;
+      }
+      const params = {guardPwd: this.guardPwd, newGuardPwd: this.newGuardPwd};
+      console.log(params);
+      const res = await api.changePwd(params);
+      if(res.data.status === "SUCCESS") {
+        let tokenData = res.data.data;
+        this.openPopup('비밀번호가 변경 되었습니다.', true, false, this.nextStep);
+        //await this.cancel();
+      }else{
+        this.openPopup('비밀번호가 일치하지 않습니다.', true, false);
+      }
+    }
+  },
+  created() {
+    this.userData = JSON.parse(_storage.getItem(_userKey));
+
+    if(this.userData != null) {
+      console.log(this.userData);
+      this.guardPhone = this.userData.guardPhone;
+      console.log(this.guardPhone);
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

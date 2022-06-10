@@ -26,6 +26,6 @@
 </template>
 
 <script>
-import Login from "@/views/login/login";
+import Login from "@/views/guard/login";
 export default Login;
 </script>

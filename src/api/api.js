@@ -8,16 +8,28 @@ import jsonp from "jsonp";
 
 export default {
 
+	back() {
+		this.$router.go(-1);
+	},
+
 	login(param) {
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/token`, param)
 	},
 
-	selShoesListesList() {
+	selShoesList() {
 		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/dashboard/list')
 	},
 
 	selActiveRangeList(shoesNo) {
 		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/active/list/' + shoesNo);
+	},
+
+	updShoesNickName(param) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/nickname/upd', param);
+	},
+
+	changePwd(param) {
+		return http.postParam(process.env.VUE_APP_SERVER_URL + `/api/guard/upd/pwd`, param)
 	},
 
 	getToken() {

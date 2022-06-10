@@ -5,12 +5,14 @@ import router from "./router/router";
 import http from "@/api/http";
 import commonApi from "@/api/api";
 import store from "./store/index"
+import mixin from "./utils/mixin"
 import ui from "./components";
 import jwt from "vue-jwt-decode";
 import * as VueGoogleMaps from "vue2-google-maps";
 
 Vue.use(Vuex);
 Vue.use(ui);
+Vue.mixin(mixin);
 
 
 

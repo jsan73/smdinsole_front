@@ -1,6 +1,6 @@
 <template>
   <div>
-    <GmapMap :center='geoCenter' :zoom='16' :options='options' style='width:100%;  height: 400px;'>
+    <GmapMap :center='center' :zoom='16' :options='options' style='width:100%;  height: 400px;'>
       <GmapMarker :key="index" v-for="(m, index) in markers" :position="m.position" />
     </GmapMap>
 
@@ -11,7 +11,7 @@
 export default {
   name: "GoogleMap",
   mounted() {
-    this.geolocate();
+    //this.geolocate();
   },
   methods: {
     geolocate() {
@@ -65,7 +65,7 @@ export default {
     };
   },
   created() {
-    this.geolocate();
+    //this.geolocate();
   }
 }
 </script>

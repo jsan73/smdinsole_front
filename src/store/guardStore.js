@@ -1,26 +1,26 @@
 // 토큰관련 Store 구성
 // 수정 불가
 
-const authStore = {
+const guardStore = {
     namespaced: true,
     state: {
         guardInfo: false,
-        shoesNo:0
+        choiceDevice:0
     },
     getters: {
         getGuardInfo: state => {
             return state.guardInfo
         },
         getShoesNo: state => {
-            return state.shoesNo
+            return state.choiceDevice
         },
     },
     mutations: {
         setGuardInfo: (state, payload) => {
             state.guardInfo=payload.guardInfo;
         },
-        setShoesNo: (state, payload) => {
-            state.shoesNo=payload.shoesNo;
+        setShoesNo: (state, shoesNo) => {
+            state.choiceDevice=shoesNo;
         }
     },
     actions: {
@@ -33,4 +33,4 @@ const authStore = {
     }
 }
 
-export default authStore
+export default guardStore

@@ -21,6 +21,16 @@ export default {
 			isSkipToken: false,
 			isDev: false,
 			titleMap: null,
+
+			alertData : {
+				show: false,
+				msg: '',
+				btnC: false,
+				btnO: true,
+				doAction: {},
+				doActionParam: null,
+				close: {}
+			}
 		};
 	},
 	watch:{

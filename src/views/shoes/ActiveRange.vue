@@ -6,7 +6,7 @@
 
           <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
-              <h4 class="mb-0">KKS inslol <small class="opacity-75">MA001</small></h4>
+              <h4 class="mb-0">{{shoes.nickName}} <small class="opacity-75">{{shoes.shoesId}}</small></h4>
 
             </div>
           </div>
@@ -24,13 +24,13 @@
             <p class="text-white my-3">{{ range.rangeName }}</p>
           </div>
           <div class="col text-end my-1">
-            <a href=""><img src="../../../public/static/images/Del.svg"></a>
-            <a href=""><img src="../../../public/static/images/Edit.svg"></a>
+            <a @click="delRange(range)"><img src="../../../public/static/images/Del.svg"></a>
+            <a @click="updRange(range.rangeNo)"><img src="../../../public/static/images/Edit.svg"></a>
           </div>
         </div>
       </div>
 <!--      <div id="map" class="map-h">-->
-        <GoogleMap :center="{ lat: range.latitude, lng: range.longitude }" :markers="range.markers" />
+        <GoogleMap :center="range.center" :markers="range.markers" :circles="range.circles" />
 <!--      </div>-->
       <div class="w-100 mb-4">
         <ul class="radius_info">
@@ -39,36 +39,9 @@
         </ul>
       </div>
     </div>
-    <!--활동범위 2
-    <div id="find-location" class="position-relative">
-        <div class="w-100 px-0 position-absolute">
-            <div class="row bg-black opacity-75 mx-0">
-                <div class="col">
-                    <p class="text-white my-3">집</p>
-                </div>
-                <div class="col text-end my-1">
-                    <a href=""><img src="images/Del.svg"></a>
-                    <a href=""><img src="images/Edit.svg"></a>
-                </div>
-            </div>
-        </div>
-        <div id="map" class="map-h">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d789.5919287307592!2d126.76617352924507!3d37.66406656036401!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c855b9bb7dda3%3A0x9dd8accf7a175f5b!2z7Yis7Lm07Y6YKDJUV09DQUZGRSk!5e0!3m2!1sko!2skr!4v1650868469212!5m2!1sko!2skr"
-                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-        <div class="w-100 mb-4">
-            <ul class="radius_info">
-                <li class="radius_info_item"><img src="images/location.svg"> 경기도 고양시 일산동구 고봉로 32-19</li>
-                <li class="radius_info_item"><img src="images/Radius.svg"> 반경 : 1000m</li>
-            </ul>
-        </div>
-    </div>
-    -->
 
     <div class="container pb-4">
-      <button type="submit" class="btn btn-style-1">활동범위 추가 +</button>
+      <button type="button" @click="addRange" class="btn btn-style-1">활동범위 추가 +</button>
     </div>
 
   </main>
@@ -76,37 +49,94 @@
 
 <script>
 import api from "@/api/api";
+import {mapState} from "vuex";
 
 export default {
   name: "ActiveRange",
   data() {
     return {
-      rangeList: {
-        latitude: 0,
-        longitude: 0,
-        radius: 0,
-        rangeAddress: "",
-        rangeName: "",
-        shoesNo: 0
-      }
+      shoes:'',
+      rangeList: [],
+      markers:[],
+      circles:[],
+      // rangeList: {
+      //   latitude: 0,
+      //   longitude: 0,
+      //   radius: 0,
+      //   rangeAddress: "",
+      //   rangeName: "",
+      //   shoesNo: 0
+      // }
     };
   },
+
   methods: {
+    addMarker(range, marker) {
+      range.push({position: marker});
+    },
+    addCercle(range, center, radius) {
+      let option ={
+        fillColor: '#0000FF',
+        fillOpacity: 0.3,
+        strokeWeight: 1,
+        strokeColor: '#0000FF',
+        radius: radius
+      }
+      range.push({center: center, option:option})
+    },
     async selActiveRangeList() {
-      let res = await api.selActiveRangeList(25);
+      let res = await api.selActiveRangeList(this.choiceDevice.shoesNo);
       if(res.data.status === "SUCCESS") {
         this.rangeList = res.data.data
 
         this.rangeList.forEach(range => {
-          let marker = [{position: { lat: range.latitude, lng: range.longitude }}];
-          range["markers"] = marker;
+          let center = {lat:range.latitude, lng:range.longitude};
+          range["center"] = center;
+          range["markers"] = [];
+          range["circles"] = [];
+          this.addMarker(range["markers"], center);
+          this.addCercle(range["circles"], center, range.radius);
+          //range["markers"] = marker;
         });
+
+        // this.rList = this.rangeList;
       }
+    },
+    async getShoesInfo() {
+      let res = await api.getShoesInfo(this.choiceDevice.shoesNumber);
+      if(res.data.status === "SUCCESS") {
+        this.shoes = res.data.data;
+      }
+    },
+    addRange() {
+      this.$router.push('rangeadd');
+    },
+    delRange(range) {
+      this.openPopup("[" + range.rangeName + "] 활동 범위를 삭제 하시겠습니까?", true, true, this.doDelete, range.rangeNo);
+    },
+    async doDelete(rangeNo) {
+      const res = await api.delActiveRange(rangeNo);
+      if(res.data.status === "SUCCESS") {
+        if(res.data.data == 1) {
+          this.openPopup("활동 범위가 삭제 되었습니다.", true, false, this.hideAlert);
+          await this.selActiveRangeList();
+        }else{
+          this.openPopup("활동 범위 삭제가 실패 되었습니다.", true, false, this.hideAlert);
+        }
+      }
+    },
+    updRange(rangeNo) {
+      this.$router.push("rangeadd?rangeNo=" + rangeNo);
     }
   },
-  created() {
+  mounted() {
+    this.getShoesInfo();
     this.selActiveRangeList();
-  }
+  },
+  computed:{
+    ...mapState("guardStore", ['choiceDevice'] ),
+
+  },
 }
 </script>
 

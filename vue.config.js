@@ -33,6 +33,7 @@ module.exports = {
   transpileDependencies: ["ansi-regex"],
 
   devServer: {
+   // proxy:'https://was-dev.kkokasin.com',
     https: true,
     host: 'm-dev.kkokasin.com',
     https: {

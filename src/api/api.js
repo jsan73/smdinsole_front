@@ -20,17 +20,46 @@ export default {
 		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/dashboard/list')
 	},
 
+	getShoesInfo(shoesNumber) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/get/' + shoesNumber);
+	},
+
 	selActiveRangeList(shoesNo) {
 		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/active/list/' + shoesNo);
 	},
+
+	getActiveRange(shoesNo, rangeNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/active/' + shoesNo + '/' + rangeNo);
+	},
+
+	insActiveRange(param) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/shoes/active/ins`, param);
+	},
+
+	updActiveRange(param) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/shoes/active/upd`, param);
+	},
+
+	delActiveRange(rangeNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/active/del/' + rangeNo);
+	},
+
 
 	updShoesNickName(param) {
 		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/nickname/upd', param);
 	},
 
 	changePwd(param) {
-		return http.postParam(process.env.VUE_APP_SERVER_URL + `/api/guard/upd/pwd`, param)
+		return http.postParam(process.env.VUE_APP_SERVER_URL + `/api/guard/upd/pwd`, param);
 	},
+
+	selectGuardList() {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/guard/list');
+	},
+
+	// addActiveRange(param) {
+	// 	return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/active/ins', param);
+	// },
 
 	getToken() {
 		console.log(process.env.VUE_APP_AUTHM_PJT)

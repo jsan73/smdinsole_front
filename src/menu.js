@@ -19,9 +19,12 @@ var menu = [
 	{ menuId: "Main", parentId: 0, menuName: "메인", icon: "description", componentName: "Dashboard", pagePath:"views/shoes", url: "/", meta: { footer:true }},
 	{ menuId: "AppControl", parentId: 0, menuName: "설정", icon: "description", componentName: "AppControl", pagePath:"views/shoes", url: "/control", meta: {logout:true} },
 	{ menuId: "Range", parentId: 0, menuName: "활동범위", icon: "description", componentName: "ActiveRange", pagePath:"views/shoes",url: "/shoes/range" },
+	{ menuId: "RangeAdd", parentId: 0, menuName: "활동범위 추가", icon: "description", componentName: "ActiveRangeAdd", pagePath:"views/shoes",url: "/shoes/rangeadd" },
 	{ menuId: "Location", parentId: 0, menuName: "현재위치", icon: "description", componentName: "Demo", url: "/loc"},
 	{ menuId: "Login", parentId: 0, menuName: "로그인", icon: "description",pagePath: "views/guard",  componentName: "Login", url: "/login", meta: { layout: 'Main' }},
 	{ menuId: "ChangePw", parentId: 0, menuName: "비밀번호 변경", icon: "description",pagePath: "views/guard",  componentName: "ChangePwd", url: "/changepwd"},
+	{ menuId: "GuardianList", parentId: 0, menuName: "보호자 관리", icon: "description",pagePath: "views/guard",  componentName: "GuardianList", url: "/guardianlist"},
+	{ menuId: "GuardianAdd", parentId: 0, menuName: "보호자 추가", icon: "description",pagePath: "views/guard",  componentName: "GuardianAdd", url: "/guardianadd"},
 	// // { menuId: "MN70", parentId: 0, menuName: "콜팝업", icon: "description", pagePath: "views/ui/temp", componentName: "CallPopup", url: "/ui/callpopup", popup: true, meta: { layout: 'Popup' }, tempmenu: "temp" },
 	// // { menuId: "MN70", parentId: 0, menuName: "콜팝업", icon: "description", pagePath: "views/ui/temp", componentName: "CallPopup", url: "/ui/callpopup", popup: true, meta: { layout: 'Popup' }, tempmenu: "temp" },
 	//

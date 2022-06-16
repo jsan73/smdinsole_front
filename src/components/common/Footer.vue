@@ -3,9 +3,9 @@
   <div class="fixed-bottom" style="background-color: #2CBBB6; z-index: 2000; min-height: 72px;">
     <ul class="d-flex ps-0 mb-0 justify-content-evenly">
       <li class="col text-center pt-2">
-        <a>
+        <a @click="move('/shoes/range')">
           <img src="/static/images/radius-pin.svg" alt="">
-          <p class="pt-1 text-white mb-2" @click="move('/shoes/range')">활동범위</p>
+          <p class="pt-1 text-white mb-2" >활동범위</p>
         </a>
       </li>
       <li class="col text-center pt-2">

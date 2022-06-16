@@ -24,7 +24,7 @@
 <!--          </a>-->
 <!--        </div>-->
 
-        <GoogleMap :center="{ lat: shoes.lat, lng: shoes.lon }" :markers="shoes.markers" />
+        <GoogleMap :center="center" :markers="markers" :circles="circles"/>
 
       </div>
 <!--    </div>-->

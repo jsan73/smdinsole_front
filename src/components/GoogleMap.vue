@@ -1,7 +1,9 @@
 <template>
   <div>
-    <GmapMap :center='center' :zoom='16' :options='options' style='width:100%;  height: 400px;'>
+    <GmapMap :center='center' :zoom='12' :options='options' style='width:100%;  height: 400px;'>
       <GmapMarker :key="index" v-for="(m, index) in markers" :position="m.position" />
+<!--      <GmapCircle :center="center" :options="circleOption"></GmapCircle>-->
+      <GmapCircle :key2="index" v-for="(c, index) in circles" :center="c.center" :options="c.option"></GmapCircle>
     </GmapMap>
 
   </div>
@@ -12,6 +14,10 @@ export default {
   name: "GoogleMap",
   mounted() {
     //this.geolocate();
+    console.log("CENTER");
+    console.log(this.center);
+    console.log("Circle");
+    console.log(this.circles);
   },
   methods: {
     geolocate() {
@@ -38,8 +44,9 @@ export default {
     },
   },
   props:{
-    center: {lat: Number, lng: Number},
+    center: {lat: 0, lng: 0},
     markers:Array,
+    circles:Array,
   },
   data() {
     return {

@@ -5,7 +5,10 @@ const guardStore = {
     namespaced: true,
     state: {
         guardInfo: false,
-        choiceDevice:0
+        choiceDevice:{
+            shoesNo:0,
+            shoesNumber:''
+        }
     },
     getters: {
         getGuardInfo: state => {
@@ -19,16 +22,17 @@ const guardStore = {
         setGuardInfo: (state, payload) => {
             state.guardInfo=payload.guardInfo;
         },
-        setShoesNo: (state, shoesNo) => {
-            state.choiceDevice=shoesNo;
+        setChoiceDevice: (state, payload) => {
+            state.choiceDevice.shoesNo = payload.shoesNo;
+            state.choiceDevice.shoesNumber = payload.shoesNumber;
         }
     },
     actions: {
         commitGuardInfo: ({ commit }, payload) => {
             commit('setGuardInfo', payload)
         },
-        commitShoesNo: ({ commit }, payload) => {
-            commit('setShoesNo', payload)
+        commitChoiceDevice: ({ commit }, payload) => {
+            commit('setChoiceDevice', payload)
         }
     }
 }

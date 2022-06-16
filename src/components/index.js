@@ -5,6 +5,7 @@ import DefaultLayout from "./layout/DefaultLayout.vue"
 import Header from "./common/Header.vue"
 import Footer from "./common/Footer.vue"
 import GoogleMap from "./GoogleMap.vue"
+import GoogleMap2 from "./GoogleMap2.vue"
 import Alert from "./common/Alert.vue"
 //import Gnb from "./common/Gnb.vue"
 
@@ -40,6 +41,7 @@ export default {
 		Vue.component("Header", Header);
 		Vue.component("Footer", Footer);
 		Vue.component("GoogleMap", GoogleMap);
+		Vue.component("GoogleMap2", GoogleMap2);
 		Vue.component("Alert", Alert);
 //		Vue.component("Gnb", Gnb);
 

@@ -19,7 +19,7 @@ export default {
     //뒤로가기
     backHandler(){
       this.$router.go(-1);
-    },
+    }
   }
 }
 </script>

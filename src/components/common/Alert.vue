@@ -7,7 +7,7 @@
           <p class="mb-5 mt-5">{{msg}}</p>
         </div>
         <div class="modal-footer flex-nowrap p-0">
-          <button v-if="btnC" @click="hideAlert" type="button" class="btn btn-lg fs-6 text-decoration-none col-6 m-0 rounded-0 border-right kksColorMain" >취소</button>
+          <button v-if="btnC" @click="close" type="button" class="btn btn-lg fs-6 text-decoration-none col-6 m-0 rounded-0 border-right kksColorMain" >취소</button>
           <button v-if="!btnC" @click="ok" type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-12 m-0 rounded-0 " data-bs-dismiss="modal">확인</button>
           <button v-else-if="btnC" @click="ok" type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 " data-bs-dismiss="modal">확인</button>
         </div>
@@ -24,25 +24,25 @@ export default {
     btnO:false,
     msg:"",
     // callback함수 인자
-    emitParam:[String, Number, Boolean, Array, Object],
+    doActionParam:[String, Number, Boolean, Array, Object],
   },
-  data() {
-    return {
-      visible:false,
-    };
-  },
+  // data() {
+  //   return {
+  //     visible:false,
+  //   };
+  // },
   methods: {
-    showAlert() {
-      this.visible = true;
-    },
-    closeAlert() {
+    // showAlert() {
+    //   this.visible = true;
+    // },
+    close() {
       this.$emit("close");
     },
     // cancel(){
     //   this.$emit('update:visible', false);
     // },
     ok(){
-        this.$emit("doAction", this.emitParam);
+        this.$emit("doAction", this.doActionParam);
     }
   }
 }

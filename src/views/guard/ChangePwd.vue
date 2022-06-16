@@ -65,37 +65,46 @@ export default {
       //api.back();
       this.$router.go(-1);
     },
-    openPopup(msg, ok, cancel, doAction) {
-      let v= {
-        msg: msg,
-        btnO:ok,
-        btnC:cancel,
-        doAction: doAction
-      }
-      this.showAlert(v);
-    },
+    // openPopup(msg, ok, cancel, doAction) {
+    //   let v= {
+    //     msg: msg,
+    //     btnO:ok,
+    //     btnC:cancel,
+    //     doAction: doAction
+    //   }
+    //   this.showAlert(v);
+    // },
     nextStep() {
       this.hideAlert();
       this.$router.go(-1);
     },
-    // hideAlert() {
-    //   alert("하이드");
-    // },
-    async change() {
+
+    change() {
       if(this.newGuardPwd != this.newGuardPwdok) {
-        this.openPopup('비밀번호 확인이 상이합니다.', true, false, {});
+        this.openPopup('비밀번호 확인이 상이합니다.', true, false, this.hideAlert);
         return false;
       }
       const params = {guardPwd: this.guardPwd, newGuardPwd: this.newGuardPwd};
-      console.log(params);
-      const res = await api.changePwd(params);
-      if(res.data.status === "SUCCESS") {
-        let tokenData = res.data.data;
-        this.openPopup('비밀번호가 변경 되었습니다.', true, false, this.nextStep);
-        //await this.cancel();
-      }else{
-        this.openPopup('비밀번호가 일치하지 않습니다.', true, false);
-      }
+
+      api.changePwd(params)
+          .then(res => {
+            if(res.data.status === "SUCCESS") {
+              let result = res.data.data;
+              if(result == 1)
+                this.openPopup('비밀번호가 변경 되었습니다.', true, false, this.nextStep);
+              else if(result == -1) {
+                this.openPopup('비밀번호가 일치하지 않습니다.', true, false, this.hideAlert);
+              }
+            }else{
+              this.openPopup('오류가 발생했습니다.', true, false, this.hideAlert);
+            }
+          })
+          // .catch(e=> {
+          //   this.openPopup('오류가 발생했습니다.', true, false, this.hideAlert);
+          // })
+          // .finally(() => {
+          //
+          // });
     }
   },
   created() {

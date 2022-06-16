@@ -118,7 +118,7 @@ const mixin = {
 
 			// Alert Open
 			this.$root.$children[0].alertData = {...this.$root.$children[0].alertData, ...v};
-			console.log(this.$root.$children[0].alertData);
+			//console.log(this.$root.$children[0].alertData);
 			this.$root.$children[0].alertData.show = true;
 			//this.$root.$children[0].$refs.refAlert.showAlert();
 
@@ -136,6 +136,16 @@ const mixin = {
 				msg: '',
 			}
 			//this.$root.$children[0].$refs.refAlert.closeAlert();
+		},
+		openPopup(msg, ok, cancel, doAction, param) {
+			let v= {
+				msg: msg,
+				btnO:ok,
+				btnC:cancel,
+				doAction: doAction,
+				emitParam: param
+			}
+			this.showAlert(v);
 		},
 	}
 }

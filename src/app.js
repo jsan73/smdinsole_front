@@ -27,7 +27,7 @@ export default {
 				msg: '',
 				btnC: false,
 				btnO: true,
-				doAction: {},
+				doAction: null,
 				doActionParam: null,
 				close: {}
 			}

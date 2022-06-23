@@ -60,12 +60,25 @@ export default {
     addGuard() {
       this.$router.push('guardianadd');
     },
+    delGuard(guardNo) {
+      this.openPopup("삭제 하시겠습니까?.", true,true, this.doDelGuard, guardNo);
+    },
+    doDelGuard(guardNo) {
+      api.delGuardian(guardNo)
+      .then((res => {
+        if(res.data.status === "SUCCESS") {
+          this.openPopup("삭제 되었습니다.", true,false, this.hideAlert);
+          this.selectGuardList();
+        }
+      }))
+    },
     telForm(str) {
       return utils.telForm(str,1);
     }
   },
   created() {
     this.selectGuardList();
+
   }
 }
 </script>

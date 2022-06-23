@@ -1,3 +1,5 @@
+import utils from "@/utils/utils";
+
 const mixin = {
 	data() {
 		return {}
@@ -137,16 +139,21 @@ const mixin = {
 			}
 			//this.$root.$children[0].$refs.refAlert.closeAlert();
 		},
-		openPopup(msg, ok, cancel, doAction, param) {
+		openPopup(msg, ok, cancel, doAction, param, alertType) {
+			if(utils.isEmpty(alertType)) alertType =  0;
 			let v= {
 				msg: msg,
 				btnO:ok,
 				btnC:cancel,
 				doAction: doAction,
-				emitParam: param
+				doActionParam: param,
+				alertType:alertType
 			}
 			this.showAlert(v);
 		},
+		gotoBack() {
+			this.$router.go(-1);
+		}
 	}
 }
 

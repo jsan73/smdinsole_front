@@ -20,6 +20,11 @@ export default {
 		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/dashboard/list')
 	},
 
+	getShoesDashInfo(shoesNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/dashboard/' + shoesNo)
+	},
+
+	// 단순 단말 조회
 	getShoesInfo(shoesNumber) {
 		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/get/' + shoesNumber);
 	},
@@ -49,6 +54,17 @@ export default {
 		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/nickname/upd', param);
 	},
 
+	// 현재위치 요청
+	reqCurrentLocation(shoesNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/req/' + shoesNo);
+	},
+
+	// 위치기록
+	selectHistory(shoesNo, days) {
+		return http.postParam(process.env.VUE_APP_SERVER_URL + '/api/shoes/history/' + shoesNo, days);
+	},
+
+
 	changePwd(param) {
 		return http.postParam(process.env.VUE_APP_SERVER_URL + `/api/guard/upd/pwd`, param);
 	},
@@ -57,10 +73,21 @@ export default {
 		return http.post(process.env.VUE_APP_SERVER_URL + '/api/guard/list');
 	},
 
-	// addActiveRange(param) {
-	// 	return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/active/ins', param);
-	// },
+	insGuardian(param, shoesNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/ins/` +  shoesNo, param);
+	},
 
+	delGuardian(guardNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/del/` +  guardNo);
+	},
+
+	setAlram(param, shoesNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/shoes/alram/` +  shoesNo, param);
+	},
+
+	selCodeList(grupCd) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/shoes/code/list/` +  grupCd);
+	},
 	getToken() {
 		console.log(process.env.VUE_APP_AUTHM_PJT)
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/token`)

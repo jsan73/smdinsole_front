@@ -46,5 +46,33 @@ export default {
             }
         }
         return rs;
-    }
+    },
+
+    // 파라미터의 타입 확인(소문자로 리턴)
+    getType(trgt) {
+        return Object.prototype.toString.call(trgt).slice(8, -1).toLowerCase();
+    },
+    // 문자형을 날짜형으로 데이터 변환
+    convertFromStrToDate(trgt) {
+        let rst = "";
+        if (this.getType(trgt) === `string`) {
+            if (/^\d{8}$/.test(trgt)) {
+                rst = trgt.replace(/^(\d{4})(\d{2})(\d{2})$/, "$1/$2/$3");
+            } else {
+                rst = trgt;
+            }
+        } else if (this.getType(trgt) === `object`) {
+            rst = {};
+            rst = this.convertFroStrTomDateObj(trgt);
+        } else if (this.getType(trgt) === `array`) {
+            rst = [];
+            trgt.map((obj, idx) => {
+                rst[idx] = this.convertFroStrTomDateObj(obj);
+            });
+        } else {
+            throw new this.CumtomException('String, Object, Array형이 아닙니다.');
+        }
+        return rst;
+    },
+
 }

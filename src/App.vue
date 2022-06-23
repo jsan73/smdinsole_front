@@ -7,8 +7,9 @@
            :btnC="alertData.btnC"
            :btnO="alertData.btnO"
            @doAction="alertData.doAction"
-           :doActionParam="alertData.emitParam"
+           :doActionParam="alertData.doActionParam"
            @close="this.hideAlert"
+           :alertType="alertData.alertType"
            ref="refAlert"
     />
 <!--    <template v-if="!isSkipToken">-->

@@ -1,8 +1,10 @@
 import api from '@/api/api';
 import {mapState, mapActions} from 'vuex';
+import ShoesHeader from "@/views/shoes/ShoesHeader";
 
 export default {
     name: "Dashboard",
+    components: {ShoesHeader},
     data() {
         return {
             shoesList : "",
@@ -54,7 +56,7 @@ export default {
                             console.log(this.circles)
                             //let marker = [{position: this.center}];
                             //this.shoes["markers"] = marker;
-                            this.shoes["batteryImg"] = "/static/images/battery/" + shoes.battery + ".svg";
+                            //this.shoes["batteryImg"] = "/static/images/battery/" + shoes.battery + ".svg";
 
                             this.commitChoiceDevice(shoes);
                             return false;
@@ -63,8 +65,8 @@ export default {
                 }
             }
         },
-        move(url) {
-            this.$router.push(url);
+        moveControl(url) {
+            this.$router.push('control');
         }
     },
     created() {

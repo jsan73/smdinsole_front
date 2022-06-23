@@ -29,6 +29,7 @@ export default {
 				btnO: true,
 				doAction: null,
 				doActionParam: null,
+				alertType:0,
 				close: {}
 			}
 		};

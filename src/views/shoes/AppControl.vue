@@ -5,7 +5,7 @@
       <h3 class="pb-2">사용 단말기 목록</h3>
       <ul class="list-group">
         <li v-for="shoes in shoesList" class="list-group-item d-flex justify-content-between align-items-start">
-          <input class="form-check-input" v-model="choiceShoes" type="radio" :name="shoes.shoesId" :id="shoes.shoesId" :value="shoes.shoesNo">
+          <input class="form-check-input" v-model="choiceShoes"  type="radio" :name="shoes.shoesId" :id="shoes.shoesId" :value="shoes">
           <label class="form-check-label" :for="shoes.shoesId">
           </label>
           <div class="ms-2 me-auto">
@@ -28,7 +28,7 @@
     </svg></a>
     </span>
     </div>
-    <div class="d-flex w-100 justify-content-between border-bottom border-1 pt-3 pb-1">
+    <div v-if="masterGuardNo == 0" class="d-flex w-100 justify-content-between border-bottom border-1 pt-3 pb-1">
       <h3 class="ps-3">보호자 관리</h3>
       <span class="pe-3">
         <a @click="move('guardianlist')"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-chevron-right"
@@ -54,23 +54,28 @@ export default {
   data() {
     return {
       shoesList:[],
-      choiceShoes:0,
+      choiceShoesNo:0,
+      choiceShoes:'',
       modalVisible:false,
-      modalShoes: {}
+      modalShoes: {},
+      masterGuardNo:0
     }
   },
   components:{
     layerModal : shoesModal
   },
   methods: {
-    ...mapActions("guardStore", ['commitShoesNo']),
+     ...mapActions("guardStore", ['commitChoiceDevice']),
     async selShoesList() {
       const res = await api.selShoesList();
       if(res.data.status === "SUCCESS") {
         this.shoesList = res.data.data
 
-        if(this.shoesList.length > 0) {
-          if(this.choiceDevice == 0) this.choiceShoes = this.shoesList[0].shoesNo;
+        for(var shoes of this.shoesList) {
+          if(this.choiceShoesNo == 0 || shoes.shoesNo == this.choiceShoesNo){
+            this.choiceShoesNo = shoes.shoesNo;
+            this.choiceShoes = shoes;
+          }
         }
       }
     },
@@ -79,24 +84,32 @@ export default {
       this.modalShoes = shoes;
 
     },
+
     move(url) {
       this.$router.push(url);
     }
   },
   watch:{
-    ...mapActions("guardStore", ['commitShoesNo']),
     choiceShoes() {
-      this.commitShoesNo(this.choiceShoes);
-      console.log(this.choiceShoes);
-    }
+      this.choiceShoesNo = this.choiceShoes.shoesNo;
+      this.commitChoiceDevice(this.choiceShoes);
+
+    },
+
   },
   computed:{
     ...mapState("guardStore", ['choiceDevice'] ),
 
   },
   created() {
-    this.choiceShoes = this.choiceDevice;
+    this.choiceShoesNo = this.choiceDevice.shoesNo;
     this.selShoesList();
+
+
+    let _storage = window.sessionStorage;
+    let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
+    let userInfo = JSON.parse(_storage.getItem(_userKey));
+    this.masterGuardNo = userInfo.masterGuardNo;
   }
 }
 </script>

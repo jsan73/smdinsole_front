@@ -4,12 +4,13 @@
       <div class="modal-content rounded-4 shadow">
         <div class="modal-body p-4 text-center">
           <!-- <h5 class="mb-0">비밀번호 확인</h5>-->
-          <p class="mb-5 mt-5">{{msg}}</p>
+          <p class="mb-5 mt-5"><span v-html="msg"></span></p>
         </div>
         <div class="modal-footer flex-nowrap p-0">
-          <button v-if="btnC" @click="close" type="button" class="btn btn-lg fs-6 text-decoration-none col-6 m-0 rounded-0 border-right kksColorMain" >취소</button>
-          <button v-if="!btnC" @click="ok" type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-12 m-0 rounded-0 " data-bs-dismiss="modal">확인</button>
-          <button v-else-if="btnC" @click="ok" type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 " data-bs-dismiss="modal">확인</button>
+          <button v-if="btnC" @click="close" type="button" class="btn btn-lg fs-6 text-decoration-none col-6 m-0 rounded-0 border-right kksColorMain" >
+            {{ types[alertType].left }}</button>
+          <button v-if="!btnC" @click="ok" type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-12 m-0 rounded-0 " data-bs-dismiss="modal">{{ types[alertType].right }}</button>
+          <button v-else-if="btnC" @click="ok" type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 " data-bs-dismiss="modal">{{ types[alertType].right }}</button>
         </div>
       </div>
     </div>
@@ -25,12 +26,16 @@ export default {
     msg:"",
     // callback함수 인자
     doActionParam:[String, Number, Boolean, Array, Object],
+    alertType:0
   },
-  // data() {
-  //   return {
-  //     visible:false,
-  //   };
-  // },
+  data() {
+    return {
+      types:[
+        {left:"취소", right:"확인"},
+        {left:"아니오", right:"예"},
+      ]
+    };
+  },
   methods: {
     // showAlert() {
     //   this.visible = true;

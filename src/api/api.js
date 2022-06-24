@@ -81,8 +81,12 @@ export default {
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/del/` +  guardNo);
 	},
 
-	setAlram(param, shoesNo) {
-		return http.post(process.env.VUE_APP_SERVER_URL + `/api/shoes/alram/` +  shoesNo, param);
+	getNotice(shoesNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/shoes/notice/get/` +  shoesNo);
+	},
+
+	setNotice(param, option) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/shoes/notice/set/` +  option, param);
 	},
 
 	selCodeList(grupCd) {

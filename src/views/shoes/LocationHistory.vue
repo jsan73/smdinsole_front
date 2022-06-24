@@ -84,7 +84,7 @@ export default {
         '토'
       ];
       const date = new Date(utils.convertFromStrToDate(this.locDate));
-      console.log(this.locDate);
+
       const dayname = days[date.getDay()];
       const year = date.getFullYear().toString();
       const mm = date.getMonth() + 1;

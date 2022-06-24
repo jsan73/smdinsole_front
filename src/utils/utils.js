@@ -59,20 +59,23 @@ export default {
             if (/^\d{8}$/.test(trgt)) {
                 rst = trgt.replace(/^(\d{4})(\d{2})(\d{2})$/, "$1/$2/$3");
             } else {
-                rst = trgt;
+                rst = trgt.replace(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1/$2/$3 $4:$5:$6");
             }
-        } else if (this.getType(trgt) === `object`) {
-            rst = {};
-            rst = this.convertFroStrTomDateObj(trgt);
-        } else if (this.getType(trgt) === `array`) {
-            rst = [];
-            trgt.map((obj, idx) => {
-                rst[idx] = this.convertFroStrTomDateObj(obj);
-            });
-        } else {
-            throw new this.CumtomException('String, Object, Array형이 아닙니다.');
         }
         return rst;
     },
+
+    getDatediff(date1, date2){
+        let d1 = new Date(this.getYmd10(date1));
+        let d2 = new Date(this.getYmd10(date2));
+
+        const diffDate = d2.getTime() - d1.getTime();
+        return Math.abs(diffDate / (1000 * 60 * 60 * 24));
+
+    },
+    getYmd10(d) {
+        //yyyy-mm-dd 포맷 날짜 생성
+        return d.getFullYear() + "-" + ((d.getMonth() + 1) > 9 ? (d.getMonth() + 1).toString() : "0" + (d.getMonth() + 1)) + "-" + (d.getDate() > 9 ? d.getDate().toString() : "0" + d.getDate().toString());
+    }
 
 }

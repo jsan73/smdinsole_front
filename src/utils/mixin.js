@@ -141,6 +141,7 @@ const mixin = {
 		},
 		openPopup(msg, ok, cancel, doAction, param, alertType) {
 			if(utils.isEmpty(alertType)) alertType =  0;
+			if(utils.isEmpty(doAction)) doAction =  this.hideAlert;
 			let v= {
 				msg: msg,
 				btnO:ok,

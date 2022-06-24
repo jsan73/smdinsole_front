@@ -15,7 +15,8 @@
         </a>
       </li>
       <li class="col text-center pt-2">
-        <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+        <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" @click="openNotice">
+
           <img src="/static/images/notifications.svg" alt="">
           <p class="pt-1 text-white mb-2">알림설정</p>
         </a>
@@ -29,7 +30,7 @@
     </ul>
   </div>
 
-  <AlramLayer></AlramLayer>
+  <NoticeLayer :visible.sync="toggleNotice"></NoticeLayer>
 
   <div class="offcanvas offcanvas-bottom" data-bs-backdrop="false" tabindex="-1" id="offcanvasBottom2" aria-labelledby="offcanvasBottomLabel2">
     <div class="offcanvas-header">
@@ -63,14 +64,15 @@
 <script>
 import {mapState} from "vuex";
 import api from "@/api/api";
-import AlramLayer from "@/components/common/AlramLayer";
+import NoticeLayer from "@/components/common/NoticeLayer";
 
 export default {
   name: "Footer",
-  components: {AlramLayer},
+  components: {NoticeLayer},
   data() {
     return {
       locationDay:0,
+      toggleNotice:false
     }
   },
   methods: {
@@ -86,15 +88,15 @@ export default {
     reqCurrentLocation() {
       this.openPopup("현재 위치를 요청하였습니다.", true, false, this.hideAlert);
     },
+    openNotice(){
+      this.toggleNotice = !this.toggleNotice;
+     // console.log(this.toggleNotice)
+    }
   },
   watch:{
     locationDay() {
       this.$router.push("/shoes/location?locationDay=" + this.locationDay);
     },
-    alramOption() {
-      let params ={code:'A01'}
-      api.setAlram(params, this.choiceDevice.shoesNo );
-    }
   },
   computed:{
 

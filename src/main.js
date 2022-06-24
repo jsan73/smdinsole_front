@@ -10,6 +10,7 @@ import ui from "./components";
 import jwt from "vue-jwt-decode";
 import * as VueGoogleMaps from "vue2-google-maps";
 
+
 Vue.use(Vuex);
 Vue.use(ui);
 Vue.mixin(mixin);

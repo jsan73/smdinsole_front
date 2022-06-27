@@ -2,14 +2,19 @@ import Vue from "vue";
 import Vuex from 'vuex'
 import App from "./App.vue";
 import router from "./router/router";
-import http from "@/api/http";
-import commonApi from "@/api/api";
 import store from "./store/index"
 import mixin from "./utils/mixin"
 import ui from "./components";
 import jwt from "vue-jwt-decode";
 import * as VueGoogleMaps from "vue2-google-maps";
-
+import 'vue2-toast/lib/toast.css';
+import Toast from 'vue2-toast';
+Vue.use(Toast, {
+    type: 'center',
+    duration: 2000,
+    wordWrap: true,
+    //width: '300px'
+});
 
 Vue.use(Vuex);
 Vue.use(ui);

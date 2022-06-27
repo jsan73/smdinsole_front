@@ -4,7 +4,7 @@
 import axios from "axios"
 // import store from "@/store/loadingStore"
 
-let _storage = window.sessionStorage;
+//let _storage = window.sessionStorage;
 
 //axios 기본설정
 const instance = axios.create({
@@ -21,25 +21,25 @@ const instance = axios.create({
 	2) 요청 에러 - 인자값: error
 */
 instance.interceptors.request.use(
-	function (config) {
-		// 요청 바로 직전
-		// store.state.loading = true;// 로딩바(Loading2.vue) 보이기/안보이기. 임시 확인용
-
-		// axios 설정값에 대해 작성합니다.
-
-		// context가 다를 경우 API Server 요청
-		// 모바일은 API Server 는 무조건 GATEWAY 서버 호출
-		config.baseURL = process.env.VUE_APP_GW_URL
-
-		return config;
-	},
-	function (error) {
-		// store.state.loading = false;// 로딩바(Loading2.vue) 보이기/안보이기. 임시 확인용
-
-		// 요청 에러 처리를 작성합니다.
-		return Promise.reject(error);
-
-	}
+	// function (config) {
+	// 	// 요청 바로 직전
+	// 	// store.state.loading = true;// 로딩바(Loading2.vue) 보이기/안보이기. 임시 확인용
+	//
+	// 	// axios 설정값에 대해 작성합니다.
+	//
+	// 	// context가 다를 경우 API Server 요청
+	// 	// 모바일은 API Server 는 무조건 GATEWAY 서버 호출
+	// 	config.baseURL = process.env.VUE_APP_GW_URL
+	//
+	// 	return config;
+	// },
+	// function (error) {
+	// 	// store.state.loading = false;// 로딩바(Loading2.vue) 보이기/안보이기. 임시 확인용
+	//
+	// 	// 요청 에러 처리를 작성합니다.
+	// 	return Promise.reject(error);
+	//
+	// }
 );
 
 
@@ -66,21 +66,21 @@ instance.interceptors.response.use(
 
 		if (error.response && error.response.status === 403 || error.response && error.response.status === 401) {
 
-			//이동하기 전에 sesstion 값 제거
-			let _authKey = process.env.VUE_APP_AUTH_KEY;
-			let _tokenKey = process.env.VUE_APP_TOKEN_KEY
-
-			_storage.removeItem(_authKey);
-			_storage.removeItem(_tokenKey);
-
-			let protocol = location.protocol;
-			let hostName = location.hostname;
-			let port = location.port;
-
-			var ssoUrl = protocol + "//" + hostName;
-			if (port != "" && port != "443") ssoUrl += ":" + port;
-
-			window.location.href = process.env.VUE_APP_SSO_URL + ssoUrl;
+			// //이동하기 전에 sesstion 값 제거
+			// let _authKey = process.env.VUE_APP_AUTH_KEY;
+			// let _tokenKey = process.env.VUE_APP_TOKEN_KEY
+			//
+			// _storage.removeItem(_authKey);
+			// _storage.removeItem(_tokenKey);
+			//
+			// let protocol = location.protocol;
+			// let hostName = location.hostname;
+			// let port = location.port;
+			//
+			// var ssoUrl = protocol + "//" + hostName;
+			// if (port != "" && port != "443") ssoUrl += ":" + port;
+			//
+			// window.location.href = process.env.VUE_APP_SSO_URL + ssoUrl;
 		}
 		/*
 			http status가 200이 아닌 경우
@@ -88,6 +88,7 @@ instance.interceptors.response.use(
 			이곳 먼저 처리 후 화면단에서 호출한 .catch() 으로 이어집니다.
 		*/
 		return Promise.reject(error);
+		//return error.response;
 	}
 );
 

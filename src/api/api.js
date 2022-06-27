@@ -16,6 +16,14 @@ export default {
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/token`, param)
 	},
 
+	loginChk(param) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/check`, param)
+	},
+
+	regist(param) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/reg`, param)
+	},
+
 	selShoesList() {
 		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/dashboard/list')
 	},

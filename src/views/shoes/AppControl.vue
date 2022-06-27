@@ -12,7 +12,7 @@
             <div class="fw-bold">{{ shoes.nickName }} <small class="opacity-75">{{ shoes.shoesId }}</small></div>
             <div v-if="shoes.radius > 0">{{ shoes.rangeName }} - {{shoes.radius/1000}}km</div>
           </div>
-          <span class="badge"><img src="../../../public/static/images/pen.svg" alt="수정" width="38" height="38" @click="showModal(shoes)"></span>
+          <span class="badge"><img v-if="masterGuardNo === 0" src="../../../public/static/images/pen.svg" alt="수정" width="38" height="38" @click="showModal(shoes)"></span>
         </li>
 
       </ul>
@@ -28,7 +28,7 @@
     </svg></a>
     </span>
     </div>
-    <div v-if="masterGuardNo == 0" class="d-flex w-100 justify-content-between border-bottom border-1 pt-3 pb-1">
+    <div v-if="masterGuardNo === 0" class="d-flex w-100 justify-content-between border-bottom border-1 pt-3 pb-1">
       <h3 class="ps-3">보호자 관리</h3>
       <span class="pe-3">
         <a @click="move('guardianlist')"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-chevron-right"
@@ -46,10 +46,13 @@
 
 <script>
 import api from "@/api/api";
-import {mapState, mapActions, mapMutations} from 'vuex';
+import {mapState, mapActions} from 'vuex';
 import shoesModal from './ShoesModal';
 
+let _storage = window.sessionStorage;
+let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
 export default {
+
   name: "AppControl",
   data() {
     return {
@@ -72,7 +75,7 @@ export default {
         this.shoesList = res.data.data
 
         for(var shoes of this.shoesList) {
-          if(this.choiceShoesNo == 0 || shoes.shoesNo == this.choiceShoesNo){
+          if(this.choiceShoesNo === 0 || shoes.shoesNo === this.choiceShoesNo){
             this.choiceShoesNo = shoes.shoesNo;
             this.choiceShoes = shoes;
           }
@@ -104,12 +107,9 @@ export default {
   created() {
     this.choiceShoesNo = this.choiceDevice.shoesNo;
     this.selShoesList();
-
-
-    let _storage = window.sessionStorage;
-    let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
     let userInfo = JSON.parse(_storage.getItem(_userKey));
     this.masterGuardNo = userInfo.masterGuardNo;
+
   }
 }
 </script>

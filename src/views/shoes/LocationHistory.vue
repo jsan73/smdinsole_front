@@ -50,7 +50,7 @@ export default {
       if(res.data.status === "SUCCESS") {
         this.history = res.data.data;
         this.history.forEach((loc, index) =>{
-          if(index == 0) this.locDate = loc.reportDate.substring(0,8);
+          if(index === 0) this.locDate = loc.reportDate.substring(0,8);
           this.addMarker(
               {
                       lat:loc.latitude,
@@ -62,8 +62,13 @@ export default {
               });
           this.polyLines.push({lat:loc.latitude, lng:loc.longitude});
         })
-        this.center = this.markers[this.markers.length-1].position;
-        this.displayDay = this.makeDay();
+        if(this.markers.length > 0) {
+          this.center = this.markers[this.markers.length - 1].position;
+          this.displayDay = this.makeDay();
+        }else{
+          this.displayDay = "위치기록이 없습니다."
+        }
+
       }
     },
     async getShoesInfo() {
@@ -92,7 +97,7 @@ export default {
       const month =  mm < 10? "0" + mm : mm.toString();
       const day =  dd < 10? "0" + dd : dd.toString();
 
-      return (this.locationDay==0)? "[오늘]":"" +  year + "-" + month + "-" + day + "(" + dayname + ")  위치기록";
+      return (this.locationDay===0)? "[오늘]":"" +  year + "-" + month + "-" + day + "(" + dayname + ")  위치기록";
 
     }
   },

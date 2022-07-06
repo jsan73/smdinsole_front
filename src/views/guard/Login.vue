@@ -27,7 +27,7 @@
         <input type="password" maxlength="15" class="form-control" id="loginPwOk" v-model="cnfGuardPwd" placeholder="**** " >
       </div>
       <div class="mb-4" v-if="!checkGuard">
-        <input type="checkbox" id="agree_" name=" " class="form-check-input" v-model="mktAgree" true-value="Y" false-value="N">
+        <input type="checkbox" id="agree_" class="form-check-input" v-model="mktAgree" true-value="Y" false-value="N">
         <label for="agree_"><span class="">약관 및 개인정보 수집 동의</span></label>
         <span style="display: inline-block; float: right;"> <img src="../../../public/static/images/Next_arr.svg" alt="더보기"> </span>
       </div>

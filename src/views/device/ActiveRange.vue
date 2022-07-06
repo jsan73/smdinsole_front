@@ -6,7 +6,7 @@
 
           <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
-              <h4 class="mb-0">{{shoes.nickName}} <small class="opacity-75">{{shoes.shoesId}}</small></h4>
+              <h4 class="mb-0">{{device.nickName}} <small class="opacity-75">{{device.deviceIMEI}}</small></h4>
 
             </div>
           </div>
@@ -55,7 +55,7 @@ export default {
   name: "ActiveRange",
   data() {
     return {
-      shoes:'',
+      device:'',
       rangeList: [],
       markers:[],
       circles:[],
@@ -65,7 +65,7 @@ export default {
       //   radius: 0,
       //   rangeAddress: "",
       //   rangeName: "",
-      //   shoesNo: 0
+      //   deviceNo: 0
       // }
     };
   },
@@ -85,12 +85,12 @@ export default {
       range.push({center: center, option:option})
     },
     async selActiveRangeList() {
-      let res = await api.selActiveRangeList(this.choiceDevice.shoesNo);
+      let res = await api.selActiveRangeList(this.choiceDevice.deviceNo);
       if(res.data.status === "SUCCESS") {
         this.rangeList = res.data.data
 
         this.rangeList.forEach(range => {
-          let center = {lat:range.latitude, lng:range.longitude};
+          let center = {lat:range.lat, lng:range.lng};
           range["center"] = center;
           range["markers"] = [];
           range["circles"] = [];
@@ -102,10 +102,10 @@ export default {
         // this.rList = this.rangeList;
       }
     },
-    async getShoesInfo() {
-      let res = await api.getShoesInfo(this.choiceDevice.shoesNumber);
+    async getDeviceInfo() {
+      let res = await api.getDeviceInfo(this.choiceDevice.deviceIMEI);
       if(res.data.status === "SUCCESS") {
-        this.shoes = res.data.data;
+        this.device = res.data.data;
       }
     },
     addRange() {
@@ -130,7 +130,7 @@ export default {
     }
   },
   mounted() {
-    this.getShoesInfo();
+    this.getDeviceInfo();
     this.selActiveRangeList();
   },
   computed:{

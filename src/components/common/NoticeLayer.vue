@@ -53,7 +53,7 @@ export default {
         codeValue:''
       },
       notice: {
-        shoesNo:0,
+        deviceNo:0,
         guardNo:0,
         notiCd:'',
         nextNotiTime:'',
@@ -83,7 +83,7 @@ export default {
       this.noticeOption = {codeValue: ''};
     },
     setNotice(optionValue) {
-      let params ={shoesNo:this.choiceDevice.shoesNo, notiCd:this.noticeOption.codeCd};
+      let params ={deviceNo:this.choiceDevice.deviceNo, notiCd:this.noticeOption.codeCd};
       api.setNotice(params, optionValue).then(res => {
         if(res.data.status === "SUCCESS") {
           this.getNoticeStatus().then(()=>{
@@ -106,7 +106,7 @@ export default {
       this.setNotice(this.noticeOption.codeValue);
     },
     async getNoticeStatus() {
-      let res = await api.getNotice(this.choiceDevice.shoesNo);
+      let res = await api.getNotice(this.choiceDevice.deviceNo);
       if(res.data.status === "SUCCESS") {
         this.notice = res.data.data;
         if(utils.isNotEmpty(this.notice)) {

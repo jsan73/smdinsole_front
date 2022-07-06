@@ -4,15 +4,15 @@
     <div class="userlistCheck">
       <h3 class="pb-2">사용 단말기 목록</h3>
       <ul class="list-group">
-        <li v-for="shoes in shoesList" class="list-group-item d-flex justify-content-between align-items-start">
-          <input class="form-check-input" v-model="choiceShoes"  type="radio" :name="shoes.shoesId" :id="shoes.shoesId" :value="shoes">
-          <label class="form-check-label" :for="shoes.shoesId">
+        <li v-for="device in deviceList" class="list-group-item d-flex justify-content-between align-items-start">
+          <input class="form-check-input" v-model="choiceDevice"  type="radio" :name="device.deviceId" :id="device.deviceIMEI" :value="device">
+          <label class="form-check-label" :for="device.deviceIMEI">
           </label>
           <div class="ms-2 me-auto">
-            <div class="fw-bold">{{ shoes.nickName }} <small class="opacity-75">{{ shoes.shoesId }}</small></div>
-            <div v-if="shoes.radius > 0">{{ shoes.rangeName }} - {{shoes.radius/1000}}km</div>
+            <div class="fw-bold">{{ device.nickName }} <small class="opacity-75">{{ device.deviceIMEI }}</small></div>
+            <div v-if="device.radius > 0">{{ device.rangeName }} - {{device.radius/1000}}km</div>
           </div>
-          <span class="badge"><img v-if="masterGuardNo === 0" src="../../../public/static/images/pen.svg" alt="수정" width="38" height="38" @click="showModal(shoes)"></span>
+          <span class="badge"><img v-if="masterGuardNo === 0" src="../../../public/static/images/pen.svg" alt="수정" width="38" height="38" @click="showModal(device)"></span>
         </li>
 
       </ul>
@@ -39,7 +39,7 @@
     </span>
     </div>
 
-    <layer-modal :visible.sync="modalVisible" :shoes="this.modalShoes"></layer-modal>
+    <layer-modal :visible.sync="modalVisible" :device="this.modalDevice"></layer-modal>
 
   </main>
 </template>
@@ -47,7 +47,7 @@
 <script>
 import api from "@/api/api";
 import {mapState, mapActions} from 'vuex';
-import shoesModal from './ShoesModal';
+import deviceModal from './DeviceModal';
 
 let _storage = window.sessionStorage;
 let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
@@ -56,35 +56,35 @@ export default {
   name: "AppControl",
   data() {
     return {
-      shoesList:[],
-      choiceShoesNo:0,
-      choiceShoes:'',
+      deviceList:[],
+      choiceDeviceNo:0,
+      choiceDevice:'',
       modalVisible:false,
-      modalShoes: {},
+      modalDevice: {},
       masterGuardNo:0
     }
   },
   components:{
-    layerModal : shoesModal
+    layerModal : deviceModal
   },
   methods: {
      ...mapActions("guardStore", ['commitChoiceDevice']),
-    async selShoesList() {
-      const res = await api.selShoesList();
+    async selDeviceList() {
+      const res = await api.selDeviceList();
       if(res.data.status === "SUCCESS") {
-        this.shoesList = res.data.data
+        this.deviceList = res.data.data
 
-        for(var shoes of this.shoesList) {
-          if(this.choiceShoesNo === 0 || shoes.shoesNo === this.choiceShoesNo){
-            this.choiceShoesNo = shoes.shoesNo;
-            this.choiceShoes = shoes;
+        for(var device of this.deviceList) {
+          if(this.choiceDeviceNo === 0 || device.deviceNo === this.choiceDeviceNo){
+            this.choiceDeviceNo = device.deviceNo;
+            this.choiceDevice = device;
           }
         }
       }
     },
-    showModal(shoes) {
+    showModal(device) {
       this.modalVisible = true;
-      this.modalShoes = shoes;
+      this.modalDevice = device;
 
     },
 
@@ -93,9 +93,9 @@ export default {
     }
   },
   watch:{
-    choiceShoes() {
-      this.choiceShoesNo = this.choiceShoes.shoesNo;
-      this.commitChoiceDevice(this.choiceShoes);
+    choiceDevice() {
+      this.choiceDeviceNo = this.choiceDevice.deviceNo;
+      this.commitChoiceDevice(this.choiceDevice);
 
     },
 
@@ -105,8 +105,8 @@ export default {
 
   },
   created() {
-    this.choiceShoesNo = this.choiceDevice.shoesNo;
-    this.selShoesList();
+    this.choiceDeviceNo = this.choiceDevice.deviceNo;
+    this.selDeviceList();
     let userInfo = JSON.parse(_storage.getItem(_userKey));
     this.masterGuardNo = userInfo.masterGuardNo;
 

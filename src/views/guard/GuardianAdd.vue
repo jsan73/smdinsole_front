@@ -52,7 +52,7 @@ export default {
       this.openPopup(this.guard.guardName + '에게<br>앱설치 링크를 보내시겠습니까?', true, true, this.doSave);
     },
     async doSave(){
-      const res = await api.insGuardian(this.guard, this.choiceDevice.shoesNo);
+      const res = await api.insGuardian(this.guard, this.choiceDevice.deviceNo);
       if(res.data.status === "SUCCESS") {
         this.hideAlert();
         this.gotoBack();

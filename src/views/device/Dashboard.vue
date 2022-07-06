@@ -1,8 +1,8 @@
 <template>
   <main class="container px-0 position-relative dash-map-h">
-<!--    <div v-for="shoes in shoesList">-->
+<!--    <div v-for="device in deviceList">-->
 
-      <ShoesHeader :shoes="shoes" @clickAction="moveControl"></ShoesHeader>
+      <DeviceHeader :device="device" :status="location" :range="range" @clickAction="moveControl"></DeviceHeader>
       <div id="find-location" class="container-fluid px-0 dash-map-h">
 <!--        <div style="position: absolute; top:50%; left: 50%;">-->
 <!--          <a class="Gpoint_OK" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"-->
@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import Dashboard from "@/views/shoes/dashboard";
-import ShoesHeader from "@/views/shoes/ShoesHeader";
+import Dashboard from "@/views/device/dashboard";
+import DeviceHeader from "@/views/device/DeviceHeader";
 export default Dashboard;
 </script>
 

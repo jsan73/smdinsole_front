@@ -1,7 +1,7 @@
 <template>
   <div>
   <main class="container px-0 position-relative h-100">
-    <ShoesHeader :shoes="shoes" @clickAction={}></ShoesHeader>
+    <DeviceHeader :device="device" :status="location" :range="range" @clickAction={}></DeviceHeader>
 
     <div id="find-location" class="container-fluid px-0 h-100">
       <GoogleMap :center="center" :markers="markers" :poly-lines="polyLines"/>
@@ -14,18 +14,20 @@
 </template>
 
 <script>
-import ShoesHeader from "@/views/shoes/ShoesHeader";
+import DeviceHeader from "@/views/device/DeviceHeader";
 import {mapState} from "vuex";
 import api from "@/api/api";
 import utils from "@/utils/utils";
 
 export default {
   name: "LocationHistory",
-  components: {ShoesHeader},
+  components: {DeviceHeader},
   data() {
     return {
       locationDay:0,
-      shoes:'',
+      device:'',
+      location:'',
+      range:'',
       center : {
         lat:0,
         lng:0,
@@ -41,26 +43,29 @@ export default {
     this.locationDay = this.$route.query.locationDay;
   },
   methods: {
-    addMarker(marker, label) {
-      this.markers.push({position: marker, label:label});
+    addMarker(marker, icon, label) {
+      this.markers.push({position: marker, icon:icon, label:label});
     },
-    async selectHistory(shoesNo) {
+    async selectHistory(deviceNo) {
       const params ={days: this.locationDay};
-      let res = await api.selectHistory(shoesNo, params);
+      let res = await api.selectHistory(deviceNo, params);
       if(res.data.status === "SUCCESS") {
         this.history = res.data.data;
         this.history.forEach((loc, index) =>{
           if(index === 0) this.locDate = loc.reportDate.substring(0,8);
           this.addMarker(
               {
-                      lat:loc.latitude,
-                      lng:loc.longitude
+                      lat:loc.lat,
+                      lng:loc.lng
+              },
+              {
+                url : "/static/images/Pin_NET.svg"
               },
               {
                       text: (index + 1).toString(),
                       color: "#FFF",
               });
-          this.polyLines.push({lat:loc.latitude, lng:loc.longitude});
+          this.polyLines.push({lat:loc.lat, lng:loc.lng});
         })
         if(this.markers.length > 0) {
           this.center = this.markers[this.markers.length - 1].position;
@@ -71,11 +76,28 @@ export default {
 
       }
     },
-    async getShoesInfo() {
-      let res = await api.getShoesDashInfo(this.choiceDevice.shoesNo);
+    async getLastLocation(deviceNo) {
+      const res = await api.getLocation(deviceNo);
       if(res.data.status === "SUCCESS") {
-        this.shoes = res.data.data;
-        this.selectHistory(this.shoes.shoesNo);
+        this.location = res.data.data
+      }
+    },
+    async getActiveRange(deviceNo) {
+      const res = await api.selActiveRangeList(deviceNo);
+      if(res.data.status === "SUCCESS") {
+        const rangeList = res.data.data
+        if(utils.isNotEmpty(rangeList) && rangeList.length > 0) {
+          this.range = rangeList[0];
+        }
+      }
+    },
+    async getDeviceInfo() {
+      let res = await api.getDeviceDashInfo(this.choiceDevice.deviceNo);
+      if(res.data.status === "SUCCESS") {
+        this.device = res.data.data;
+        this.selectHistory(this.device.deviceNo);
+        this.getLastLocation(this.device.deviceNo);
+        this.getActiveRange(this.device.deviceNo);
       }
     },
     makeDay() {
@@ -102,7 +124,7 @@ export default {
     }
   },
   created() {
-    this.getShoesInfo();
+    this.getDeviceInfo();
   },
   computed:{
     ...mapState("guardStore", ['choiceDevice'] ),

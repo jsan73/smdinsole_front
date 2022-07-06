@@ -3,7 +3,7 @@
   <div class="fixed-bottom" style="background-color: #2CBBB6; z-index: 2000; min-height: 72px;">
     <ul class="d-flex ps-0 mb-0 justify-content-evenly">
       <li class="col text-center pt-2">
-        <a @click="move('/shoes/range')">
+        <a @click="move('/device/range')">
           <img src="/static/images/radius-pin.svg" alt="">
           <p class="pt-1 text-white mb-2" >활동범위</p>
         </a>
@@ -95,7 +95,7 @@ export default {
   },
   watch:{
     locationDay() {
-      this.$router.push("/shoes/location?locationDay=" + this.locationDay);
+      this.$router.push("/device/location?locationDay=" + this.locationDay);
     },
   },
   computed:{

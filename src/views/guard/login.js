@@ -32,7 +32,7 @@ export default {
         //         _sotrage.setItem(process.env.VUE_APP_TOKEN_KEY, tokenData);
         //         http.setToken(tokenData);
         //         await this.$router.replace("/");
-        //         //window.location.href = "/shoes/list";
+        //         //window.location.href = "/device/list";
         //         console.log("메인 이동");
         //     }else{
         //         console.log("FAIL")

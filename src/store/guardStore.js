@@ -6,15 +6,16 @@ const guardStore = {
     state: {
         guardInfo: false,
         choiceDevice:{
-            shoesNo:0,
-            shoesNumber:''
+            deviceNo:0,
+            deviceNumber:'',
+            deviceIMEI:''
         }
     },
     getters: {
         getGuardInfo: state => {
             return state.guardInfo
         },
-        getShoesNo: state => {
+        getDeviceNo: state => {
             return state.choiceDevice
         },
     },
@@ -23,8 +24,9 @@ const guardStore = {
             state.guardInfo=payload.guardInfo;
         },
         setChoiceDevice: (state, payload) => {
-            state.choiceDevice.shoesNo = payload.shoesNo;
-            state.choiceDevice.shoesNumber = payload.shoesNumber;
+            state.choiceDevice.deviceNo = payload.deviceNo;
+            state.choiceDevice.deviceNumber = payload.deviceNumber;
+            state.choiceDevice.deviceIMEI = payload.deviceIMEI;
         }
     },
     actions: {

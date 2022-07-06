@@ -24,53 +24,59 @@ export default {
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/reg`, param)
 	},
 
-	selShoesList() {
-		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/dashboard/list')
+	selDeviceList() {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/device/dashboard/list')
 	},
 
-	getShoesDashInfo(shoesNo) {
-		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/dashboard/' + shoesNo)
+	getDeviceDashInfo(deviceNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/device/dashboard/' + deviceNo)
 	},
 
 	// 단순 단말 조회
-	getShoesInfo(shoesNumber) {
-		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/get/' + shoesNumber);
+	getDeviceInfo(deviceNumber) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/device/get/' + deviceNumber);
 	},
 
-	selActiveRangeList(shoesNo) {
-		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/active/list/' + shoesNo);
+	selActiveRangeList(deviceNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/device/active/list/' + deviceNo);
 	},
 
-	getActiveRange(shoesNo, rangeNo) {
-		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/active/' + shoesNo + '/' + rangeNo);
+	getActiveRange(deviceNo, rangeNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/device/active/' + deviceNo + '/' + rangeNo);
 	},
 
 	insActiveRange(param) {
-		return http.post(process.env.VUE_APP_SERVER_URL + `/api/shoes/active/ins`, param);
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/device/active/ins`, param);
 	},
 
 	updActiveRange(param) {
-		return http.post(process.env.VUE_APP_SERVER_URL + `/api/shoes/active/upd`, param);
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/device/active/upd`, param);
 	},
 
 	delActiveRange(rangeNo) {
-		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/active/del/' + rangeNo);
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/device/active/del/' + rangeNo);
 	},
 
 
-	updShoesNickName(param) {
-		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/nickname/upd', param);
+	updDeviceNickName(param) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/device/nickname/upd', param);
 	},
 
-	// 현재위치 요청
-	reqCurrentLocation(shoesNo) {
-		return http.post(process.env.VUE_APP_SERVER_URL + '/api/shoes/req/' + shoesNo);
+	// Device에 현재위치 요청
+	reqCurrentLocation(deviceNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/device/req/' + deviceNo);
 	},
 
 	// 위치기록
-	selectHistory(shoesNo, days) {
-		return http.postParam(process.env.VUE_APP_SERVER_URL + '/api/shoes/history/' + shoesNo, days);
+	selectHistory(deviceNo, days) {
+		return http.postParam(process.env.VUE_APP_SERVER_URL + '/api/device/loc/list/' + deviceNo, days);
 	},
+
+	// 마지막 위치기록
+	getLocation(deviceNo) {
+		return http.postParam(process.env.VUE_APP_SERVER_URL + '/api/device/loc/get/' + deviceNo);
+	},
+
 
 
 	changePwd(param) {
@@ -81,24 +87,24 @@ export default {
 		return http.post(process.env.VUE_APP_SERVER_URL + '/api/guard/list');
 	},
 
-	insGuardian(param, shoesNo) {
-		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/ins/` +  shoesNo, param);
+	insGuardian(param, deviceNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/ins/` +  deviceNo, param);
 	},
 
 	delGuardian(guardNo) {
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/del/` +  guardNo);
 	},
 
-	getNotice(shoesNo) {
-		return http.post(process.env.VUE_APP_SERVER_URL + `/api/shoes/notice/get/` +  shoesNo);
+	getNotice(deviceNo) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/device/notice/get/` +  deviceNo);
 	},
 
 	setNotice(param, option) {
-		return http.post(process.env.VUE_APP_SERVER_URL + `/api/shoes/notice/set/` +  option, param);
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/device/notice/set/` +  option, param);
 	},
 
 	selCodeList(grupCd) {
-		return http.post(process.env.VUE_APP_SERVER_URL + `/api/shoes/code/list/` +  grupCd);
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/device/code/list/` +  grupCd);
 	},
 	getToken() {
 		console.log(process.env.VUE_APP_AUTHM_PJT)

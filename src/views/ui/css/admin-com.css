@@ -312,15 +312,15 @@ a:hover {
   background: url(public/static/images/icon_menu.png) no-repeat -225px 0;
 }
 
-.tm_shoes {
+.tm_device {
   background: url(public/static/images/icon_menu.png) no-repeat -250px 0;
 }
 
-#menu ul li a:hover>.tm_shoes {
+#menu ul li a:hover>.tm_device {
   background: url(public/static/images/icon_menu.png) no-repeat -275px 0;
 }
 
-#menu ul li a.over>.tm_shoes {
+#menu ul li a.over>.tm_device {
   background: url(public/static/images/icon_menu.png) no-repeat -275px 0;
 }
 
@@ -915,7 +915,7 @@ ul.notice {
   background: url(public/static/images/icon_menu.png) no-repeat -200px 0;
 }
 
-.t_shoes {
+.t_device {
   background: url(public/static/images/icon_menu.png) no-repeat -250px 0;
 }
 

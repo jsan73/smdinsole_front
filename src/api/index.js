@@ -4,7 +4,7 @@
 import axios from "axios"
 // import store from "@/store/loadingStore"
 
-//let _storage = window.sessionStorage;
+let _storage = window.sessionStorage;
 
 //axios 기본설정
 const instance = axios.create({
@@ -64,14 +64,16 @@ instance.interceptors.response.use(
 	function (error) {
 		// store.state.loading = false;// 로딩바(Loading2.vue) 보이기/안보이기. 임시 확인용
 
-		if (error.response && error.response.status === 403 || error.response && error.response.status === 401) {
+		if (error.response && error.response.status === 401) {
 
 			// //이동하기 전에 sesstion 값 제거
 			// let _authKey = process.env.VUE_APP_AUTH_KEY;
 			// let _tokenKey = process.env.VUE_APP_TOKEN_KEY
+			let _tokenKey = process.env.VUE_APP_TOKEN_KEY;
+			let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
 			//
-			// _storage.removeItem(_authKey);
-			// _storage.removeItem(_tokenKey);
+			_storage.removeItem(_userKey);
+			_storage.removeItem(_tokenKey);
 			//
 			// let protocol = location.protocol;
 			// let hostName = location.hostname;
@@ -80,7 +82,7 @@ instance.interceptors.response.use(
 			// var ssoUrl = protocol + "//" + hostName;
 			// if (port != "" && port != "443") ssoUrl += ":" + port;
 			//
-			// window.location.href = process.env.VUE_APP_SSO_URL + ssoUrl;
+			window.location.href = "/login";
 		}
 		/*
 			http status가 200이 아닌 경우

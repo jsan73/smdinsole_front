@@ -9,7 +9,7 @@
         <h6 class="mt-5 ps-3">등록된 단말기의 사용명칭을 변경합니다.</h6>
         <div class="my-4 px-3">
           <label for="AdrInput" class="form-label  fw-bold kksColorPrimary ">사용명칭</label>
-          <input type="text" class="form-control" id="AdrInput" placeholder="KKS insole" v-model="shoes.nickName">
+          <input type="text" class="form-control" id="AdrInput" placeholder="KKS insole" v-model="device.nickName">
         </div>
 
       </div>
@@ -20,7 +20,7 @@
         <button type="button" @click="$emit('update:visible', !visible)" class="btn btn-style-1 btn-style-1-gray">취소</button>
       </div>
       <div class="col">
-        <button type="button" @click="modifyShoes" class="btn btn-style-1 ">저장</button>
+        <button type="button" @click="modifyDevice" class="btn btn-style-1 ">저장</button>
       </div>
     </div>
   </div>
@@ -31,18 +31,18 @@
 import api from "@/api/api";
 
 export default {
-  name: "ShoesModal",
+  name: "DeviceModal",
   props: {
     visible:false,
-    shoes:null
+    device:null
   },
 
   methods: {
-    async modifyShoes() {
+    async modifyDevice() {
 
-      if(this.shoes != null) {
-       // this.shoes.nickName = this.nickname;
-        const res = await api.updShoesNickName(this.shoes);
+      if(this.device != null) {
+       // this.device.nickName = this.nickname;
+        const res = await api.updDeviceNickName(this.device);
         if(res.data.status === "SUCCESS") {
 
           console.log("수정완료");
@@ -52,7 +52,7 @@ export default {
     }
   },
   created() {
-    this.nickname = this.shoes.nickname;
+    this.nickname = this.device.nickname;
   }
 }
 </script>

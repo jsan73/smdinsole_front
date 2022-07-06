@@ -108,12 +108,12 @@ export default {
       address:null,
       activeRange: {
         rangeNo:0,
-        latitude:'',
-        longitude: '',
+        lat:'',
+        lng: '',
         radius:1,
         rangeAddress:'',
         rangeName: '',
-        shoesNo:0
+        deviceNo:0
       }
     };
   },
@@ -161,10 +161,11 @@ export default {
       this.circles.push({center: this.center, option:option})
     },
     async getActiveRange() {
-      const res = await api.getActiveRange(this.choiceDevice.shoesNo, this.rangeNo);
+      const res = await api.getActiveRange(this.choiceDevice.deviceNo, this.rangeNo);
       if(res.data.status === "SUCCESS") {
           this.activeRange = res.data.data;
-          this.setMap(this.activeRange.latitude, this.activeRange.longitude);
+          this.radius = this.activeRange.radius / 1000;
+          this.setMap(this.activeRange.lat, this.activeRange.lng);
       }
     },
     geolocate() {
@@ -190,10 +191,10 @@ export default {
       }.bind(this));
     },
     async saveRange() {
-      this.activeRange.latitude = this.center.lat;
-      this.activeRange.longitude = this.center.lng;
+      this.activeRange.lat = this.center.lat;
+      this.activeRange.lng = this.center.lng;
       this.activeRange.radius = this.radius*1000;
-      this.activeRange.shoesNo = this.choiceDevice.shoesNo;
+      this.activeRange.deviceNo = this.choiceDevice.deviceNo;
 
       let res;
       if(this.activeRange.rangeNo > 0) {

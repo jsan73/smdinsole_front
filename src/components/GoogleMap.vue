@@ -1,9 +1,9 @@
 <template>
   <div>
     <GmapMap :center='center' :zoom='12' :options='options' style='width:100%;  height: 400px;'>
-      <GmapMarker :key="index" v-for="(m, index) in markers" :position="m.position" :label="m.label" />
+      <GmapMarker :key="index" v-for="(m, index) in markers" :icon="m.icon" :position="m.position" :label="m.label" />
 <!--      <GmapCircle :center="center" :options="circleOption"></GmapCircle>-->
-      <GmapCircle :key2="index" v-for="(c, index) in circles" :center="c.center" :options="c.option"></GmapCircle>
+      <GmapCircle :key="'o-${index}'" v-for="(c, index) in circles" :center="c.center" :options="c.option"></GmapCircle>
 
       <gmap-polyline v-if="polyLines && polyLines.length > 0" :path="polyLines" :editable="false"
                      v-bind:options="{
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+
 export default {
   name: "GoogleMap",
   props:{
@@ -78,7 +79,7 @@ export default {
       },
       locationMarkers: [],
       locPlaces: [],
-      existingPlace: null
+      existingPlace: null,
 
     };
   },

@@ -44,31 +44,38 @@ Vue.use(VueGoogleMaps, {
 //Skip token Key for UI - 여기 변경해야 모바일 빌드가능
 var _skipToken = false;
 
-if(location.pathname === "/login" || location.pathname === "/termagree" || /\/alrmplan\/[a-z0-9]{5}/g.test(location.pathname)) {
+if(location.pathname === "/login" || location.pathname === "/magree") {
     _skipToken = true;
     Vue.prototype.$skipToken = true;
 }
+console.log(store.getters['guardStore/getGuardInfo'])
+start();
 
-if(!_skipToken) {
-    const token =_storage.getItem(_tokenKey);
-    try {
-        if (token) {
-            let decodeToken = jwt.decode(token);
-            if (decodeToken) {
-                let userData = JSON.stringify(decodeToken);
-                _storage.setItem(_userKey, userData);
-
-                start();
-            }
-        }else{
-            window.location.href = "/login";
-        }
-    }catch (err){
-        window.location.href = "/login";
-    }
-} else {
-    start();
-}
+// if(!_skipToken) {
+//     const token =_storage.getItem(_tokenKey);
+//    //start();
+//     try {
+//         if (token) {
+//             let decodeToken = jwt.decode(token);
+//             if (decodeToken) {
+//                 let userData = JSON.stringify(decodeToken);
+//                 _storage.setItem(_userKey, userData);
+//
+//                 start();
+//             }
+//         }else{
+//             //window.location.href = "/login";
+//             start();
+//         }
+//     }catch (err){
+//         //window.location.href = "/login";
+//     }
+// } else {
+//
+//     start();
+//
+//
+// }
 
 function start() {
     new Vue({

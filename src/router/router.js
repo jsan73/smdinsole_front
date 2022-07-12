@@ -3,8 +3,10 @@
 
 import Vue from "vue"
 import VueRouter from "vue-router"
+import store from "@/store/index"
 //import NotFound from "@/components/NotFound.vue"
 import http from "@/api/http"
+import utils from "@/utils/utils";
 
 Vue.use(VueRouter)
 
@@ -13,7 +15,7 @@ const routes = []; //menu.getRouteView();
 
 
 let _storage = window.sessionStorage
-let _authKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_AUTH_KEY
+let _tokenKey = process.env.VUE_APP_TOKEN_KEY;
 
 const router = new VueRouter({
 	mode: "history",
@@ -23,27 +25,18 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 
-	// 시스템 접속 권한 체크
-	let auth = JSON.parse(_storage.getItem(_authKey));
-	var isAuth = auth?.funcSstm?.filter(function (o){
-		return o.funcId === process.env.VUE_APP_AUTH_KEY+"_10000";
-	})
+
+	// // 시스템 접속 권한 체크
+	let token = _storage.getItem(_tokenKey);
 
 	//http.setMenuId(to?.name);
 
-	if(isAuth?.length <= 0 && to?.path != "/login") {
+	if(utils.isEmpty(token) && to?.path != "/login") {
+		//window.location.href = "/login";
+		// console.log("router")
+		// console.log(token)
+		return next('/login')
 
-		// next("/notauth");
-		window.location.href = "/login";
-
-	} else if(to?.meta?.access !== undefined) {// 이동할 router에 meta(여기선 requiresLogin)가 있을 때
-		//let isLogin = true;
-
-		if(to.meta.access === true) {// 인증되어 있으면(여기선 true) 이동
-			next();
-		} else {// 인증되어 있지 않으면 인증 요구
-//			next("/notfound")// 첫화면으로
-		}
 	} else {
 		next()
 	}

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import router from "@/router/router";
 import menuList from "@/menu";
+import {mapState} from "vuex";
 // import LayerLayout from "@/components/layout/LayerLayout";
 //import {mapState, mapMutations, mapActions} from "vuex";
 //import mapState from "vuex"
@@ -40,7 +41,7 @@ export default {
 		}
 	},
 	computed: {
-		//...mapState('loadStore', ['loading']),
+		...mapState('guardStore', ['guardInfo']),
 		layout() {
 			//return ((this.$route.meta.layout === "Main" || this.$route.path === "/main" || this.$route.path === "/") ? "Main" : "Default-Layout");
 			return ((this.$route.meta.layout === "Main") ? "Main" : "Default-Layout");
@@ -169,11 +170,18 @@ export default {
 				var userInfo = JSON.parse(_storage.getItem(_userKey));
 				var token = _storage.getItem(process.env.VUE_APP_TOKEN_KEY);
 				//Start 하기전에 Native 호출.
-				// _this._callNative({
-				// 	"method": "sendDeviceInfo",
-				// 	"loginId": userInfo?.loginId,
-				// 	"token": token
-				// });
+
+				_this._callNative({
+					"method": "sendDeviceInfo",
+					"guardPhone": userInfo.guardPhone,
+					"token": token,
+					"refreshToken": this.guardInfo.refreshToken
+				});
+
+				_this._callNative({
+					"method": "setDebugging",
+					"useYn": 'Y',
+				});
 			}, 1);
 
 			// var auth = null;
@@ -196,6 +204,7 @@ export default {
 
 		} else {
 			this.isSkipToken = true;
+			console.log("1")
 		}
 
 		this.makeRouteView();

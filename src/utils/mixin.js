@@ -7,10 +7,9 @@ const mixin = {
 	computed: {
 		isApp: function () {
 			const userAgent = (navigator.userAgent || navigator.vendor || window.opera).toLowerCase();
-
-			if(/rion-mini-and/i.test(userAgent)) {
+			if(/kokasin-aos/i.test(userAgent)) {
 				return "and";
-			} else if(/rion-mini-ios/i.test(userAgent)) {
+			} else if(/kokasin-ios/i.test(userAgent)) {
 				return "ios";
 			} else {
 				return false;
@@ -30,10 +29,10 @@ const mixin = {
 			}
 			callBackInterface = callBackInterface + ".";
 
-			//Download Url이 full 이 아닐때
-			if(data.method === "downloadFile" && data.url.toString().indexOf("https") < 0) {
-				data.url = process.env.VUE_APP_SERVER_URL + data.url;
-			}
+			// //Download Url이 full 이 아닐때
+			// if(data.method === "downloadFile" && data.url.toString().indexOf("https") < 0) {
+			// 	data.url = process.env.VUE_APP_SERVER_URL + data.url;
+			// }
 
 			if(this.isApp === "and") {
 				if(data.callback !== undefined) {
@@ -65,6 +64,9 @@ const mixin = {
 				// PC 테스트 대응.
 				if(data.method === "showDialogAlert") {
 					alert(data.message);
+				}
+				if(data.method === "sendDeviceInfo") {
+	//				alert(data.token);
 				}
 				if(data.method === "showDialogConfirm") {
 					const isVal = confirm(data.message);

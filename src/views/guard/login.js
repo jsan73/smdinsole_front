@@ -1,6 +1,6 @@
 import api from '@/api/api';
 import http from '@/api/http';
-import {mapActions} from "vuex";
+import {mapActions, mapState} from "vuex";
 import jwt from "vue-jwt-decode";
 import utils from "@/utils/utils";
 
@@ -12,11 +12,13 @@ export default {
     data() {
         return {
             checkGuard: true,
-            guardPhone: '01064089965',
-            guardPwd: '1234',
+            guardPhone: '',
+            guardPwd: '',
             cnfGuardPwd: '',
             guardNo: 0,
-            mktAgree: 'N'
+            mktAgree: 'N',
+            autoLogin: 'N',
+            refreshToken  : ''
         };
     },
     methods: {
@@ -38,7 +40,15 @@ export default {
         //         console.log("FAIL")
         //     }
         // }
-
+        setStorage(tokenData) {
+            _storage.setItem(process.env.VUE_APP_TOKEN_KEY, tokenData);
+            let decodeToken = jwt.decode(tokenData);
+            if (decodeToken) {
+                let userData = JSON.stringify(decodeToken);
+                _storage.setItem(_userKey, userData);
+                http.setToken(tokenData);
+            }
+        },
         login() {
             if(utils.isEmpty(this.guardPhone)) {
                 this.$toast.bottom("핸드폰 번호를<br>입력해 주세요.");
@@ -48,23 +58,20 @@ export default {
                 this.$toast.bottom("비밀 번호를<br>입력해 주세요.");
                 return;
             }
-            const params = {guardPhone: this.guardPhone, guardPwd: this.guardPwd};
+            const params = {guardPhone: this.guardPhone, guardPwd: this.guardPwd, autoLogin:this.autoLogin};
             api.loginChk(params).then(res => {
                 if(res.data.status === "SUCCESS") {
                     if(res.data.data === 0) {
                         api.login(params).then(res => {
                             if(res.data.status === "SUCCESS") {
-                                let tokenData = res.data.data
-                                _storage.setItem(process.env.VUE_APP_TOKEN_KEY, tokenData);
-                                let decodeToken = jwt.decode(tokenData);
-                                if (decodeToken) {
-                                    let userData = JSON.stringify(decodeToken);
-                                    _storage.setItem(_userKey, userData);
+                                let tokenData = res.data.data.token
+                                let refreshToken = res.data.data.refreshToken;
+                                this.setStorage(tokenData);
 
-                                    http.setToken(tokenData);
-                                    this.$router.replace("/");
-                                }
+                                let payload = {guardPhone: this.guardPhone, autoLogin: this.autoLogin, refreshToken: refreshToken};
+                                this.commitGuardInfo(payload);
 
+                                this.$router.replace("/");
                             }
                         }).catch(e => {
                             // 로그인 실패
@@ -104,5 +111,29 @@ export default {
             })
         }
 
+    },
+    computed:{
+        ...mapState("guardStore", ['guardInfo'] )
+
+
+    },
+    created() {
+        let guardInfo = this.guardInfo;
+
+        if(utils.isNotEmpty(guardInfo)) {
+            this.guardPhone = guardInfo.guardPhone;
+            this.autoLogin = guardInfo.autoLogin;
+            this.refreshToken = guardInfo.refreshToken;
+
+            if(this.autoLogin) {
+                api.relogin(this.refreshToken).then(res => {
+                    if (res.data.status === "SUCCESS") {
+                        let tokenData = res.data.data
+                        this.setStorage(tokenData);
+                            this.$router.replace("/");
+                    }
+                })
+            }
+        }
     }
 }

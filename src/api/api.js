@@ -16,6 +16,11 @@ export default {
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/token`, param)
 	},
 
+	relogin(param) {
+		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/ref/token`, param)
+	},
+
+
 	loginChk(param) {
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/check`, param)
 	},

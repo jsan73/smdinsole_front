@@ -72,8 +72,8 @@ instance.interceptors.response.use(
 			let _tokenKey = process.env.VUE_APP_TOKEN_KEY;
 			let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
 			//
-			_storage.removeItem(_userKey);
-			_storage.removeItem(_tokenKey);
+			// _storage.removeItem(_userKey);
+			// _storage.removeItem(_tokenKey);
 			//
 			// let protocol = location.protocol;
 			// let hostName = location.hostname;
@@ -82,7 +82,7 @@ instance.interceptors.response.use(
 			// var ssoUrl = protocol + "//" + hostName;
 			// if (port != "" && port != "443") ssoUrl += ":" + port;
 			//
-			window.location.href = "/login";
+			//window.location.href = "/login";
 		}
 		/*
 			http status가 200이 아닌 경우

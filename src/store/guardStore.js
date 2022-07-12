@@ -4,7 +4,11 @@
 const guardStore = {
     namespaced: true,
     state: {
-        guardInfo: false,
+        guardInfo: {
+            guardPhone: '',
+            autoLogin:'',
+            refreshToken:''
+        },
         choiceDevice:{
             deviceNo:0,
             deviceNumber:'',
@@ -15,13 +19,15 @@ const guardStore = {
         getGuardInfo: state => {
             return state.guardInfo
         },
-        getDeviceNo: state => {
+        getDevice: state => {
             return state.choiceDevice
         },
     },
     mutations: {
         setGuardInfo: (state, payload) => {
-            state.guardInfo=payload.guardInfo;
+            state.guardInfo.guardPhone = payload.guardPhone;
+            state.guardInfo.autoLogin = payload.autoLogin;
+            state.guardInfo.refreshToken = payload.refreshToken;
         },
         setChoiceDevice: (state, payload) => {
             state.choiceDevice.deviceNo = payload.deviceNo;

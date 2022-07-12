@@ -14,7 +14,7 @@
 
       <div class="mb-4" v-if="checkGuard">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="PwdCheck">
+          <input class="form-check-input" type="checkbox" id="PwdCheck" v-model="autoLogin" true-value="Y" false-value="N">
           <label class="form-check-label" for="PwdCheck">
             비밀번호를 저장합니다.
           </label>

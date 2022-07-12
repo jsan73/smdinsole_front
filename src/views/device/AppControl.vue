@@ -5,7 +5,7 @@
       <h3 class="pb-2">사용 단말기 목록</h3>
       <ul class="list-group">
         <li v-for="device in deviceList" class="list-group-item d-flex justify-content-between align-items-start">
-          <input class="form-check-input" v-model="choiceDevice"  type="radio" :name="device.deviceId" :id="device.deviceIMEI" :value="device">
+          <input class="form-check-input" v-model="selectDevice"  type="radio" :name="device.deviceId" :id="device.deviceIMEI" :value="device">
           <label class="form-check-label" :for="device.deviceIMEI">
           </label>
           <div class="ms-2 me-auto">
@@ -49,8 +49,7 @@ import api from "@/api/api";
 import {mapState, mapActions} from 'vuex';
 import deviceModal from './DeviceModal';
 
-let _storage = window.sessionStorage;
-let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
+
 export default {
 
   name: "AppControl",
@@ -58,7 +57,7 @@ export default {
     return {
       deviceList:[],
       choiceDeviceNo:0,
-      choiceDevice:'',
+      selectDevice:'',
       modalVisible:false,
       modalDevice: {},
       masterGuardNo:0
@@ -77,7 +76,7 @@ export default {
         for(var device of this.deviceList) {
           if(this.choiceDeviceNo === 0 || device.deviceNo === this.choiceDeviceNo){
             this.choiceDeviceNo = device.deviceNo;
-            this.choiceDevice = device;
+            this.selectDevice = device;
           }
         }
       }
@@ -93,20 +92,24 @@ export default {
     }
   },
   watch:{
-    choiceDevice() {
-      this.choiceDeviceNo = this.choiceDevice.deviceNo;
-      this.commitChoiceDevice(this.choiceDevice);
+    selectDevice() {
+      this.choiceDeviceNo = this.selectDevice.deviceNo;
+      this.commitChoiceDevice(this.selectDevice);
 
     },
 
   },
   computed:{
-    ...mapState("guardStore", ['choiceDevice'] ),
+    ...mapState("guardStore", ['choiceDevice'] )
+
 
   },
   created() {
     this.choiceDeviceNo = this.choiceDevice.deviceNo;
     this.selDeviceList();
+
+    let _storage = window.sessionStorage;
+    let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
     let userInfo = JSON.parse(_storage.getItem(_userKey));
     this.masterGuardNo = userInfo.masterGuardNo;
 

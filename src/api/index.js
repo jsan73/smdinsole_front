@@ -4,8 +4,6 @@
 import axios from "axios"
 // import store from "@/store/loadingStore"
 
-let _storage = window.sessionStorage;
-
 //axios 기본설정
 const instance = axios.create({
 	baseURL        : process.env.VUE_APP_SERVER_URL,

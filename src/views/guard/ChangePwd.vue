@@ -43,9 +43,8 @@
 <script>
 import api from "@/api/api";
 import Popup from "@/components/common/Alert";
-
-let _storage = window.sessionStorage;
-let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
+import utils from "@/utils/utils";
+import {mapState} from "vuex";
 
 export default {
   name: "PasswordChange",
@@ -107,14 +106,13 @@ export default {
           // });
     }
   },
-  created() {
-    this.userData = JSON.parse(_storage.getItem(_userKey));
+  computed:{
+    ...mapState("guardStore", ['guardInfo'] )
 
-    if(this.userData != null) {
-      console.log(this.userData);
-      this.guardPhone = this.userData.guardPhone;
-      console.log(this.guardPhone);
-    }
+
+  },
+  created() {
+    this.guardPhone = this.guardInfo.guardPhone;
   }
 }
 </script>

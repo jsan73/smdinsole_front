@@ -4,8 +4,6 @@ import {mapActions, mapState} from "vuex";
 import jwt from "vue-jwt-decode";
 import utils from "@/utils/utils";
 
-let _storage = window.sessionStorage
-let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
 
 export default {
     name: "Login",
@@ -22,7 +20,7 @@ export default {
         };
     },
     methods: {
-        ...mapActions("guardStore", ["commitGuardInfo"]),
+        ...mapActions("guardStore", ["commitGuardInfo", "commitToken"]),
 
         // async login() {
         //     const params = {guardPhone: this.guardPhone, guardPwd: this.guardPwd};
@@ -40,15 +38,15 @@ export default {
         //         console.log("FAIL")
         //     }
         // }
-        setStorage(tokenData) {
-            _storage.setItem(process.env.VUE_APP_TOKEN_KEY, tokenData);
-            let decodeToken = jwt.decode(tokenData);
-            if (decodeToken) {
-                let userData = JSON.stringify(decodeToken);
-                _storage.setItem(_userKey, userData);
-                http.setToken(tokenData);
-            }
-        },
+        // setStorage(tokenData) {
+        //     _storage.setItem(process.env.VUE_APP_TOKEN_KEY, tokenData);
+        //     let decodeToken = jwt.decode(tokenData);
+        //     if (decodeToken) {
+        //         let userData = JSON.stringify(decodeToken);
+        //         _storage.setItem(_userKey, userData);
+        //         http.setToken(tokenData);
+        //     }
+        // },
         login() {
             if(utils.isEmpty(this.guardPhone)) {
                 this.$toast.bottom("핸드폰 번호를<br>입력해 주세요.");
@@ -66,11 +64,11 @@ export default {
                             if(res.data.status === "SUCCESS") {
                                 let tokenData = res.data.data.token
                                 let refreshToken = res.data.data.refreshToken;
-                                this.setStorage(tokenData);
 
                                 let payload = {guardPhone: this.guardPhone, autoLogin: this.autoLogin, refreshToken: refreshToken};
                                 this.commitGuardInfo(payload);
-
+                                this.commitToken(tokenData);
+                                http.setToken(tokenData);
                                 this.$router.replace("/");
                             }
                         }).catch(e => {
@@ -125,15 +123,15 @@ export default {
             this.autoLogin = guardInfo.autoLogin;
             this.refreshToken = guardInfo.refreshToken;
 
-            if(this.autoLogin) {
-                api.relogin(this.refreshToken).then(res => {
-                    if (res.data.status === "SUCCESS") {
-                        let tokenData = res.data.data
-                        this.setStorage(tokenData);
-                            this.$router.replace("/");
-                    }
-                })
-            }
+            // if(this.autoLogin) {
+            //     api.relogin(this.refreshToken).then(res => {
+            //         if (res.data.status === "SUCCESS") {
+            //             let tokenData = res.data.data
+            //             this.setStorage(tokenData);
+            //                 this.$router.replace("/");
+            //         }
+            //     })
+            // }
         }
     }
 }

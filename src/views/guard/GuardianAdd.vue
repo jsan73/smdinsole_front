@@ -33,6 +33,7 @@
 <script>
 import {mapState} from "vuex";
 import api from "@/api/api";
+import utils from "@/utils/utils";
 
 export default {
   name: "GuardianAdd",
@@ -64,15 +65,13 @@ export default {
 
   },
   computed:{
-    ...mapState("guardStore", ['choiceDevice'] ),
+    ...mapState("guardStore", ['choiceDevice', "guardInfo"] ),
 
   },
   created(){
-    let _storage = window.sessionStorage;
-    let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
-    let userInfo = JSON.parse(_storage.getItem(_userKey));
+    let userInfo = utils.getGuard(this.guardInfo.token);
 
-    this.guard.masterGuardNo = userInfo.guardNo;
+    this.guard.masterGuardNo =  userInfo.guardNo;
   }
 }
 </script>

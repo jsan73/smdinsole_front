@@ -25,10 +25,6 @@ Vue.mixin(mixin);
 Vue.config.productionTip = false;
 Vue.prototype.store = store;
 
-// token 설정 및 권한설정 > save to sessionStorage
-let _storage = window.sessionStorage;
-let _tokenKey = process.env.VUE_APP_TOKEN_KEY;
-let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
 let _gKey = process.env.VUE_APP_GOOGLE_MAP_KEY;
 
 

@@ -2,6 +2,7 @@ import Vue from "vue";
 import router from "@/router/router";
 import menuList from "@/menu";
 import {mapState} from "vuex";
+import http from '@/api/http';
 // import LayerLayout from "@/components/layout/LayerLayout";
 //import {mapState, mapMutations, mapActions} from "vuex";
 //import mapState from "vuex"
@@ -165,16 +166,16 @@ export default {
 			var _this = this;
 			setTimeout(() => {
 
-				let _storage = window.sessionStorage;
-				let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
-				var userInfo = JSON.parse(_storage.getItem(_userKey));
-				var token = _storage.getItem(process.env.VUE_APP_TOKEN_KEY);
+				// let _storage = window.sessionStorage;
+				// let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
+				// var userInfo = JSON.parse(_storage.getItem(_userKey));
+				// var token = _storage.getItem(process.env.VUE_APP_TOKEN_KEY);
 				//Start 하기전에 Native 호출.
-
+				console.log("APP - NATIVE");
 				_this._callNative({
 					"method": "sendDeviceInfo",
-					"guardPhone": userInfo.guardPhone,
-					"token": token,
+					"guardPhone": this.guardInfo.guardPhone,
+					"token": this.guardInfo.token,
 					"refreshToken": this.guardInfo.refreshToken
 				});
 
@@ -183,7 +184,7 @@ export default {
 					"useYn": 'Y',
 				});
 			}, 1);
-
+			http.setToken(this.guardInfo.token)
 			// var auth = null;
 			// try {
 			// 	auth = JSON.parse(this.$getSession(process.env.VUE_APP_AUTH_KEY));

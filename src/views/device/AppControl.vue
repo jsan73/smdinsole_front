@@ -48,6 +48,7 @@
 import api from "@/api/api";
 import {mapState, mapActions} from 'vuex';
 import deviceModal from './DeviceModal';
+import utils from "@/utils/utils";
 
 
 export default {
@@ -100,7 +101,7 @@ export default {
 
   },
   computed:{
-    ...mapState("guardStore", ['choiceDevice'] )
+    ...mapState("guardStore", ['choiceDevice','guardInfo'] )
 
 
   },
@@ -108,9 +109,7 @@ export default {
     this.choiceDeviceNo = this.choiceDevice.deviceNo;
     this.selDeviceList();
 
-    let _storage = window.sessionStorage;
-    let _userKey = process.env.VUE_APP_PJT + ":" + process.env.VUE_APP_USER_KEY;
-    let userInfo = JSON.parse(_storage.getItem(_userKey));
+    let userInfo = utils.getGuard(this.guardInfo.token);
     this.masterGuardNo = userInfo.masterGuardNo;
 
   }

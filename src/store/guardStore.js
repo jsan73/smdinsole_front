@@ -7,6 +7,7 @@ const guardStore = {
         guardInfo: {
             guardPhone: '',
             autoLogin:'',
+            token:'',
             refreshToken:''
         },
         choiceDevice:{
@@ -19,6 +20,9 @@ const guardStore = {
         getGuardInfo: state => {
             return state.guardInfo
         },
+        getToken: state=> {
+            return state.guardInfo.token
+        },
         getDevice: state => {
             return state.choiceDevice
         },
@@ -29,6 +33,9 @@ const guardStore = {
             state.guardInfo.autoLogin = payload.autoLogin;
             state.guardInfo.refreshToken = payload.refreshToken;
         },
+        setToken: (state, token) => {
+            state.guardInfo.token = token;
+        },
         setChoiceDevice: (state, payload) => {
             state.choiceDevice.deviceNo = payload.deviceNo;
             state.choiceDevice.deviceNumber = payload.deviceNumber;
@@ -38,6 +45,9 @@ const guardStore = {
     actions: {
         commitGuardInfo: ({ commit }, payload) => {
             commit('setGuardInfo', payload)
+        },
+        commitToken: ({commit}, token) => {
+            commit('setToken', token)
         },
         commitChoiceDevice: ({ commit }, payload) => {
             commit('setChoiceDevice', payload)

@@ -110,5 +110,11 @@ export default {
             }
         }
         return res;
+    },
+    getGuard(token) {
+        const dToken = jwt.decode(token)
+        let userInfo = JSON.stringify(dToken);
+
+        return userInfo;
     }
 }

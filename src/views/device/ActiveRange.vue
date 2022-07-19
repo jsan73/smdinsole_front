@@ -5,10 +5,7 @@
         <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
 
           <div class="d-flex gap-2 w-100 justify-content-between">
-            <div>
-              <h4 class="mb-0">{{device.nickName}} <small class="opacity-75">{{device.deviceIMEI}}</small></h4>
-
-            </div>
+              <h4 class="mb-0">{{device.nickName}}</h4>
           </div>
 
         </a>
@@ -29,19 +26,19 @@
           </div>
         </div>
       </div>
-<!--      <div id="map" class="map-h">-->
+      <div id="map" class="map-h">
         <GoogleMap :center="range.center" :markers="range.markers" :circles="range.circles" />
-<!--      </div>-->
+      </div>
       <div class="w-100 mb-4">
         <ul class="radius_info">
-          <li class="radius_info_item"><img src="../../../public/static/images/location.svg">{{range.rangeAddress}}</li>
-          <li class="radius_info_item"><img src="../../../public/static/images/Radius.svg"> 반경 : {{range.radius}}m</li>
+          <li class="radius_info_item"><img src="../../../public/static/images/location.svg"> {{range.rangeAddress}}</li>
+          <li class="radius_info_item"><img src="../../../public/static/images/Radius.svg"> 범위 : {{range.radius / 1000}}km</li>
         </ul>
       </div>
     </div>
 
     <div class="container pb-4">
-      <button type="button" @click="addRange" class="btn btn-style-1">활동범위 추가 +</button>
+      <button type="button" @click="addRange" class="btn btn-style-1">안심존 추가 +</button>
     </div>
 
   </main>
@@ -72,7 +69,10 @@ export default {
 
   methods: {
     addMarker(range, marker) {
-      range.push({position: marker});
+      const icon = {
+        url : "/static/images/Pin_OK.svg"
+      }
+      range.push({position: marker, icon: icon});
     },
     addCercle(range, center, radius) {
       let option ={
@@ -112,16 +112,16 @@ export default {
       this.$router.push('rangeadd');
     },
     delRange(range) {
-      this.openPopup("[" + range.rangeName + "] 활동 범위를 삭제 하시겠습니까?", true, true, this.doDelete, range.rangeNo);
+      this.openPopup("[" + range.rangeName + "] 안심존을 삭제 하시겠습니까?", true, true, this.doDelete, range.rangeNo);
     },
     async doDelete(rangeNo) {
       const res = await api.delActiveRange(rangeNo);
       if(res.data.status === "SUCCESS") {
         if(res.data.data == 1) {
-          this.openPopup("활동 범위가 삭제 되었습니다.", true, false, this.hideAlert);
+          this.openPopup("안심존이 삭제 되었습니다.", true, false, this.hideAlert);
           await this.selActiveRangeList();
         }else{
-          this.openPopup("활동 범위 삭제가 실패 되었습니다.", true, false, this.hideAlert);
+          this.openPopup("안심존 삭제가 실패 되었습니다.", true, false, this.hideAlert);
         }
       }
     },

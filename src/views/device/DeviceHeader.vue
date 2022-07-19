@@ -5,8 +5,8 @@
         <img :src="gpsImg" width="44" height="56" class=" flex-shrink-0">
         <div class="d-flex gap-2 w-100 justify-content-between">
           <div>
-            <h4 class="mb-0">{{device.nickName}} <small class="opacity-75">{{device.deviceIMEI}}</small></h4>
-            <p class="mb-0 mt-1">{{range.rangeName}} - {{range.radius}}m</p>
+            <h4 class="mb-0">{{device.nickName}}</h4>
+            <p class="mb-0 mt-1">{{range.rangeName}} - {{range.radius / 1000}} km</p>
           </div>
         </div>
         <div class="battery"><img :src="batteryImg" width="32" height="32"></div>
@@ -42,6 +42,7 @@ export default {
   },
   watch: {
     status() {
+
       switch (this.status.battery) {
         case 0:
           this.batteryImg = "/static/images/battery/Warn.svg";

@@ -1,6 +1,6 @@
 <template>
   <!-- main -->
-  <main class="main">
+  <main>
     <div class="userlistCheck">
       <h3 class="pb-2">사용 단말기 목록</h3>
       <ul class="list-group">
@@ -18,26 +18,22 @@
       </ul>
     </div>
 
-    <div class="d-flex w-100 justify-content-between border-bottom border-1 pt-3 pb-1">
-      <h3 class="ps-3">비밀번호 변경</h3>
-      <span class="pe-3">
-    <a @click="move('changepwd')"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-chevron-right"
-                    viewBox="0 0 16 16">
-        <path fill-rule="evenodd"
-              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-    </svg></a>
-    </span>
+    <div class="list-group">
+      <a @click="move('changepwd')" class="list-group-item list-group-item-action d-flex py-3" aria-current="true">
+        <div class="d-flex gap-2 w-100 justify-content-between">
+          <h3>비밀번호 변경</h3>
+          <i class="bi-chevron-right text-primary fs-3"></i>
+        </div>
+      </a>
+      <a @click="move('guardianlist')" class="list-group-item list-group-item-action d-flex py-3" aria-current="true">
+        <div class="d-flex gap-2 w-100 justify-content-between">
+          <h3>보호자 관리</h3>
+          <i class="bi-chevron-right text-primary fs-3"></i>
+        </div>
+      </a>
     </div>
-    <div v-if="masterGuardNo === 0" class="d-flex w-100 justify-content-between border-bottom border-1 pt-3 pb-1">
-      <h3 class="ps-3">보호자 관리</h3>
-      <span class="pe-3">
-        <a @click="move('guardianlist')"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-chevron-right"
-                        viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-        </svg></a>
-    </span>
-    </div>
+
+
 
     <layer-modal :visible.sync="modalVisible" :device="this.modalDevice"></layer-modal>
 
@@ -74,11 +70,22 @@ export default {
       if(res.data.status === "SUCCESS") {
         this.deviceList = res.data.data
 
-        for(var device of this.deviceList) {
+        for(let device of this.deviceList) {
           if(this.choiceDeviceNo === 0 || device.deviceNo === this.choiceDeviceNo){
             this.choiceDeviceNo = device.deviceNo;
             this.selectDevice = device;
           }
+          this.getActiveRange(device);
+        }
+      }
+    },
+    async getActiveRange(device) {
+      const res = await api.selActiveRangeList(device.deviceNo);
+      if(res.data.status === "SUCCESS") {
+        const rangeList = res.data.data
+        if(utils.isNotEmpty(rangeList) && rangeList.length > 0) {
+          device.rangeName = rangeList[0].rangeName;
+          device.radius = rangeList[0].radius;
         }
       }
     },
@@ -107,11 +114,10 @@ export default {
   },
   created() {
     this.choiceDeviceNo = this.choiceDevice.deviceNo;
-    this.selDeviceList();
-
     let userInfo = utils.getGuard(this.guardInfo.token);
     this.masterGuardNo = userInfo.masterGuardNo;
 
+    this.selDeviceList();
   }
 }
 </script>

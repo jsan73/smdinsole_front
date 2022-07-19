@@ -4,11 +4,11 @@
 
     <div class="radiusAdd" >
       <div class="mb-4 px-3">
-        <label for="RadiusNameInput" class="form-label fw-bold kksColorPrimary ">활동범위명</label>
+        <label for="RadiusNameInput" class="form-label fw-bold kksColorPrimary ">안심존 명칭</label>
         <input type="text" class="form-control" v-model="activeRange.rangeName" id="RadiusNameInput" name="RadiusNameInput" placeholder="입력" >
       </div>
       <div class="mb-4 px-3">
-        <label for="autocomplete" class="form-label  fw-bold kksColorPrimary ">주소</label>
+        <label for="autocomplete" class="form-label  fw-bold kksColorPrimary ">안심존 주소</label>
         <input type="text" id="autocomplete" v-model="activeRange.rangeAddress" class="form-control"  placeholder="주소입력" >
       </div>
 
@@ -29,7 +29,7 @@
         <GoogleMap :center="center" :circles="circles" :markers="markers" />
 
 <!--      </div>-->
-<!--      <div class="py-5 px-3">-->
+      <div class="py-5 px-3">
 <!--        <div class="progress" style="height:5px">-->
 <!--          <div class="progress-bar bg-c-red" style="width:40%; height:5px"></div>-->
           <input type="range"
@@ -38,13 +38,13 @@
                  class="form-range"
                  min="10"
                  max="2000"
-                 step="10" id="customRange2">
+                 step="10" id="customRange2" style="width:100%; height:5px">
 
 <!--        </div>-->
-<!--      </div>-->
+      </div>
       <div class="mb-4 px-4 row">
         <div class="col-4 ps-1 fw-bold kksColorPrimary ">
-          활동반경
+          안심존 범위
         </div>
         <div class="col-8 border-bottom text-end">
           <input type="text" v-model="radius" class="form-control w-75 d-inline-block border-0 text-end" id="RadiusInput" placeholder=""><b>km</b>
@@ -121,7 +121,7 @@ export default {
   mounted() {
     this.rangeNo = this.$route.query.rangeNo;
     if(this.rangeNo > 0) {
-      this.$emit('change', "활동범위 수정");
+      this.$emit('change', "안심존 수정");
       this.getActiveRange();
     }else{
       this.geolocate();
@@ -145,7 +145,10 @@ export default {
         lng: lng,
       };
       this.markers = [];
-      this.markers.push({position: this.center});
+      const icon = {
+        url : "/static/images/Pin_OK.svg"
+      }
+      this.markers.push({position: this.center, icon:icon});
 
       this.addCircle();
     },
@@ -206,9 +209,9 @@ export default {
       }
       console.log(res.data);
       if(res.data.status === "SUCCESS") {
-        this.openPopup("활동 범위가 저장 되었습니다.", true, false, this.nextStep)
+        this.openPopup("안심존이 저장 되었습니다.", true, false, this.nextStep)
       }else{
-        this.openPopup("활동 범위 저장에 실패하였습니다.", true, false, this.hideAlert)
+        this.openPopup("안심존 저장에 실패하였습니다.", true, false, this.hideAlert)
       }
     },
 

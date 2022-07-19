@@ -1,5 +1,5 @@
 <template>
-  <div>
+<!--  <div>-->
     <GmapMap :center='center' :zoom='12' :options='options' style='width:100%;  height: 400px;'>
       <GmapMarker :key="index" v-for="(m, index) in markers" :icon="m.icon" :position="m.position" :label="m.label" @click="toggleInfoWindow(m, index)"/>
 <!--      <GmapCircle :center="center" :options="circleOption"></GmapCircle>-->
@@ -9,6 +9,8 @@
           :opened="infoWinOpen"
           @closeclick="infoWinOpen=false">
           <div v-html="infoContent"></div>
+<!--        <div class="Gpoint_OK" data-bs-placement="bottom" style="position: absolute; top:50%; left: 50%;" v-html="infoContent">-->
+<!--        </div>-->
       </gmap-info-window>
 
       <GmapCircle :key="'o-${index}'" v-for="(c, index) in circles" :center="c.center" :options="c.option"></GmapCircle>
@@ -24,7 +26,7 @@
       </gmap-polyline>
     </GmapMap>
 
-  </div>
+<!--  </div>-->
 </template>
 
 <script>
@@ -74,7 +76,7 @@ export default {
     },
     getInfoWindowContent(map) {
 
-       const service = new window.google.maps.places.PlacesService(map);
+      // const service = new window.google.maps.places.PlacesService(map);
       return "aaaaa"
       //
       // service.getDetails(request, function (place, status) {
@@ -111,6 +113,7 @@ export default {
         mapTypeControlOptions: {
           position: 6
         },
+         disableDefaultUI:true
       },
       locationMarkers: [],
       locPlaces: [],
@@ -136,6 +139,15 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+  display:none;
+}
+.gmnoprint div {
+  background:none !important;
+}
 
 </style>

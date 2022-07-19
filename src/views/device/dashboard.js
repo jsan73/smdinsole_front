@@ -71,6 +71,11 @@ export default {
                         url : "/static/images/Pin_NET.svg"
                     }
                     this.addMarker(this.center, icon);
+                }else{
+                    this.location = {
+                        battery:0,
+                        status:0,
+                    }
                 }
             }
         },

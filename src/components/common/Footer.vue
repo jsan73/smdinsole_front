@@ -2,31 +2,31 @@
   <footer id="footer">
   <div class="fixed-bottom" style="background-color: #2CBBB6; z-index: 2000; min-height: 72px;">
     <ul class="d-flex ps-0 mb-0 justify-content-evenly">
-      <li class="col text-center pt-2">
+      <il class="col text-center pt-2">
         <a @click="move('/device/range')">
           <img src="/static/images/radius-pin.svg" alt="">
-          <p class="pt-1 text-white mb-2" >활동범위</p>
+          <p class="pt-1 text-white mb-2" >안심존</p>
         </a>
-      </li>
-      <li class="col text-center pt-2">
+      </il>
+      <il class="col text-center pt-2">
         <a @click="reqCurrentLocation">
           <img src="/static/images/refresh.svg" alt="">
           <p class="pt-1 text-white mb-2" >현재위치</p>
         </a>
-      </li>
-      <li class="col text-center pt-2">
+      </il>
+      <il class="col text-center pt-2">
         <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" @click="openNotice">
 
           <img src="/static/images/notifications.svg" alt="">
           <p class="pt-1 text-white mb-2">알림설정</p>
         </a>
-      </li>
-      <li class="col text-center pt-2">
+      </il>
+      <il class="col text-center pt-2">
         <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom2" aria-controls="offcanvasBottom2">
           <img src="/static/images/clock.svg" alt="">
           <p class="pt-1 text-white mb-2">위치기록</p>
         </a>
-      </li>
+      </il>
     </ul>
   </div>
 

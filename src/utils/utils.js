@@ -1,3 +1,5 @@
+import jwt from "vue-jwt-decode";
+
 export default {
     //Object 널체크
     isEmptyObject(obj) {
@@ -113,7 +115,7 @@ export default {
     },
     getGuard(token) {
         const dToken = jwt.decode(token)
-        let userInfo = JSON.stringify(dToken);
+        let userInfo = dToken;
 
         return userInfo;
     }

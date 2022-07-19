@@ -21,10 +21,9 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 
-	// // 시스템 접속 권한 체크
-	let token = store.getters['guardStore/getToken'];
-
 	if(to?.path == "/login") return next()
+
+	let token = store.getters['guardStore/getToken'];
 
 	if(utils.isEmpty(token) && to?.path != "/login") {
 		return next('/login')

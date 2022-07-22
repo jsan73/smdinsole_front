@@ -68,8 +68,8 @@ export default {
 	},
 
 	// Device에 현재위치 요청
-	reqCurrentLocation(deviceNo) {
-		return http.post(process.env.VUE_APP_SERVER_URL + '/api/device/req/' + deviceNo);
+	reqCurrentLocation(deviceIMEI) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/device/req/' + deviceIMEI);
 	},
 
 	// 위치기록

@@ -85,8 +85,14 @@ export default {
         this.$router.push(url);
       }
     },
-    reqCurrentLocation() {
-      this.openPopup("현재 위치를 요청하였습니다.", true, false, this.hideAlert);
+    async reqCurrentLocation() {
+      const res = await api.reqCurrentLocation(this.choiceDevice.deviceIMEI);
+      if(res.data.status === "SUCCESS") {
+        if (res.data.data > 0)
+          this.openPopup("현재 위치를 요청하였습니다.", true, false, this.hideAlert);
+        else
+          this.openPopup("현재 위치 요청에<br> 실패 하였습니다.", true, false, this.hideAlert);
+      }
     },
     openNotice(){
       this.toggleNotice = !this.toggleNotice;

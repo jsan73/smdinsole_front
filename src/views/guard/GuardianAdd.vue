@@ -9,7 +9,7 @@
       </div>
       <div class="mb-4">
         <label for="PhoneInput" class="form-label kksColorPrimary fw-bold">핸드폰 번호</label>
-        <input type="text" v-model="guard.guardPhone" class="form-control" id="PhoneInput" name="PhoneInput" placeholder="핸드폰번호 입력" >
+        <input type="number" pattern="\d*" v-model="guard.guardPhone" class="form-control" id="PhoneInput" name="PhoneInput" placeholder="핸드폰번호 입력" >
       </div>
 
       <div  class="btn_wrap">

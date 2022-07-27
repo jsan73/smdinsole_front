@@ -69,6 +69,12 @@ export default {
                                 this.commitGuardInfo(payload);
                                 this.commitToken(tokenData);
                                 http.setToken(tokenData);
+
+                                if(this.autoLogin ==="Y") {
+                                    const payload = {method: 'putAppData', key: "password", value: this.guardPwd};
+                                    this._callNative(payload);
+                                }
+
                                 this.$router.replace("/");
                             }
                         }).catch(e => {
@@ -107,11 +113,22 @@ export default {
             }).catch(e =>{
                 this.$toast.bottom(e.response.data.message);
             })
+        },
+        autoLoginPwd(pwd) {
+            this.guardPwd = pwd;
+            setTimeout(() => {
+            this.login();
+            }, 500);
+        },
+        goTerm() {
+            const payload = {method: 'openWebView', url: process.env.VUE_APP_SERVER_URL +"/termprivacy"};
+            this._callNative(payload);
+            //his.$router.push("termprivacy");
         }
 
     },
     computed:{
-        ...mapState("guardStore", ['guardInfo'] )
+        ...mapState("guardStore", ['guardInfo', 'getToken'] )
 
 
     },
@@ -123,6 +140,11 @@ export default {
             this.autoLogin = guardInfo.autoLogin;
             this.refreshToken = guardInfo.refreshToken;
 
+            if(this.isApp && this.autoLogin === "Y" && utils.isEmpty(this.getToken)) {
+                const payload = {method: 'getAppData', key: "password", callback: 'autoLoginPwd', interface: 'Login'};
+                this._callNative(payload);
+            }
+
             // if(this.autoLogin) {
             //     api.relogin(this.refreshToken).then(res => {
             //         if (res.data.status === "SUCCESS") {
@@ -133,5 +155,14 @@ export default {
             //     })
             // }
         }
-    }
+    },
+    beforeMount() {
+        window['InterfaceLogin'] = {
+            components   : this,
+            autoLoginPwd: (data) => this.autoLoginPwd(data),
+        };
+    },
+    beforeDestroy() {
+        delete window['InterfaceLogin'];
+    },
 }

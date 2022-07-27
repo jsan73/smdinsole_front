@@ -40,7 +40,7 @@ Vue.use(VueGoogleMaps, {
 //Skip token Key for UI - 여기 변경해야 모바일 빌드가능
 var _skipToken = false;
 
-if(location.pathname === "/login" || location.pathname === "/magree") {
+if(location.pathname === "/login" || location.pathname === "/termprivacy") {
     _skipToken = true;
     Vue.prototype.$skipToken = true;
 }

@@ -1,7 +1,7 @@
 <template>
   <main id="wrap">
-    <Header ref="header" :title="menu_title" :logout="logout"></Header>
-    <router-view v-on:change="setTitle"></router-view>
+    <Header ref="header" :title="menu_title" :logout="logout" :menuId="menuId"></Header>
+    <router-view v-on:change="setChange"></router-view>
     <Footer ref="footer" v-if="is_footer"></Footer>
   </main>
 
@@ -14,7 +14,8 @@ export default {
     return {
       menu_title: "",
       is_footer:false,
-      logout:false
+      logout:false,
+      menuId:""
     };
   },
   watch: {
@@ -24,15 +25,18 @@ export default {
   },
   mounted() {
     this.init();
+
   },
   methods:{
     init() {
       this.menu_title = this.$route.meta.title;
       this.is_footer = this.$route.meta.footer;
       this.logout = this.$route.meta.logout;
+      this.menuId = this.$route.name;
     },
-    setTitle(title) {
+    setChange(title) {
       this.menu_title = title;
+      this.menuId = this.$route.name;
     }
   }
 

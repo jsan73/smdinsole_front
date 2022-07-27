@@ -25,6 +25,7 @@ var menu = [
 	{ menuId: "ChangePw", parentId: 0, menuName: "비밀번호 변경", icon: "description",pagePath: "views/guard",  componentName: "ChangePwd", url: "/changepwd"},
 	{ menuId: "GuardianList", parentId: 0, menuName: "보호자 관리", icon: "description",pagePath: "views/guard",  componentName: "GuardianList", url: "/guardianlist"},
 	{ menuId: "GuardianAdd", parentId: 0, menuName: "보호자 추가", icon: "description",pagePath: "views/guard",  componentName: "GuardianAdd", url: "/guardianadd"},
+	{ menuId: "TermPrivacy", parentId: 0, menuName: "약관 보기", icon: "description",pagePath: "views/guard",  componentName: "TermPrivacy", url: "/termprivacy"},
 	// // { menuId: "MN70", parentId: 0, menuName: "콜팝업", icon: "description", pagePath: "views/ui/temp", componentName: "CallPopup", url: "/ui/callpopup", popup: true, meta: { layout: 'Popup' }, tempmenu: "temp" },
 	// // { menuId: "MN70", parentId: 0, menuName: "콜팝업", icon: "description", pagePath: "views/ui/temp", componentName: "CallPopup", url: "/ui/callpopup", popup: true, meta: { layout: 'Popup' }, tempmenu: "temp" },
 	//

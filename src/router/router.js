@@ -21,14 +21,12 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 
-	if(to?.path == "/login") return next()
+	if(to?.path == "/login" || to?.path == "/termprivacy") return next()
 
 	let token = store.getters['guardStore/getToken'];
-
 	if(utils.isEmpty(token) && to?.path != "/login") {
 		return next('/login')
 	} else {
-		console.log("router token : " + token)
 		if(utils.isNotEmpty(token)) {
 			const {exp} = jwt.decode(token);
 			if (exp < (new Date().getTime() + 1) / 1000) {

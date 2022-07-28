@@ -98,6 +98,10 @@ export default {
         },
         moveControl(url) {
             this.$router.push('control');
+        },
+        requestLocation(data) {
+            console.log("LastLcocation CALL")
+            this.getLastLocation(this.choiceDevice.deviceNo)
         }
     },
     created() {
@@ -112,4 +116,14 @@ export default {
         ...mapState("guardStore", ['choiceDevice'] ),
 
     },
+    beforeMount() {
+        window['InterfaceLocation'] = {
+            components   : this,
+            requestLocation: (data) => this.requestLocation(data),
+        };
+    },
+    beforeDestroy() {
+        delete window['InterfaceLocation'];
+    },
+
 }

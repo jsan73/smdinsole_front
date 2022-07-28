@@ -71,7 +71,7 @@ export default {
   components: {NoticeLayer},
   data() {
     return {
-      locationDay:0,
+      locationDay:-1 ,
       toggleNotice:false
     }
   },

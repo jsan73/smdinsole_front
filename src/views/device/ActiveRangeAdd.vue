@@ -26,7 +26,8 @@
         </div>
       </div>
 <!--      <div class="" style="width:100%; height:150px; background-color:burlywood;">-->
-        <GoogleMap :center="center" :circles="circles" :markers="markers" />
+        <GoogleMap :center="center" :circles="circles" :markers="markers" :zoom="zoom" />
+
 
 <!--      </div>-->
       <div class="py-5 px-3">
@@ -93,6 +94,7 @@
 <script>
 import api from "@/api/api";
 import {mapState} from 'vuex';
+import utils from "@/utils/utils";
 export default {
   name: "ActiveRangeAdd",
   data() {
@@ -104,6 +106,7 @@ export default {
       rangeValue:0,
       radius:1,
       circles:[],
+      zoom:15,
 
       address:null,
       activeRange: {
@@ -136,6 +139,7 @@ export default {
   watch:{
     radius(){
       this.addCircle()
+
     }
   },
   methods: {
@@ -162,6 +166,7 @@ export default {
       }
       this.circles = [];
       this.circles.push({center: this.center, option:option})
+      this.zoom = utils.getGmapZoolLevel(this.center.lat, this.radius*1000)
     },
     async getActiveRange() {
       const res = await api.getActiveRange(this.choiceDevice.deviceNo, this.rangeNo);
@@ -171,9 +176,25 @@ export default {
           this.setMap(this.activeRange.lat, this.activeRange.lng);
       }
     },
+    getAddress(lat, lng) {
+      var geocoder = new window.google.maps.Geocoder();
+      var rel = new window.google.maps.LatLng(lat, lng);
+      geocoder.geocode({'latLng':rel}, async function(results, status) {
+            if (status == 'OK') {
+              console.log(results);
+              let addr1 = results[2]['address_components'][1]['long_name']
+              let addr2 = results[2]['address_components'][0]['long_name']
+              this.activeRange.rangeAddress = addr1 + " " + addr2;
+            }else{
+              this.$toast.bottom("주소 정보가 없습니다.");
+            }
+      }.bind(this));
+
+    },
     geolocate() {
       navigator.geolocation.getCurrentPosition(position => {
         this.setMap(position.coords.latitude, position.coords.longitude);
+        this.getAddress(position.coords.latitude, position.coords.longitude);
       });
     },
 
@@ -186,10 +207,8 @@ export default {
       geocoder.geocode( { 'address': this.activeRange.rangeAddress}, async function(results, status) {
         if (status == 'OK') {
           this.setMap(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-        } else if(status =="ZERO_RESULTS"){
-          alert('Geocode was not successful for the following reason: ' + status);
-        } else {
-          alert('Geocode was not successful for the following reason: ' + status);
+        } else if(status =="ZERO_RESULTS") {
+          this.$toast.bottom("주소 결과가 없습니다.");
         }
       }.bind(this));
     },

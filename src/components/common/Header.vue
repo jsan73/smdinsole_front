@@ -24,7 +24,7 @@ export default {
     menuId:''
   },
   methods: {
-    ...mapActions("guardStore", ["commitToken"]),
+    ...mapActions("guardStore", ["commitToken", "commitAutoLogin"]),
 
     //뒤로가기
     backHandler(){
@@ -37,7 +37,9 @@ export default {
     },
     goLogout() {
       this.commitToken('');
-      this.$router.replace('/login');
+      this.commitAutoLogin('N');
+      window.location.href = "/login"
+      //this.$router.replace('/login');
     }
   },
   watch: {

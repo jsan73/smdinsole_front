@@ -118,5 +118,9 @@ export default {
         let userInfo = dToken;
 
         return userInfo;
+    },
+    getGmapZoolLevel(lat, radius){
+        return Math.log2(38000 * Math.cos ( lat * Math.PI / 180) / (radius/1000)*2)  - 1.5
     }
+
 }

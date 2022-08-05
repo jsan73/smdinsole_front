@@ -36,6 +36,9 @@ const guardStore = {
         setToken: (state, token) => {
             state.guardInfo.token = token;
         },
+        setAutoLogin: (state, login) => {
+            state.guardInfo.token = login;
+        },
         setChoiceDevice: (state, payload) => {
             state.choiceDevice.deviceNo = payload.deviceNo;
             state.choiceDevice.deviceNumber = payload.deviceNumber;
@@ -48,6 +51,9 @@ const guardStore = {
         },
         commitToken: ({commit}, token) => {
             commit('setToken', token)
+        },
+        commitAutoLogin: ({commit}, login) => {
+            commit('setAutoLogin', login)
         },
         commitChoiceDevice: ({ commit }, payload) => {
             commit('setChoiceDevice', payload)

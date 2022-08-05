@@ -27,7 +27,7 @@
         </div>
       </div>
       <div id="map" class="map-h">
-        <GoogleMap :center="range.center" :markers="range.markers" :circles="range.circles" />
+        <GoogleMap :center="range.center" :markers="range.markers" :circles="range.circles" :zoom="range.zoom" />
       </div>
       <div class="w-100 mb-4">
         <ul class="radius_info">
@@ -47,6 +47,7 @@
 <script>
 import api from "@/api/api";
 import {mapState} from "vuex";
+import utils from "@/utils/utils";
 
 export default {
   name: "ActiveRange",
@@ -56,6 +57,7 @@ export default {
       rangeList: [],
       markers:[],
       circles:[],
+
       // rangeList: {
       //   latitude: 0,
       //   longitude: 0,
@@ -96,6 +98,11 @@ export default {
           range["circles"] = [];
           this.addMarker(range["markers"], center);
           this.addCercle(range["circles"], center, range.radius);
+
+          const zl = utils.getGmapZoolLevel(range.lat, range.radius);
+
+          range["zoom"] = zl;
+          console.log(range["zoom"]);
           //range["markers"] = marker;
         });
 

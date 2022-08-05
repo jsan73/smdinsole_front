@@ -36,11 +36,11 @@ module.exports = {
    // proxy:'https://was-dev.kkokasin.com',
     https: false,
     host: 'm-dev.kkokasin.com',
-    // https: {
-    //   key: fs.readFileSync('kkokasin.com.key'),
-    //   cert: fs.readFileSync('kkokasin.com.crt'),
-    //   ca: fs.readFileSync('rootca.crt')
-    // }
+    https: {
+      key: fs.readFileSync('kkokasin.com.key'),
+      cert: fs.readFileSync('kkokasin.com.crt'),
+      ca: fs.readFileSync('rootca.crt')
+    }
   },
 
   //한국어 날짜 표기 (다국어 제외)

@@ -1,6 +1,6 @@
 <template>
 <!--  <div>-->
-    <GmapMap :center='center' :zoom='12' :options='options' style='width:100%;  height: 400px;'>
+    <GmapMap :center='center' :zoom='zoom' :options='options' style='width:100%;  height: 500px;'>
       <GmapMarker :key="index" v-for="(m, index) in markers" :icon="m.icon" :position="m.position" :label="m.label" @click="toggleInfoWindow(m, index)"/>
 <!--      <GmapCircle :center="center" :options="circleOption"></GmapCircle>-->
       <gmap-info-window
@@ -38,6 +38,7 @@ export default {
     markers:Array,
     circles:Array,
     polyLines:Array,
+    zoom:Number
   },
   mounted() {
     //this.geolocate();
@@ -45,6 +46,7 @@ export default {
     // console.log(this.center);
     // console.log("Circle");
     // console.log(this.circles);
+
   },
   methods: {
     geolocate() {
@@ -53,8 +55,6 @@ export default {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
-        console.log("geolocate");
-        console.log(position.coords.latitude);
       }, error => {
         console.log(error);
       });
@@ -135,6 +135,7 @@ export default {
   },
   created() {
     //this.geolocate();
+    //this.zoom = 15
   }
 }
 </script>

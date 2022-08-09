@@ -100,7 +100,6 @@ export default {
             this.$router.push('control');
         },
         requestLocation(data) {
-            console.log("LastLcocation CALL")
             this.getLastLocation(this.choiceDevice.deviceNo)
         }
     },

@@ -171,7 +171,7 @@ export default {
 				// var userInfo = JSON.parse(_storage.getItem(_userKey));
 				// var token = _storage.getItem(process.env.VUE_APP_TOKEN_KEY);
 				//Start 하기전에 Native 호출.
-				console.log("APP - NATIVE");
+
 				_this._callNative({
 					"method": "sendDeviceInfo",
 					"guardPhone": this.guardInfo.guardPhone,
@@ -205,7 +205,6 @@ export default {
 
 		} else {
 			this.isSkipToken = true;
-			console.log("1")
 		}
 
 		this.makeRouteView();

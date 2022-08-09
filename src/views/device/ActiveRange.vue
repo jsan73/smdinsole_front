@@ -102,7 +102,7 @@ export default {
           const zl = utils.getGmapZoolLevel(range.lat, range.radius);
 
           range["zoom"] = zl;
-          console.log(range["zoom"]);
+
           //range["markers"] = marker;
         });
 

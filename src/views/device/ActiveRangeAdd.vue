@@ -26,7 +26,7 @@
         </div>
       </div>
 <!--      <div class="" style="width:100%; height:150px; background-color:burlywood;">-->
-        <GoogleMap :center="center" :circles="circles" :markers="markers" :zoom="zoom" />
+        <GoogleMap v-if="displayGMap" :center="center" :circles="circles" :markers="markers" :zoom="zoom" />
 
 
 <!--      </div>-->
@@ -117,7 +117,8 @@ export default {
         rangeAddress:'',
         rangeName: '',
         deviceNo:0
-      }
+      },
+      displayGMap:false
     };
   },
 
@@ -127,7 +128,7 @@ export default {
       this.$emit('change', "안심존 수정");
       this.getActiveRange();
     }else{
-      this.geolocate();
+     // this.geolocate();
     }
   },
   computed:{
@@ -181,7 +182,7 @@ export default {
       var rel = new window.google.maps.LatLng(lat, lng);
       geocoder.geocode({'latLng':rel}, async function(results, status) {
             if (status == 'OK') {
-              console.log(results);
+
               let addr1 = results[2]['address_components'][1]['long_name']
               let addr2 = results[2]['address_components'][0]['long_name']
               this.activeRange.rangeAddress = addr1 + " " + addr2;
@@ -195,6 +196,7 @@ export default {
       navigator.geolocation.getCurrentPosition(position => {
         this.setMap(position.coords.latitude, position.coords.longitude);
         this.getAddress(position.coords.latitude, position.coords.longitude);
+        this.displayGMap = true;
       });
     },
 
@@ -207,6 +209,7 @@ export default {
       geocoder.geocode( { 'address': this.activeRange.rangeAddress}, async function(results, status) {
         if (status == 'OK') {
           this.setMap(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+          this.displayGMap = true;
         } else if(status =="ZERO_RESULTS") {
           this.$toast.bottom("주소 결과가 없습니다.");
         }
@@ -226,7 +229,7 @@ export default {
         res = await api.insActiveRange(this.activeRange);
 
       }
-      console.log(res.data);
+
       if(res.data.status === "SUCCESS") {
         this.openPopup("안심존이 저장 되었습니다.", true, false, this.nextStep)
       }else{

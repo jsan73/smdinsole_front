@@ -44,7 +44,7 @@ if(location.pathname === "/login" || location.pathname === "/termprivacy") {
     _skipToken = true;
     Vue.prototype.$skipToken = true;
 }
-console.log(store.getters['guardStore/getGuardInfo'])
+
 start();
 
 // if(!_skipToken) {

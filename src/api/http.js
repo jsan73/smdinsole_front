@@ -125,18 +125,6 @@ export default {
 
 	},
 
-	postFileOption(url) {
-		console.log(url);
-		return {
-			url      : `${axios.defaults.baseURL}${url}`,
-			headers  : {
-				"Accept"                     : "application/json",
-				"Access-Control-Allow-Origin": "*",
-				"X-AUTH-TOKEN"               : _tokenKey
-			}
-			, timeout: 600000 // 10분
-		}
-	},
 
 	postParam(url, params) {
 		return axios.post(url, {}, {

@@ -44,8 +44,7 @@ export default {
        // this.device.nickName = this.nickname;
         const res = await api.updDeviceNickName(this.device);
         if(res.data.status === "SUCCESS") {
-
-          console.log("수정완료");
+          this.$toast.bottom("수정 되었습니다.");
         }
       }
       this.$emit('update:visible', false);

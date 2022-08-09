@@ -38,8 +38,8 @@ export default {
 	},
 
 	// 단순 단말 조회
-	getDeviceInfo(deviceNumber) {
-		return http.post(process.env.VUE_APP_SERVER_URL + '/api/device/get/' + deviceNumber);
+	getDeviceInfo(deviceIMEI) {
+		return http.post(process.env.VUE_APP_SERVER_URL + '/api/device/get/' + deviceIMEI);
 	},
 
 	selActiveRangeList(deviceNo) {
@@ -112,7 +112,6 @@ export default {
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/device/code/list/` +  grupCd);
 	},
 	getToken() {
-		console.log(process.env.VUE_APP_AUTHM_PJT)
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/token`)
 	},
 

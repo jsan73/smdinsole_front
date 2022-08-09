@@ -20,8 +20,6 @@ const mixin = {
 		// Native 호출
 		_callNative(data) {
 
-			console.log(data);
-
 			//Extend Interface가 존재할때
 			var callBackInterface = "window.Interface";
 			if(data.interface !== undefined) {
@@ -43,7 +41,7 @@ const mixin = {
 					data.callbackCancel = data.callbackCancel.replace(callBackInterface,'');
 					data.callbackCancel = callBackInterface + data.callbackCancel;
 				}
-				console.log(JSON.stringify(data))
+
 				window.AppInterface.postMessage(JSON.stringify(data));
 			} else if(this.isApp === "ios") {
 				if(data.callback !== undefined) {
@@ -133,7 +131,6 @@ const mixin = {
 			// 	this.abort.abort();
 			// 	this.abort = null;
 			// }
-			console.log("gkdlem");
 
 			this.$root.$children[0].alertData = {
 				show: false,

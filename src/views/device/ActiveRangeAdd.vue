@@ -182,10 +182,11 @@ export default {
       var rel = new window.google.maps.LatLng(lat, lng);
       geocoder.geocode({'latLng':rel}, async function(results, status) {
             if (status == 'OK') {
-
-              let addr1 = results[2]['address_components'][1]['long_name']
-              let addr2 = results[2]['address_components'][0]['long_name']
-              this.activeRange.rangeAddress = addr1 + " " + addr2;
+              // console.log(results);
+              // let addr1 = results[2]['address_components'][1]['long_name']
+              // let addr2 = results[2]['address_components'][0]['long_name']
+              // this.activeRange.rangeAddress = addr1 + " " + addr2;
+              this.activeRange.rangeAddress = results[0]['formatted_address'].replace("대한민국 ", '');
             }else{
               this.$toast.bottom("주소 정보가 없습니다.");
             }

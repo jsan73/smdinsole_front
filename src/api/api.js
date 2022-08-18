@@ -82,10 +82,12 @@ export default {
 		return http.postParam(process.env.VUE_APP_SERVER_URL + '/api/device/loc/get/' + deviceNo);
 	},
 
-
-
 	changePwd(param) {
 		return http.postParam(process.env.VUE_APP_SERVER_URL + `/api/guard/upd/pwd`, param);
+	},
+
+	tmpPwd(){
+		return http.postParam(process.env.VUE_APP_SERVER_URL + `/api/guard/upd/tmppwd`);
 	},
 
 	selectGuardList() {

@@ -37,7 +37,7 @@ const guardStore = {
             state.guardInfo.token = token;
         },
         setAutoLogin: (state, login) => {
-            state.guardInfo.token = login;
+            state.guardInfo.autoLogin = login;
         },
         setChoiceDevice: (state, payload) => {
             state.choiceDevice.deviceNo = payload.deviceNo;

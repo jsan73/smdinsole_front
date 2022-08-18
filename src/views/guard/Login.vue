@@ -40,6 +40,9 @@
       <div class="btn_wrap" v-if="checkGuard">
         <button class="btn btn-style-1" v-on:click="login">입장하기</button>
       </div>
+      <div class="mb-4 text-start" v-if="checkGuard">
+        <p><a href="#" @click="tmpPwd">비밀번호 찾기</a></p>
+      </div>
 
       <div class="btn_wrap" v-if="!checkGuard">
         <button class="btn btn-style-1" v-on:click="regist">가입하기</button>

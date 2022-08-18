@@ -47,6 +47,16 @@ export default {
         //         http.setToken(tokenData);
         //     }
         // },
+        async tmpPwd() {
+            let res = await api.tmpPwd();
+            if(res.data.status === "SUCCESS") {
+                if(res.data.data > 0) {
+                    this.$toast.bottom("임시 비밀번호가 문자 발송 되었습니다.");
+                }else{
+                    this.$toast.bottom("임시 비밀번호 발급이 실패했습니다.");
+                }
+            }
+        },
         login() {
             if(utils.isEmpty(this.guardPhone)) {
                 this.$toast.bottom("핸드폰 번호를<br>입력해 주세요.");

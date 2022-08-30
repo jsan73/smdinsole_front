@@ -25,6 +25,7 @@
     "vue-jwt-decode": "^0.1.0",
     "vue-router": "^3.5.1",
     "vue2-dropzone": "^3.6.0",
+    "vue2-gmap-custom-marker": "^6.0.1",
     "vue2-google-maps": "^0.10.7",
     "vue2-toast": "^2.1.0",
     "vuex": "^3.5.1",

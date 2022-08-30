@@ -1,8 +1,8 @@
 <template>
   <!-- main -->
-  <main class="main">
+  <main class="container mt-4 px-0">
 
-    <div class="radiusAdd" >
+<!--    <div class="radiusAdd" >-->
       <div class="mb-4 px-3">
         <label for="RadiusNameInput" class="form-label fw-bold kksColorPrimary ">안심존 명칭</label>
         <input type="text" class="form-control" v-model="activeRange.rangeName" id="RadiusNameInput" name="RadiusNameInput" placeholder="입력" >
@@ -25,11 +25,9 @@
 
         </div>
       </div>
-<!--      <div class="" style="width:100%; height:150px; background-color:burlywood;">-->
-        <GoogleMap v-if="displayGMap" :center="center" :circles="circles" :markers="markers" :zoom="zoom" />
-
-
-<!--      </div>-->
+      <div class="" style="width:auto; height:400px; background-color:burlywood;">
+        <GoogleMap v-if="displayGMap" :center="center" :circles="circles" :markers="markers" :zoom="zoom" :styles="styles" />
+      </div>
       <div class="py-5 px-3">
 <!--        <div class="progress" style="height:5px">-->
 <!--          <div class="progress-bar bg-c-red" style="width:40%; height:5px"></div>-->
@@ -43,16 +41,14 @@
 
 <!--        </div>-->
       </div>
-      <div class="mb-4 px-4 row">
-        <div class="col-4 ps-1 fw-bold kksColorPrimary ">
-          안심존 범위
-        </div>
+      <div class="mb-4 px-3 d-flex">
+        <div class="col-4 ps-1 fw-bold kksColorPrimary ">안심존 범위</div>
         <div class="col-8 border-bottom text-end">
           <input type="text" v-model="radius" class="form-control w-75 d-inline-block border-0 text-end" id="RadiusInput" placeholder=""><b>km</b>
         </div>
 
       </div>
-      <div class="mb-2 px-4 row">
+      <div class="mb-2 px-3 d-flex">
         <div class="col px-1">
           <button type="button" class="btn btn-style-2" :class="[radius==1?'selected':'']" @click="toggleRadius(100)">1km</button>
         </div>
@@ -63,7 +59,7 @@
           <button type="button" class="btn btn-style-2" :class="[radius==3?'selected':'']" @click="toggleRadius(300)">3km</button>
         </div>
       </div>
-      <div class="mb-4 px-4 row">
+      <div class="mb-4 px-3 d-flex">
         <div class="col px-1">
           <button type="button" class="btn btn-style-2" :class="[radius==5?'selected':'']" @click="toggleRadius(500)">5km</button>
         </div>
@@ -86,7 +82,7 @@
 
         </div>
       </div>
-    </div>
+<!--    </div>-->
 
   </main>
 </template>
@@ -118,7 +114,8 @@ export default {
         rangeName: '',
         deviceNo:0
       },
-      displayGMap:false
+      displayGMap:false,
+      styles:'width:100%;  height: 400px;'
     };
   },
 
@@ -159,10 +156,11 @@ export default {
     },
     addCircle() {
       let option ={
-        fillColor: '#0000FF',
-        fillOpacity: 0.3,
-        strokeWeight: 1,
-        strokeColor: '#0000FF',
+        fillColor: '#7BFF70',
+        fillOpacity: 0.1,
+        // strokeWeight: 5,
+        strokeColor: '#7BD6CE',
+        strokeOpacity: 0.9,
         radius: this.radius * 1000
       }
       this.circles = [];
@@ -172,6 +170,7 @@ export default {
     async getActiveRange() {
       const res = await api.getActiveRange(this.choiceDevice.deviceNo, this.rangeNo);
       if(res.data.status === "SUCCESS") {
+          this.displayGMap = true;
           this.activeRange = res.data.data;
           this.radius = this.activeRange.radius / 1000;
           this.setMap(this.activeRange.lat, this.activeRange.lng);
@@ -207,10 +206,12 @@ export default {
     fillInAddress() {
       // Get the place details from the autocomplete object.
       var geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode( { 'address': this.activeRange.rangeAddress}, async function(results, status) {
+      geocoder.geocode( { 'address': this.activeRange.rangeAddress, region:'kr'}, async function(results, status) {
         if (status == 'OK') {
+          console.log(results);
           this.setMap(results[0].geometry.location.lat(), results[0].geometry.location.lng());
           this.displayGMap = true;
+          this.activeRange.rangeAddress = results[0]['formatted_address'].replace("대한민국 ", '');
         } else if(status =="ZERO_RESULTS") {
           this.$toast.bottom("주소 결과가 없습니다.");
         }

@@ -10,11 +10,15 @@
 <!--          </a>-->
 <!--        </div>-->
         <div id="map" class="h-100">
-          <GoogleMap :center="center" :markers="markers" :circles="circles" :zoom="15" />
+          <GoogleMap :center="center" :markers="markers" :circles="circles" :zoom="15" :styles="styles" @markerPosition="sendLocation2" />
         </div>
 
+        <div>
+          <button type="button" @click="sendLocation">위치 전송</button>
+        </div>
       </div>
 <!--    </div>-->
+
   </main>
 
 

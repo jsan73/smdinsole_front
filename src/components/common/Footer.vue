@@ -17,7 +17,8 @@
       <il class="col text-center pt-2">
         <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" @click="openNotice">
 
-          <img src="/static/images/notifications.svg" alt="">
+<!--          <img src="/static/images/notifications.svg" alt="">-->
+          <img :src="noticeIcon" alt="">
           <p class="pt-1 text-white mb-2">알림설정</p>
         </a>
       </il>
@@ -30,7 +31,7 @@
     </ul>
   </div>
 
-  <NoticeLayer :visible.sync="toggleNotice"></NoticeLayer>
+  <NoticeLayer :visible.sync="toggleNotice" @noticeStatus="changeNoticeIco"></NoticeLayer>
 
   <div class="offcanvas offcanvas-bottom" data-bs-backdrop="false" tabindex="-1" id="offcanvasBottom2" aria-labelledby="offcanvasBottomLabel2">
     <div class="offcanvas-header">
@@ -72,10 +73,14 @@ export default {
   data() {
     return {
       locationDay:-1 ,
-      toggleNotice:false
+      toggleNotice:false,
+      noticeIcon:'/static/images/notifications.svg'
     }
   },
   methods: {
+    changeNoticeIco(val) {
+      this.noticeIcon = '/static/images/notifications' + val + '.svg'
+    },
     move(url) {
       let path = window.location.pathname;
       if(path === "/main") {

@@ -84,6 +84,7 @@ export default {
     },
     setNotice(optionValue) {
       let params ={deviceNo:this.choiceDevice.deviceNo, notiCd:this.noticeOption.codeCd};
+
       api.setNotice(params, optionValue).then(res => {
         if(res.data.status === "SUCCESS") {
           this.getNoticeStatus().then(()=>{
@@ -94,6 +95,7 @@ export default {
                 this.openPopup(this.notice.displayDay + "까지<br>알림이 해제됩니다.", true, false);
             }else{
               this.openPopup("알림이 설정 되었습니다.", true, false);
+              this.$emit("noticeStatus","");
             }
             $('.offcanvas').offcanvas('hide');
             this.$emit('update:visible', false);
@@ -106,6 +108,7 @@ export default {
       this.setNotice(this.noticeOption.codeValue);
     },
     async getNoticeStatus() {
+      console.log("getNoticeStatus")
       let res = await api.getNotice(this.choiceDevice.deviceNo);
       if(res.data.status === "SUCCESS") {
         this.notice = res.data.data;
@@ -122,8 +125,10 @@ export default {
           } else {
             // 무한 해제
           }
+          this.$emit("noticeStatus","_off");
         }else {
           //console.log(this.notice);
+          this.$emit("noticeStatus","");
         }
       }
     },

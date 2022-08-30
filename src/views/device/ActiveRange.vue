@@ -27,7 +27,7 @@
         </div>
       </div>
       <div id="map" class="map-h">
-        <GoogleMap :center="range.center" :markers="range.markers" :circles="range.circles" :zoom="range.zoom" />
+        <GoogleMap :center="range.center" :markers="range.markers" :circles="range.circles" :zoom="range.zoom" :styles="styles" />
       </div>
       <div class="w-100 mb-4">
         <ul class="radius_info">
@@ -57,6 +57,7 @@ export default {
       rangeList: [],
       markers:[],
       circles:[],
+      styles:'width:100%;  height: 400px;'
 
       // rangeList: {
       //   latitude: 0,
@@ -78,10 +79,11 @@ export default {
     },
     addCercle(range, center, radius) {
       let option ={
-        fillColor: '#0000FF',
-        fillOpacity: 0.3,
-        strokeWeight: 1,
-        strokeColor: '#0000FF',
+        fillColor: '#7BFF70',
+        fillOpacity: 0.1,
+        // strokeWeight: 5,
+        strokeColor: '#7BD6CE',
+        strokeOpacity: 0.9,
         radius: radius
       }
       range.push({center: center, option:option})

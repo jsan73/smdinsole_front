@@ -66,6 +66,22 @@ export default {
         }
         return rst;
     },
+    getNowDateToStr() {
+        let d = new Date();
+
+        let rst = d.getFullYear() + "-" + this.leftPad(d.getMonth() + 1) + "-" + this.leftPad(d.getDate());
+        rst +=  "T" + this.leftPad(d.getHours()) + ":" + this.leftPad(d.getMinutes()) + ":" + this.leftPad(d.getSeconds())
+
+        return rst;
+    },
+    leftPad(value) {
+        if (value >= 10) {
+            return value;
+        }
+
+        return `0${value}`;
+
+    },
 
     getDatediff(date1, date2){
         let d1 = new Date(this.getYmd10(date1));

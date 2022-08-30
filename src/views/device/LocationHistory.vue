@@ -4,7 +4,7 @@
     <DeviceHeader :device="device" :status="location" :range="range" @clickAction={}></DeviceHeader>
 
     <div id="find-location" class="container-fluid px-0 h-100">
-      <GoogleMap :center="center" :markers="markers" :poly-lines="polyLines"/>
+      <GoogleMap :center="center" :markers="markers" :poly-lines="polyLines" :zoom="zoom" :styles="styles" :custom="true"/>
     </div>
   </main>
   <div class="fixed-bottom location-wrap">
@@ -36,15 +36,17 @@ export default {
       history:'',
       polyLines:[],
       locDate:'',
-      displayDay:''
+      displayDay:'',
+      zoom:15,
+      styles:'width:100%;  height: 500px;'
     }
   },
   mounted() {
     this.locationDay = this.$route.query.locationDay;
   },
   methods: {
-    addMarker(marker, icon, label) {
-      this.markers.push({position: marker, icon:icon, label:label});
+    addMarker(marker, icon, label, loc) {
+      this.markers.push({position: marker, icon:icon, label:label, loc:loc});
     },
     async selectHistory(deviceNo) {
       const params ={days: this.locationDay};
@@ -53,18 +55,31 @@ export default {
         this.history = res.data.data;
         this.history.forEach((loc, index) =>{
           if(index === 0) this.locDate = loc.reportDate.substring(0,8);
+          let iconUrl = "/static/images/Pin_NET.svg"
+          // GPS:4, CELL:5, SAVE-WIFI:6
+          switch (loc.status) {
+            case 4:
+              iconUrl = "/static/images/Pin_GPS.svg"
+              break;
+            case 5:
+              iconUrl = "/static/images/Pin_Cell.svg"
+              break;
+            case 6:
+              iconUrl = "/static/images/Pin_WiFi.svg"
+              break;
+          }
           this.addMarker(
               {
                       lat:loc.lat,
                       lng:loc.lng
               },
               {
-                url : "/static/images/Pin_NET.svg"
+                url : iconUrl
               },
               {
                       text: (index + 1).toString(),
-                      color: "#FFF",
-              });
+                      color: "#FFFF",
+              }, loc);
           this.polyLines.push({lat:loc.lat, lng:loc.lng});
         })
         if(this.markers.length > 0) {

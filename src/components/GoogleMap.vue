@@ -1,24 +1,32 @@
 <template>
 <!--  <div>-->
-    <GmapMap :center='center' :zoom='zoom' :options='options' style='width:100%;  height: 500px;' id="gmap">
-      <GmapMarker :key="index" v-for="(m, index) in markers" :icon="m.icon" :position="m.position" :label="m.label" @click="toggleInfoWindow(m, index)"/>
-<!--      <GmapCircle :center="center" :options="circleOption"></GmapCircle>-->
+    <GmapMap :center='center' :zoom='zoom' :options='options' :style='styles' id="gmap">
+      <GmapMarker v-if="!custom" :key="index" v-for="(m, index) in markers" :icon="m.icon" :position="m.position" :draggable=true :label="m.label" @click="toggleInfoWindow(m, index)" @dragend="ondragend($event.latLng)"/>
+      <gmap-custom-marker v-if="custom"
+          :key="index" v-for="(m, index) in markers"
+          :marker="m.position"
+          @click.native="toggleInfoWindow(m, index)"
+      >
+<!--        <img :src="m.icon.url" />-->
+        <div class='Gpoint_OK' :style="{'background-image':'url(' + m.icon.url + ')'}" >{{ index }}</div>
+<!--        <my-component></my-component>-->
+      </gmap-custom-marker>
+
       <gmap-info-window
           :options="infoOptions"
           :position="infoWindowPos"
           :opened="infoWinOpen"
           @closeclick="infoWinOpen=false">
-          <div v-html="infoContent"></div>
-
+          <p v-html="infoContent"></p>
       </gmap-info-window>
 
       <GmapCircle :key="'o-${index}'" v-for="(c, index) in circles" :center="c.center" :options="c.option"></GmapCircle>
 
       <gmap-polyline v-if="polyLines && polyLines.length > 0" :path="polyLines" :editable="false"
                      v-bind:options="{
-                        strokeColor: '#0a816f',
+                        strokeColor: '#4299B6',
                         strokeOpacity: 0.5,
-                        strokeWeight: 5,
+                        // strokeWeight: 5,
                        // geodesic: true
                     }"
                      ref="polyline">
@@ -29,6 +37,8 @@
 </template>
 
 <script>
+import utils from "@/utils/utils";
+import GmapCustomMarker from "vue2-gmap-custom-marker";
 
 export default {
   name: "GoogleMap",
@@ -37,7 +47,15 @@ export default {
     markers:Array,
     circles:Array,
     polyLines:Array,
-    zoom:Number
+    zoom:Number,
+    styles:String,
+    custom: {
+      type: Boolean,
+      default: false
+    }
+  },
+  components: {
+    'gmap-custom-marker': GmapCustomMarker
   },
   mounted() {
     //this.geolocate();
@@ -45,7 +63,7 @@ export default {
     // console.log(this.center);
     // console.log("Circle");
     // console.log(this.circles);
-
+    if(utils.isEmpty(this.styles)) this.styles = "width:100%;  height: 500px;"
   },
   methods: {
     geolocate() {
@@ -62,7 +80,7 @@ export default {
       this.infoWindowPos = marker.position;
       //this.infoContent = this.getInfoWindowContent(marker.position);
       // console.log(marker);
-      this.getInfoWindowContent(marker.position);
+      this.getInfoWindowContent(marker.position, marker.loc);
 
       //check if its the same marker that was selected if yes toggle
       if (this.currentMidx == idx) {
@@ -74,7 +92,12 @@ export default {
         this.currentMidx = idx;
       }
     },
-    getInfoWindowContent(map) {
+    ondragend(event) {
+      console.log(event)
+      this.$emit("markerPosition", event);
+    },
+
+    getInfoWindowContent(map, loc) {
 //        this.getAddress(map.lat, map.lng);
 //       const service = new window.google.maps.places.PlacesService(document.getElementById("map"));
 // //      return "aaaaa"
@@ -98,7 +121,8 @@ export default {
           // let addr4 = results[0]['address_components'][0]['long_name']
           // //this.activeRange.rangeAddress = addr1 + " " + addr2;
           // this.infoContent = addr0 + " " + addr1 + " " + addr2 + " " + addr3 + " " + addr4;
-          this.infoContent = results[0]['formatted_address'].replace("대한민국 ", '');
+//          this.infoContent = "<a class='Gpoint_OK' data-bs-toggle='tooltip'  data-bs-placement='bottom' data-bs-html='true' title='2021-03-09 13:36:23 </br> 경기도 일산동구 고봉로 32-19 40호1'>1</a>"
+          this.infoContent = loc.reportDate + "<br>" + results[0]['formatted_address'].replace("대한민국 ", '');
         }else{
           this.$toast.bottom("주소 정보가 없습니다.");
         }
@@ -132,7 +156,8 @@ export default {
         mapTypeControlOptions: {
           position: 6
         },
-         disableDefaultUI:true
+         disableDefaultUI:true,
+
       },
       locationMarkers: [],
       locPlaces: [],
@@ -150,6 +175,7 @@ export default {
           height: -35
         }
       },
+
     };
   },
   created() {

@@ -18,20 +18,21 @@ export default {
             },
             markers:[],
             circles:[],
-
+            styles:'width:100%;  height: 500px;'
         };
     },
     methods: {
         ...mapActions("guardStore", ['commitChoiceDevice']),
-        addMarker(marker, icon) {
-            this.markers.push({position: marker, icon: icon});
+        addMarker(marker, icon, loc) {
+            this.markers.push({position: marker, icon: icon, loc:loc});
         },
         addCircle(center, radius) {
             let option ={
-                fillColor: '#0000FF',
-                fillOpacity: 0.3,
-                strokeWeight: 1,
-                strokeColor: '#0000FF',
+                fillColor: '#7BFF70',
+                fillOpacity: 0.1,
+                // strokeWeight: 1,
+                strokeColor: '#7BD6CE',
+                strokeOpacity: 0.9,
                 radius: radius
             }
             this.circles.push({center: center, option:option})
@@ -70,7 +71,7 @@ export default {
                     const icon = {
                         url : "/static/images/Pin_NET.svg"
                     }
-                    this.addMarker(this.center, icon);
+                    this.addMarker(this.center, icon, this.location);
                 }else{
                     this.location = {
                         battery:0,
@@ -101,6 +102,28 @@ export default {
         },
         requestLocation(data) {
             this.getLastLocation(this.choiceDevice.deviceNo)
+        },
+        sendLocation() {
+            navigator.geolocation.getCurrentPosition(position => {
+                // this.setMap(position.coords.latitude, position.coords.longitude);
+                // this.getAddress(position.coords.latitude, position.coords.longitude);
+                let param = {
+                    deviceIMEI : this.choiceDevice.deviceIMEI,
+                    location : "NTY," + position.coords.latitude +"," + position.coords.longitude + ",18," + utils.getNowDateToStr()
+                }
+
+                api.sendLocation(param);
+            });
+        },
+        sendLocation2(position) {
+
+                let param = {
+                    deviceIMEI : this.choiceDevice.deviceIMEI,
+                    location : "NTY," + position.lat() +"," + position.lng() + ",18," + utils.getNowDateToStr()
+                }
+
+                api.sendLocation(param);
+
         }
     },
     created() {

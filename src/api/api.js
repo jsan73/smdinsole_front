@@ -117,6 +117,10 @@ export default {
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/get/token`)
 	},
 
+	sendLocation(param) {
+		return http.postParam(process.env.VUE_APP_SERVER_URL + `/api/device/loc/ins`, param)
+	},
+
 
 	getUser() {
 		return http.post(process.env.VUE_APP_AUTHM_PJT + `/api/get/userinfo`)

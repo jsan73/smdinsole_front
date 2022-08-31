@@ -1,15 +1,15 @@
 <template>
   <div>
-  <main class="container px-0 position-relative h-100">
-    <DeviceHeader :device="device" :status="location" :range="range" @clickAction={}></DeviceHeader>
+    <main class="container px-0 position-relative h-100">
+      <DeviceHeader :device="device" :status="location" :range="range" ></DeviceHeader>
 
-    <div id="find-location" class="container-fluid px-0 h-100">
-      <GoogleMap :center="center" :markers="markers" :poly-lines="polyLines" :zoom="zoom" :styles="styles" :custom="true"/>
+      <div id="find-location" class="container-fluid px-0  dash-map-h">
+        <GoogleMap :center="center" :markers="markers" :poly-lines="polyLines" :zoom="zoom" :styles="styles" :custom="true"/>
+      </div>
+    </main>
+    <div class="fixed-bottom location-wrap">
+      <p class="text-center text-white mb-0">{{ displayDay }}</p>
     </div>
-  </main>
-  <div class="fixed-bottom location-wrap">
-    <p class="text-center text-white mb-0">{{ displayDay }}</p>
-  </div>
   </div>
 </template>
 
@@ -45,29 +45,20 @@ export default {
     this.locationDay = this.$route.query.locationDay;
   },
   methods: {
-    addMarker(marker, icon, label, loc) {
-      this.markers.push({position: marker, icon:icon, label:label, loc:loc});
+    addMarker(marker, icon, label, content) {
+      this.markers.push({position: marker, icon:icon, label:label, content:content});
     },
     async selectHistory(deviceNo) {
       const params ={days: this.locationDay};
       let res = await api.selectHistory(deviceNo, params);
       if(res.data.status === "SUCCESS") {
+        let lats = [];
+        let lngs = [];
         this.history = res.data.data;
+
         this.history.forEach((loc, index) =>{
           if(index === 0) this.locDate = loc.reportDate.substring(0,8);
-          let iconUrl = "/static/images/Pin_NET.svg"
-          // GPS:4, CELL:5, SAVE-WIFI:6
-          switch (loc.status) {
-            case 4:
-              iconUrl = "/static/images/Pin_GPS.svg"
-              break;
-            case 5:
-              iconUrl = "/static/images/Pin_Cell.svg"
-              break;
-            case 6:
-              iconUrl = "/static/images/Pin_WiFi.svg"
-              break;
-          }
+          let iconUrl = utils.getPinImage(loc.status);
           this.addMarker(
               {
                       lat:loc.lat,
@@ -79,12 +70,25 @@ export default {
               {
                       text: (index + 1).toString(),
                       color: "#FFFF",
-              }, loc);
+              }, loc.reportDate.replace('T', ' '));
           this.polyLines.push({lat:loc.lat, lng:loc.lng});
+          lats.push(loc.lat);
+          lngs.push(loc.lng);
         })
         if(this.markers.length > 0) {
           this.center = this.markers[this.markers.length - 1].position;
           this.displayDay = this.makeDay();
+          let minLat = Math.min(...lats)
+          let maxLat = Math.max(...lats)
+
+          let minLng = Math.min(...lngs)
+          let maxLng = Math.max(...lngs)
+
+          // let zoomRadius = 1500;
+          let zoomRadius = utils.getDistanceFromLatLonInKm(minLat, maxLng, maxLat, minLng);
+          // if(dist > 3000) zoomRadius = dist / 2
+          this.zoom = utils.getGmapZoomLevel(( maxLat + minLat) / 2, zoomRadius/2)
+          this.center = utils.getCenter(minLat, maxLng, maxLat, minLng);
         }else{
           this.displayDay = "위치기록이 없습니다."
         }

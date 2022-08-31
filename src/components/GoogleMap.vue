@@ -1,14 +1,16 @@
 <template>
 <!--  <div>-->
     <GmapMap :center='center' :zoom='zoom' :options='options' :style='styles' id="gmap">
-      <GmapMarker v-if="!custom" :key="index" v-for="(m, index) in markers" :icon="m.icon" :position="m.position" :draggable=true :label="m.label" @click="toggleInfoWindow(m, index)" @dragend="ondragend($event.latLng)"/>
+      <GmapMarker v-if="!custom" :key="index" v-for="(m, index) in markers" :icon="m.icon" :position="m.position"
+                  :draggable=true :label="m.label" @click="toggleInfoWindow(m, index)" @dragend="ondragend($event.latLng)"
+      />
       <gmap-custom-marker v-if="custom"
           :key="index" v-for="(m, index) in markers"
           :marker="m.position"
           @click.native="toggleInfoWindow(m, index)"
       >
 <!--        <img :src="m.icon.url" />-->
-        <div class='Gpoint_OK' :style="{'background-image':'url(' + m.icon.url + ')'}" >{{ index }}</div>
+        <div class='Gpoint_OK' :style="{'background-image':'url(' + m.icon.url + ')'}" >{{ index +1}}</div>
 <!--        <my-component></my-component>-->
       </gmap-custom-marker>
 
@@ -19,9 +21,7 @@
           @closeclick="infoWinOpen=false">
           <p v-html="infoContent"></p>
       </gmap-info-window>
-
-      <GmapCircle :key="'o-${index}'" v-for="(c, index) in circles" :center="c.center" :options="c.option"></GmapCircle>
-
+      <GmapCircle :key="'c' + index" v-for="(c, index) in circles" :center="c.center" :options="c.option"></GmapCircle>
       <gmap-polyline v-if="polyLines && polyLines.length > 0" :path="polyLines" :editable="false"
                      v-bind:options="{
                         strokeColor: '#4299B6',
@@ -80,7 +80,7 @@ export default {
       this.infoWindowPos = marker.position;
       //this.infoContent = this.getInfoWindowContent(marker.position);
       // console.log(marker);
-      this.getInfoWindowContent(marker.position, marker.loc);
+      this.getInfoWindowContent(marker.position, marker.content);
 
       //check if its the same marker that was selected if yes toggle
       if (this.currentMidx == idx) {
@@ -97,7 +97,7 @@ export default {
       this.$emit("markerPosition", event);
     },
 
-    getInfoWindowContent(map, loc) {
+    getInfoWindowContent(map, content) {
 //        this.getAddress(map.lat, map.lng);
 //       const service = new window.google.maps.places.PlacesService(document.getElementById("map"));
 // //      return "aaaaa"
@@ -113,7 +113,6 @@ export default {
       var rel = new window.google.maps.LatLng(map.lat, map.lng);
       geocoder.geocode({'latLng':rel}, async function(results, status) {
         if (status == 'OK') {
-          console.log(results)
           // let addr0 = results[0]['address_components'][4]['long_name']
           // let addr1 = results[0]['address_components'][3]['long_name']
           // let addr2 = results[0]['address_components'][2]['long_name']
@@ -122,23 +121,14 @@ export default {
           // //this.activeRange.rangeAddress = addr1 + " " + addr2;
           // this.infoContent = addr0 + " " + addr1 + " " + addr2 + " " + addr3 + " " + addr4;
 //          this.infoContent = "<a class='Gpoint_OK' data-bs-toggle='tooltip'  data-bs-placement='bottom' data-bs-html='true' title='2021-03-09 13:36:23 </br> 경기도 일산동구 고봉로 32-19 40호1'>1</a>"
-          this.infoContent = loc.reportDate + "<br>" + results[0]['formatted_address'].replace("대한민국 ", '');
+          this.infoContent = content + "<br>" + results[0]['formatted_address'].replace("대한민국 ", '');
         }else{
           this.$toast.bottom("주소 정보가 없습니다.");
         }
       }.bind(this));
 
     },
-    // setMarker(Points, Label) {//지도에 마커를 찍는 함수.
-    //   const markers = new google.maps.Marker({
-    //     position: Points,
-    //     map: this.map,
-    //     label: {
-    //       text: Label,
-    //       color: "#FFF",
-    //     },
-    //   });
-    // },
+
   },
   data() {
     return {

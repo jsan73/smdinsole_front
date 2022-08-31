@@ -135,8 +135,71 @@ export default {
 
         return userInfo;
     },
-    getGmapZoolLevel(lat, radius){
+
+    // 구글 지도 zoom level
+    getGmapZoomLevel(lat, radius){
         return Math.log2(38000 * Math.cos ( lat * Math.PI / 180) / (radius/1000)*2)  - 1.5
+    },
+    getPinImage(status) {
+        // GPS:4, CELL:5, SAVE-WIFI:6
+        let iconUrl = "/static/images/Pin_NET.svg"
+        switch (status) {
+            case 4:
+                iconUrl = "/static/images/Pin_GPS.svg"
+                break;
+            case 5:
+                iconUrl = "/static/images/Pin_Cell.svg"
+                break;
+            case 6:
+                iconUrl = "/static/images/Pin_WiFi.svg"
+                break;
+        }
+
+        return iconUrl;
+    },
+
+    // 두 좌표간의 거리
+    getDistanceFromLatLonInKm(lat1,lng1,lat2,lng2) {
+        function deg2rad(deg) {
+            return deg * (Math.PI/180)
+        }
+
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2-lat1);  // deg2rad below
+        var dLon = deg2rad(lng2-lng1);
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R * c *1000; // Distance in km
+        console.log("거리 ", d)
+        return d;
+    },
+
+    // 두 좌표의 중간 지점 구하기
+    getCenter(lat1,lng1,lat2,lng2) {
+
+// 위도, 경도를 라디안 단위로 변환
+        const l1 = lat1 * Math.PI / 180;
+        const l2 = lat2 * Math.PI / 180;
+        const n1 = lng1 * Math.PI / 180;
+        const n2 = lng2 * Math.PI / 180;
+
+        const Bx = Math.cos(l2) * Math.cos(n2 - n1);
+        const By = Math.cos(l2) * Math.sin(n2 - n1);
+        const l3 = Math.atan2(Math.sin(l1) + Math.sin(l2),
+        Math.sqrt((Math.cos(l1) + Bx) * (Math.cos(l1) + Bx) + By * By));
+        const n3 = n1 + Math.atan2(By, Math.cos(l1) + Bx);
+
+// 라디안을 디그리로 변환
+        const lat3 = l3 * 180 / Math.PI;
+        let lon3 = n3 * 180 / Math.PI;
+
+// lat3 = 77.2989712658764
+// lon3 = 199.60411612492646
+
+// 경도는 −180 ~ +180 사이의 값으로 정규화 할 수 있다.
+        lon3 = (lon3 + 540) % 360 - 180;
+        return {lat:lat3, lng:lon3}
     }
+
 
 }

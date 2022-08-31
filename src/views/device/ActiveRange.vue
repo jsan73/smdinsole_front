@@ -71,11 +71,11 @@ export default {
   },
 
   methods: {
-    addMarker(range, marker) {
+    addMarker(range, marker, content) {
       const icon = {
         url : "/static/images/Pin_OK.svg"
       }
-      range.push({position: marker, icon: icon});
+      range.push({position: marker, icon: icon, content:content});
     },
     addCercle(range, center, radius) {
       let option ={
@@ -98,10 +98,10 @@ export default {
           range["center"] = center;
           range["markers"] = [];
           range["circles"] = [];
-          this.addMarker(range["markers"], center);
+          this.addMarker(range["markers"], center, range.rangeName);
           this.addCercle(range["circles"], center, range.radius);
 
-          const zl = utils.getGmapZoolLevel(range.lat, range.radius);
+          const zl = utils.getGmapZoomLevel(range.lat, range.radius);
 
           range["zoom"] = zl;
 

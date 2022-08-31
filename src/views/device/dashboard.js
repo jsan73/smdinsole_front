@@ -23,8 +23,8 @@ export default {
     },
     methods: {
         ...mapActions("guardStore", ['commitChoiceDevice']),
-        addMarker(marker, icon, loc) {
-            this.markers.push({position: marker, icon: icon, loc:loc});
+        addMarker(marker, icon, content) {
+            this.markers.push({position: marker, icon: icon, content:content});
         },
         addCircle(center, radius) {
             let option ={
@@ -68,10 +68,11 @@ export default {
                 if(utils.isNotEmpty(this.location)) {
                     this.center.lat = this.location.lat;
                     this.center.lng = this.location.lng;
+
                     const icon = {
-                        url : "/static/images/Pin_NET.svg"
+                        url : utils.getPinImage(this.location.status)
                     }
-                    this.addMarker(this.center, icon, this.location);
+                    this.addMarker(this.center, icon, this.location.reportDate.replace('T', ' '));
                 }else{
                     this.location = {
                         battery:0,
@@ -81,6 +82,26 @@ export default {
             }
         },
         async getActiveRange(deviceNo) {
+            const res = await api.selActiveRangeList(deviceNo);
+            if(res.data.status === "SUCCESS") {
+                const rangeList = res.data.data
+                if(utils.isNotEmpty(rangeList) && rangeList.length > 0) {
+                    this.range = rangeList[0];
+                }
+                rangeList.forEach((range, index) => {
+                    //if(index == 0) {
+                        let activeMarker = {lat: range.lat, lng: range.lng};
+                        const icon = {
+                            url: "/static/images/Pin_OK.svg"
+                        }
+                        this.addMarker(activeMarker, icon, range.rangeName);
+
+                        this.addCircle(activeMarker, range.radius);
+                    //}
+                })
+            }
+        },
+        async getActiveRange_old(deviceNo) {
             const res = await api.selActiveRangeList(deviceNo);
             if(res.data.status === "SUCCESS") {
                 const rangeList = res.data.data

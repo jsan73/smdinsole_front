@@ -14,7 +14,7 @@
         </div>
 
         <div>
-          <button type="button" @click="sendLocation">위치 전송</button>
+          <button type="button" @click="sendLocation">현재 위치 전송</button>
         </div>
       </div>
 <!--    </div>-->

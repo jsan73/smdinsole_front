@@ -28,6 +28,7 @@
           <p class="pt-1 text-white mb-2">위치기록</p>
         </a>
       </il>
+
     </ul>
   </div>
 
@@ -50,7 +51,7 @@
                   </ul>
       -->
       <div class="form-check offcanvas_List" v-for="(n, i) in 6 ">
-        <input class="form-check-input" v-model="locationDay" type="radio" name="locatonHistory" :id="'locatonHistory'+(i+1)" :value="i">
+        <input class="form-check-input" v-model="locationDay" type="radio" name="locatonHistory" :id="'locatonHistory'+(i+1)" :value="i" data-bs-dismiss="offcanvas" aria-label="Close">
         <label class="form-check-label" :for="'locatonHistory'+(i+1)">
           <div v-if="i==0">오늘</div>
           <div v-else>{{i}}일전</div>
@@ -72,7 +73,7 @@ export default {
   components: {NoticeLayer},
   data() {
     return {
-      locationDay:-1 ,
+      locationDay:-1,
       toggleNotice:false,
       noticeIcon:'/static/images/notifications.svg'
     }
@@ -102,6 +103,9 @@ export default {
     openNotice(){
       this.toggleNotice = !this.toggleNotice;
      // console.log(this.toggleNotice)
+    },
+    goHistory() {
+      this.$router.push("/device/location?locationDay=" + this.locationDay);
     }
   },
   watch:{

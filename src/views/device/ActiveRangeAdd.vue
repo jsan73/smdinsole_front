@@ -150,7 +150,7 @@ export default {
       const icon = {
         url : "/static/images/Pin_OK.svg"
       }
-      this.markers.push({position: this.center, icon:icon});
+      this.markers.push({position: this.center, icon:icon, content:this.activeRange.rangeName});
 
       this.addCircle();
     },
@@ -165,7 +165,7 @@ export default {
       }
       this.circles = [];
       this.circles.push({center: this.center, option:option})
-      this.zoom = utils.getGmapZoolLevel(this.center.lat, this.radius*1000)
+      this.zoom = utils.getGmapZoomLevel(this.center.lat, this.radius*1000)
     },
     async getActiveRange() {
       const res = await api.getActiveRange(this.choiceDevice.deviceNo, this.rangeNo);

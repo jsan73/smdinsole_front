@@ -45,8 +45,8 @@ export default {
     this.locationDay = this.$route.query.locationDay;
   },
   methods: {
-    addMarker(marker, icon, label, content) {
-      this.markers.push({position: marker, icon:icon, label:label, content:content});
+    addMarker(marker, icon, content) {
+      this.markers.push({position: marker, icon:icon, content:content});
     },
     async selectHistory(deviceNo) {
       const params ={days: this.locationDay};
@@ -67,10 +67,7 @@ export default {
               {
                 url : iconUrl
               },
-              {
-                      text: (index + 1).toString(),
-                      color: "#FFFF",
-              }, loc.reportDate.replace('T', ' '));
+              loc.reportDate.replace('T', ' '));
           this.polyLines.push({lat:loc.lat, lng:loc.lng});
           lats.push(loc.lat);
           lngs.push(loc.lng);
@@ -78,17 +75,20 @@ export default {
         if(this.markers.length > 0) {
           this.center = this.markers[this.markers.length - 1].position;
           this.displayDay = this.makeDay();
-          let minLat = Math.min(...lats)
-          let maxLat = Math.max(...lats)
+          this.zoom = 18
+          if(this.markers.length > 1) {
+            // Marker들을 지도안에 모두 표시될 수 있도록 지도의 zoom 조절
+            let minLat = Math.min(...lats)
+            let maxLat = Math.max(...lats)
 
-          let minLng = Math.min(...lngs)
-          let maxLng = Math.max(...lngs)
+            let minLng = Math.min(...lngs)
+            let maxLng = Math.max(...lngs)
 
-          // let zoomRadius = 1500;
-          let zoomRadius = utils.getDistanceFromLatLonInKm(minLat, maxLng, maxLat, minLng);
-          // if(dist > 3000) zoomRadius = dist / 2
-          this.zoom = utils.getGmapZoomLevel(( maxLat + minLat) / 2, zoomRadius/2)
-          this.center = utils.getCenter(minLat, maxLng, maxLat, minLng);
+            let zoomRadius = utils.getDistanceFromLatLonInKm(minLat, maxLng, maxLat, minLng);
+            this.zoom = utils.getGmapZoomLevel((maxLat + minLat) / 2, zoomRadius / 2)
+            console.log("zoom ", this.zoom)
+            this.center = utils.getCenter(minLat, maxLng, maxLat, minLng);
+          }
         }else{
           this.displayDay = "위치기록이 없습니다."
         }

@@ -9,7 +9,7 @@
         </a>
       </il>
       <il class="col text-center pt-2">
-        <a @click="reqCurrentLocation">
+        <a @click="reqCurrentLocation" >
           <img src="/static/images/refresh.svg" alt="">
           <p class="pt-1 text-white mb-2" >현재위치</p>
         </a>
@@ -32,7 +32,7 @@
     </ul>
   </div>
 
-  <NoticeLayer :visible.sync="toggleNotice" @noticeStatus="changeNoticeIco"></NoticeLayer>
+  <NoticeLayer :visible.sync="toggleNotice" @noticeStatus="changeNoticeIco" ></NoticeLayer>
 
   <div class="offcanvas offcanvas-bottom" data-bs-backdrop="false" tabindex="-1" id="offcanvasBottom2" aria-labelledby="offcanvasBottomLabel2">
     <div class="offcanvas-header">
@@ -40,16 +40,6 @@
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-      <!--
-                  <ul class="offcanvas_List">
-                      <li class="">오늘</li>
-                      <li class="">1일전</li>
-                      <li class="">2일전</li>
-                      <li class="">3일전</li>
-                      <li class="">4일전</li>
-                      <li class="">5일전</li>
-                  </ul>
-      -->
       <div class="form-check offcanvas_List" v-for="(n, i) in 6 ">
         <input class="form-check-input" v-model="locationDay" type="radio" name="locatonHistory" :id="'locatonHistory'+(i+1)" :value="i" data-bs-dismiss="offcanvas" aria-label="Close">
         <label class="form-check-label" :for="'locatonHistory'+(i+1)">
@@ -83,15 +73,12 @@ export default {
       this.noticeIcon = '/static/images/notifications' + val + '.svg'
     },
     move(url) {
-      let path = window.location.pathname;
-      if(path === "/main") {
-        this.$router.push(url);
-      } else {
-        //this.$router.replace(url);
-        this.$router.push(url);
-      }
+      $('.offcanvas').offcanvas('hide');
+      this.$router.push(url);
     },
     async reqCurrentLocation() {
+      $('.offcanvas').offcanvas('hide');
+
       const res = await api.reqCurrentLocation(this.choiceDevice.deviceIMEI);
       if(res.data.status === "SUCCESS") {
         if (res.data.data > 0)
@@ -102,14 +89,12 @@ export default {
     },
     openNotice(){
       this.toggleNotice = !this.toggleNotice;
-     // console.log(this.toggleNotice)
     },
-    goHistory() {
-      this.$router.push("/device/location?locationDay=" + this.locationDay);
-    }
+
   },
   watch:{
     locationDay() {
+
       this.$router.push("/device/location?locationDay=" + this.locationDay);
     },
   },

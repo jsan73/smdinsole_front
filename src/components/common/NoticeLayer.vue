@@ -1,5 +1,6 @@
 <template>
   <div class="offcanvas offcanvas-bottom" data-bs-backdrop="false" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasBottomLabel">알림 설정</h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" @click="$emit('update:visible', false)"></button>

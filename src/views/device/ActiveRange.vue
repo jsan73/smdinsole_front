@@ -121,7 +121,13 @@ export default {
       this.$router.push('rangeadd');
     },
     delRange(range) {
-      this.openPopup("[" + range.rangeName + "] 안심존을 삭제 하시겠습니까?", true, true, this.doDelete, range.rangeNo);
+      if (this.rangeList == 1) {
+        this.openPopup("하나 이상의 안심존은 필수 입니다.", true, false, this.hideAlert);
+      }else if(range.baseYn == 'Y') {
+        this.openPopup("[" + range.rangeName + "] 안심존은 수정만 가능 합니다.", true, false, this.hideAlert);
+      }else {
+        this.openPopup("[" + range.rangeName + "] 안심존을 삭제 하시겠습니까?", true, true, this.doDelete, range.rangeNo);
+      }
     },
     async doDelete(rangeNo) {
       const res = await api.delActiveRange(rangeNo);
@@ -130,7 +136,7 @@ export default {
           this.openPopup("안심존이 삭제 되었습니다.", true, false, this.hideAlert);
           await this.selActiveRangeList();
         }else{
-          this.openPopup("안심존 삭제가 실패 되었습니다.", true, false, this.hideAlert);
+          this.openPopup("오류로 인해 삭제되지 않았습니다.", true, false, this.hideAlert);
         }
       }
     },

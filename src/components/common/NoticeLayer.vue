@@ -19,7 +19,7 @@
 
       <div v-if="notice" class="offcanvas-body">
         <p class="m-4 text-center" v-if="notice.notiCd === 'NC99'">알림을 받으려면<br>다시 설정해야 합니다.</p>
-        <p class="m-4 text-center" v-else>{{notice.displayDay}}시까지 <br>알림이 해제됩니다.</p>
+        <p class="m-4 text-center" v-else>{{notice.displayDay}}까지 <br>알림이 해제됩니다.</p>
         <div class="m-4 text-center">
           <button type="button" @click="resetNotice" class="btn btn-style-1 btn-sm w-50">지금 알림 설정하기</button>
         </div>
@@ -121,7 +121,11 @@ export default {
 
             this.notice.displayDay =  (diffDate < 1)? "오늘 ":"내일 ";
             const hours = nextTime.getHours() < 12 ? "오전 " + nextTime.getHours() :"오후 " + (nextTime.getHours()-12);
-            this.notice.displayDay += hours;
+            this.notice.displayDay += hours + "시 ";
+            const min = nextTime.getMinutes();
+            if(min > 0) {
+              this.notice.displayDay += min + "분 "
+            }
 
           } else {
             // 무한 해제

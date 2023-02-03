@@ -131,7 +131,7 @@ export default {
             }, 500);
         },
         goTerm() {
-            const payload = {method: 'openWebView', url: process.env.VUE_APP_SERVER_URL +"/termprivacy"};
+            const payload = {method: 'openWebView', url: process.env.VUE_APP_URL +"/termprivacy"};
             this._callNative(payload);
             //his.$router.push("termprivacy");
         }

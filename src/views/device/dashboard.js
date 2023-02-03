@@ -72,7 +72,7 @@ export default {
                     const icon = {
                         url : utils.getPinImage(this.location.status)
                     }
-                    this.addMarker(this.center, icon, this.location.reportDate.replace('T', ' '));
+                    this.addMarker(this.center, icon, utils.convertFromStrToDate(this.location.reportDate));
                 }else{
                     this.location = {
                         battery:0,

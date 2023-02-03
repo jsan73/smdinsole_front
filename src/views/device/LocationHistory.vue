@@ -57,6 +57,7 @@ export default {
         this.history = res.data.data;
 
         this.history.forEach((loc, index) =>{
+          console.log(loc)
           if(index === 0) this.locDate = loc.reportDate.substring(0,8);
           let iconUrl = utils.getPinImage(loc.status);
           this.addMarker(
@@ -67,7 +68,7 @@ export default {
               {
                 url : iconUrl
               },
-              loc.reportDate.replace('T', ' '));
+              utils.convertFromStrToDate(loc.reportDate));
           this.polyLines.push({lat:loc.lat, lng:loc.lng});
           lats.push(loc.lat);
           lngs.push(loc.lng);

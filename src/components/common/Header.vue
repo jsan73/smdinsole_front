@@ -24,7 +24,7 @@ export default {
     menuId:''
   },
   methods: {
-    ...mapActions("guardStore", ["commitToken", "commitAutoLogin"]),
+    ...mapActions("guardStore", ["commitToken", "commitAutoLogin", "commitChoiceDevice"]),
 
     //뒤로가기
     backHandler(){
@@ -37,6 +37,10 @@ export default {
     },
     goLogout() {
       this.commitToken('');
+      let choiceDevice = {
+        "deviceNo":0
+      }
+      this.commitChoiceDevice(choiceDevice);
       this.commitAutoLogin('N');
       window.location.href = "/login"
       //this.$router.replace('/login');

@@ -6,7 +6,7 @@ const webpack = require('webpack');
 
 let active = true;
 if(process.env.VUE_APP_MODE === 'prod') {
-  active = false;
+  //active = false;
 }
 
 module.exports = {

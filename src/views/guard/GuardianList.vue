@@ -6,8 +6,8 @@
       <table class="table table-hover align-middle">
         <thead class="table-light">
         <tr>
-          <th scope="col" class="ps-3" style="width: 32%;">이름</th>
-          <th scope="col" style="width: 50%;">핸드폰번호</th>
+          <th scope="col" class="ps-3" style="width: 32%;">사용자명</th>
+          <th scope="col" style="width: 50%;">휴대전화번호</th>
           <th scope="col" class="ps-3"  style="width: 18%;">삭제</th>
         </tr>
         </thead>
@@ -15,7 +15,7 @@
         <tr v-for="guard in guardList">
           <td class="ps-3">{{guard.guardName}}</td>
           <td>{{ telForm(guard.guardPhone,1) }}</td>
-          <td><img v-show="guard.masterGuardNo > 0" @click="delGuard(guard.guardNo)" src="../../../public/static/images/bin.svg" alt="삭제"></td>
+          <td height="65px"><img v-show="guard.masterGuardNo > 0" @click="delGuard(guard.guardNo)" src="../../../public/static/images/bin.svg" alt="삭제"></td>
         </tr>
         </tbody>
       </table>
@@ -23,7 +23,7 @@
     <div class="btn_wrap">
       <div class="row">
         <div class="col">
-          <button type="button" @click="addGuard" class="btn btn-style-1">보호자 추가 +</button>
+          <button type="button" @click="addGuard" class="btn btn-style-1">사용자 추가 +</button>
         </div>
 
       </div>

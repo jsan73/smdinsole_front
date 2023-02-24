@@ -4,12 +4,12 @@
 
     <div class="pwModi" >
       <div class="mb-4">
-        <label for="NameInput" class="form-label kksColorPrimary fw-bold">이름</label>
-        <input type="text" v-model="guard.guardName" class="form-control" id="NameInput" name="PhoneInput" placeholder="보호자" >
+        <label for="NameInput" class="form-label kksColorPrimary fw-bold">사용자명</label>
+        <input type="text" v-model="guard.guardName" class="form-control" id="NameInput" name="PhoneInput" placeholder="사용자명" >
       </div>
       <div class="mb-4">
-        <label for="PhoneInput" class="form-label kksColorPrimary fw-bold">핸드폰 번호</label>
-        <input type="number" pattern="\d*" v-model="guard.guardPhone" class="form-control" id="PhoneInput" name="PhoneInput" placeholder="핸드폰번호 입력" >
+        <label for="PhoneInput" class="form-label kksColorPrimary fw-bold">휴대전화번호</label>
+        <input type="number" pattern="\d*" v-model="guard.guardPhone" class="form-control" id="PhoneInput" name="PhoneInput" placeholder="휴대전화번호 입력" >
       </div>
 
       <div  class="btn_wrap">

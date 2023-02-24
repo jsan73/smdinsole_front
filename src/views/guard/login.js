@@ -98,7 +98,7 @@ export default {
                     }
                 }
             }).catch(e=>{
-                // 등록되지 않은 보호자
+                // 등록되지 않은 사용자
                 this.openPopup(e.response.data.message, true, false);
 
             })

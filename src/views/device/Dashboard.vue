@@ -13,9 +13,9 @@
           <GoogleMap :center="center" :markers="markers" :circles="circles" :zoom="15" :styles="styles" @markerPosition="sendLocation2" />
         </div>
 
-        <div>
-          <button type="button" @click="sendLocation">현재 위치 전송</button>
-        </div>
+<!--        <div>-->
+<!--          <button type="button" @click="sendLocation">현재 위치 전송</button>-->
+<!--        </div>-->
       </div>
 <!--    </div>-->
 

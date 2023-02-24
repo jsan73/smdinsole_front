@@ -4,8 +4,8 @@
 
     <div class="pwModi" >
       <div class="mb-4">
-        <label for="PhoneInput" class="form-label fw-bold">보호자 핸드폰번호</label>
-        <input type="text" v-model="guardPhone" class="form-control" id="PhoneInput" name="PhoneInput" placeholder="핸드폰번호 입력" >
+        <label for="PhoneInput" class="form-label fw-bold">휴대전화번호</label>
+        <input type="text" v-model="guardPhone" class="form-control" id="PhoneInput" name="PhoneInput" placeholder="휴대전화번호 입력" >
       </div>
       <div class="mb-4">
         <label for="PwdInput" class="form-label fw-bold">현재 비밀번호</label>

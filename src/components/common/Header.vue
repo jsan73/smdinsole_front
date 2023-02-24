@@ -3,7 +3,8 @@
   <div class="pagetitle">
     <h2 class="text-center">{{ title }}</h2>
     <div class="iconL" v-if="!isMain"><a href="#"><img src="/static/images/Pre_arr.svg" alt="pre" width=" " height=" " class=" flex-shrink-0" @click="backHandler()"></a></div>
-    <div v-if="logout" class="iconR"><a href="#" @click="goLogout"><img src="../../../public/static/images/logout.svg" alt="logout" width=" " height=" " class=" flex-shrink-0"></a></div>
+    <div class="iconR" v-if="isMain"><a @click="moveControl"><img src="/static/images/cog.svg" alt="설정" width=" " height=" " class=" flex-shrink-0"></a></div>
+<!--    <div v-if="logout" class="iconR"><a href="#" @click="goLogout"><img src="../../../public/static/images/logout.svg" alt="logout" width=" " height=" " class=" flex-shrink-0"></a></div>-->
   </div>
   </header>
 </template>
@@ -44,7 +45,11 @@ export default {
       this.commitAutoLogin('N');
       window.location.href = "/login"
       //this.$router.replace('/login');
+    },
+    moveControl(){
+      this.$router.push('control');
     }
+
   },
   watch: {
     menuId() {

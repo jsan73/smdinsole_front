@@ -119,7 +119,7 @@ export default {
             }
         },
         moveControl(url) {
-            this.$router.push('control');
+            this.$router.push('devicecontrol');
         },
         requestLocation(data) {
             this.getLastLocation(this.choiceDevice.deviceNo)

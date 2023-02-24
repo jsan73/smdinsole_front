@@ -3,8 +3,8 @@
     <div class="signIn">
       <h1 class="text-center pb-5"><img src="../../../public/static/images/kokasin_logo.svg" alt="kt꼬까신"></h1>
       <div class="mb-4">
-        <label for="guardPhone" class="form-label kksColorPrimary fw-bold">보호자 핸드폰번호</label>
-        <input type="number" pattern="\d*" maxlength="11" class="form-control" id="guardPhone" v-model="guardPhone" placeholder="핸드폰번호 입력"
+        <label for="guardPhone" class="form-label kksColorPrimary fw-bold">휴대전화번호</label>
+        <input type="number" pattern="\d*" maxlength="11" class="form-control" id="guardPhone" v-model="guardPhone" placeholder="휴대전화번호 입력"
                oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
       </div>
       <div class="mb-4">
@@ -38,7 +38,7 @@
 
 
       <div class="btn_wrap" v-if="checkGuard">
-        <button class="btn btn-style-1" v-on:click="login">입장하기</button>
+        <button class="btn btn-style-1" v-on:click="login">로그인</button>
       </div>
       <div class="mb-4 text-start" v-if="checkGuard">
         <p><a href="#" @click="tmpPwd">비밀번호 찾기</a></p>

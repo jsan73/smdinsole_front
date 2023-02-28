@@ -13,7 +13,8 @@ const guardStore = {
         choiceDevice:{
             deviceNo:0,
             deviceNumber:'',
-            deviceIMEI:''
+            deviceIMEI:'',
+            masterGuardNo:0
         }
     },
     getters: {
@@ -43,6 +44,7 @@ const guardStore = {
             state.choiceDevice.deviceNo = payload.deviceNo;
             state.choiceDevice.deviceNumber = payload.deviceNumber;
             state.choiceDevice.deviceIMEI = payload.deviceIMEI;
+            state.choiceDevice.masterGuardNo = payload.masterGuardNo;
         }
     },
     actions: {

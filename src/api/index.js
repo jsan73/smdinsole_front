@@ -80,7 +80,7 @@ instance.interceptors.response.use(
 			// var ssoUrl = protocol + "//" + hostName;
 			// if (port != "" && port != "443") ssoUrl += ":" + port;
 			//
-			//window.location.href = "/login";
+			window.location.href = "/login";
 		}
 		/*
 			http status가 200이 아닌 경우

@@ -13,6 +13,7 @@ Vue.use(Toast, {
     type: 'center',
     duration: 2000,
     wordWrap: true,
+
     //width: '300px'
 });
 

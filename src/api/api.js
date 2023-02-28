@@ -90,16 +90,16 @@ export default {
 		return http.postParam(process.env.VUE_APP_SERVER_URL + `/api/guard/upd/tmppwd`);
 	},
 
-	selectGuardList() {
-		return http.post(process.env.VUE_APP_SERVER_URL + '/api/guard/list');
+	selectGuardList(param) {
+		return http.postParam(process.env.VUE_APP_SERVER_URL + '/api/guard/list', param);
 	},
 
 	insGuardian(param, deviceNo) {
 		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/ins/` +  deviceNo, param);
 	},
 
-	delGuardian(guardNo) {
-		return http.post(process.env.VUE_APP_SERVER_URL + `/api/guard/del/` +  guardNo);
+	delGuardian(guardNo, param) {
+		return http.postParam(process.env.VUE_APP_SERVER_URL + `/api/guard/del/` +  guardNo, param);
 	},
 
 	getNotice(deviceNo) {

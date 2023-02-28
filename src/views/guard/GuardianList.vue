@@ -15,7 +15,7 @@
         <tr v-for="guard in guardList">
           <td class="ps-3">{{guard.guardName}}</td>
           <td>{{ telForm(guard.guardPhone,1) }}</td>
-          <td height="65px"><img v-show="guard.masterGuardNo > 0" @click="delGuard(guard.guardNo)" src="../../../public/static/images/bin.svg" alt="삭제"></td>
+          <td height="65px"><img v-show="guard.guardNo != masterGuardNo" @click="delGuard(guard.guardNo)" src="../../../public/static/images/bin.svg" alt="삭제"></td>
         </tr>
         </tbody>
       </table>
@@ -35,6 +35,7 @@
 import api from "@/api/api";
 import utils from "@/utils/utils"
 import Popup from "@/components/common/Alert";
+import {mapState} from "vuex";
 export default {
   name: "GuardianList",
   data() {
@@ -43,14 +44,20 @@ export default {
       guardInfo:{
         guardNo:0,
         guardPhone:'',
-        guardName:'',
-        masterGuardNo:0
-      }
+        guardName:''
+
+      },
+      masterGuardNo:0
     }
+  },
+  computed: {
+    ...mapState("guardStore", ['choiceDevice', 'guardInfo'])
   },
   methods: {
     selectGuardList() {
-      api.selectGuardList()
+      let param = {"deviceNo" : this.choiceDevice.deviceNo}
+      this.masterGuardNo = this.choiceDevice.masterGuardNo
+      api.selectGuardList(param)
       .then(res => {
         if(res.data.status === "SUCCESS") {
           this.guardList = res.data.data;
@@ -64,7 +71,8 @@ export default {
       this.openPopup("삭제 하시겠습니까?.", true,true, this.doDelGuard, guardNo);
     },
     doDelGuard(guardNo) {
-      api.delGuardian(guardNo)
+      let param = {"deviceNo" : this.choiceDevice.deviceNo}
+      api.delGuardian(guardNo, param)
       .then((res => {
         if(res.data.status === "SUCCESS") {
           this.openPopup("삭제 되었습니다.", true,false, this.hideAlert);

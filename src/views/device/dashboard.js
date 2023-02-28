@@ -18,7 +18,10 @@ export default {
             },
             markers:[],
             circles:[],
-            styles:'width:100%;  height: 500px;'
+            styles:'width:100%;  height: 500px;',
+            auto_reload:false,
+            auto_reload_delay: 60 * 1000,
+            auto_reload_func:null
         };
     },
     methods: {
@@ -63,11 +66,15 @@ export default {
         },
         async getLastLocation(deviceNo) {
             const res = await api.getLocation(deviceNo);
+            console.log("GET : " + deviceNo);
             if(res.data.status === "SUCCESS") {
                 this.location = res.data.data
+                console.log(this.location)
                 if(utils.isNotEmpty(this.location)) {
                     this.center.lat = this.location.lat;
                     this.center.lng = this.location.lng;
+                    //this.location.battery = Math.floor(Math.random() * 5);
+                    console.log(this.location.battery)
 
                     const icon = {
                         url : utils.getPinImage(this.location.status)
@@ -145,10 +152,22 @@ export default {
 
                 api.sendLocation(param);
 
+        },
+        start_auto_reload() {
+            console.log("start!!");
+            this.auto_reload = true;
+            this.auto_reload_func = setInterval(() => {
+                this.getLastLocation(this.choiceDevice.deviceNo);
+            }, this.auto_reload_delay)
+        },
+        stop_auto_reload() {
+            console.log("stop!!");
+            this.auto_reload = false;
+            clearInterval(this.auto_reload_func);
         }
     },
     created() {
-
+        this.start_auto_reload();
         //this.selDeviceList();
     },
     mounted() {
@@ -168,5 +187,8 @@ export default {
     beforeDestroy() {
         delete window['InterfaceLocation'];
     },
+    destroyed() {
+        this.stop_auto_reload();
+    }
 
 }

@@ -12,7 +12,7 @@
             <div class="fw-bold">{{ device.nickName }} <small v-if="device.nickName == ''" class="opacity-75">{{ device.deviceIMEI }}</small></div>
             <div v-if="device.radius > 0">{{ device.rangeName }} - {{device.radius/1000}}km</div>
           </div>
-          <span class="badge"><img v-if="masterGuardNo === 0" src="../../../public/static/images/pen.svg" alt="수정" width="38" height="38" @click="showModal(device)"></span>
+          <span class="badge"><img v-if="masterGuardNo == guardNo" src="../../../public/static/images/pen.svg" alt="수정" width="38" height="38" @click="showModal(device)"></span>
         </li>
 
       </ul>
@@ -29,7 +29,7 @@
 
 
 
-    <layer-modal :visible.sync="modalVisible" :device="this.modalDevice" z-index="99999"></layer-modal>
+    <layer-modal :visible.sync="modalVisible" :device="this.modalDevice" z-index="999999"></layer-modal>
 
   </main>
 </template>
@@ -51,7 +51,8 @@ export default {
       selectDevice:'',
       modalVisible:false,
       modalDevice: {},
-      masterGuardNo:0
+      masterGuardNo:0,
+      guardNo:0
     }
   },
   components:{
@@ -94,6 +95,7 @@ export default {
     },
     selectConfirmDevice() {
       this.choiceDeviceNo = this.selectDevice.deviceNo;
+      this.masterGuardNo = this.selectDevice.masterGuardNo;
       this.commitChoiceDevice(this.selectDevice);
       this.$router.go(-1);
     },
@@ -114,7 +116,8 @@ export default {
   created() {
     this.choiceDeviceNo = this.choiceDevice.deviceNo;
     let userInfo = utils.getGuard(this.guardInfo.token);
-    this.masterGuardNo = userInfo.masterGuardNo;
+    this.masterGuardNo = this.choiceDevice.masterGuardNo;
+    this.guardNo = userInfo.guardNo;
 
     this.selDeviceList();
   }

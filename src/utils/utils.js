@@ -199,7 +199,51 @@ export default {
 // 경도는 −180 ~ +180 사이의 값으로 정규화 할 수 있다.
         lon3 = (lon3 + 540) % 360 - 180;
         return {lat:lat3, lng:lon3}
-    }
+    },
+
+    getBatteryImage(battery) {
+        let batteryImg = '';
+        switch (battery) {
+            case 0:
+                batteryImg = "/static/images/battery/Warn.svg";
+                break;
+            case 1:
+            case 2:
+            case 3:
+                batteryImg = "/static/images/battery/" + battery + ".svg";
+                break;
+            case 4:
+                // 충전중
+                batteryImg = "/static/images/battery/Chg.svg";
+                break;
+            case 5:
+                // 충전완료
+                batteryImg = "/static/images/battery/Complete.svg";
+                break;
+            default:
+                batteryImg = "/static/images/battery/0.svg";
+        }
+        return batteryImg
+    },
+    getNetImg(status) {
+        //(GPS:4, CELL:5, SAVE-WIFI:6,없음:7)
+        let netImg = '';
+        switch (status) {
+            case 4:
+                netImg = "/static/images/GPS/NET.svg";
+                break;
+            case 5:
+            case 6:
+                netImg = "/static/images/GPS/OK.svg";
+                break;
+            case 7:
+                netImg = "/static/images/GPS/NO.svg";
+                break;
+            default:
+                netImg = "/static/images/GPS/NO.svg";
+        }
+        return netImg
+    },
 
 
 }

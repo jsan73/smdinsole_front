@@ -10,7 +10,7 @@
           <i class="bi-chevron-right text-primary fs-3"></i>
         </div>
       </a>
-      <a @click="move('guardianlist')" class="list-group-item list-group-item-action d-flex py-3" aria-current="true">
+      <a v-if="masterGuardNo == guardNo" @click="move('guardianlist')" class="list-group-item list-group-item-action d-flex py-3" aria-current="true">
         <div class="d-flex gap-2 w-100 justify-content-between">
           <h3>사용자 관리</h3>
           <i class="bi-chevron-right text-primary fs-3"></i>
@@ -41,22 +41,23 @@ import utils from "@/utils/utils";
 export default {
 
   name: "AppControl",
-  // data() {
-  //   return {
+  data() {
+     return {
   //     deviceList:[],
-  //     choiceDeviceNo:0,
+        choiceDeviceNo:0,
   //     selectDevice:'',
   //     modalVisible:false,
   //     modalDevice: {},
-  //     masterGuardNo:0
-  //   }
-  // },
+       guardNo:0,
+          masterGuardNo:0
+    }
+  },
   // components:{
   //   layerModal : deviceModal
   // },
   methods: {
     ...mapActions("guardStore", ["commitToken", "commitAutoLogin", "commitChoiceDevice"]),
-    //  ...mapActions("guardStore", ['commitChoiceDevice']),
+     ...mapActions("guardStore", ['commitChoiceDevice']),
     // async selDeviceList() {
     //   const res = await api.selDeviceList();
     //   if(res.data.status === "SUCCESS") {
@@ -108,15 +109,18 @@ export default {
   //   },
   //
   // },
-  // computed:{
-  //   ...mapState("guardStore", ['choiceDevice','guardInfo'] )
-  //
-  //
-  // },
+  computed:{
+    ...mapState("guardStore", ['choiceDevice','guardInfo'] )
+
+
+  },
   created() {
-    // this.choiceDeviceNo = this.choiceDevice.deviceNo;
-    // let userInfo = utils.getGuard(this.guardInfo.token);
-    // this.masterGuardNo = userInfo.masterGuardNo;
+    this.choiceDeviceNo = this.choiceDevice.deviceNo;
+    console.log(this.choiceDeviceNo);
+    let userInfo = utils.getGuard(this.guardInfo.token);
+    this.masterGuardNo = this.choiceDevice.masterGuardNo;
+    this.guardNo = userInfo.guardNo;
+
     //
     // this.selDeviceList();
   }

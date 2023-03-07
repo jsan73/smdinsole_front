@@ -13,7 +13,8 @@ module.exports = {
 
   productionSourceMap: active,
 
-  outputDir: "./dist/" + process.env.VUE_APP_PJT,
+
+  outputDir: "./dist/" + process.env.VUE_APP_PJT + "_" + process.env.VUE_APP_MODE,
   //outputDir: "D:/usr/local/tomcat/9.0.36/webapps/ROOT/" + process.env.VUE_APP_PJT,
   //indexPath: "./index.html",
   // publicPath : "/" + process.env.VUE_APP_PJT + "/",

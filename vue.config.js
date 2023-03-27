@@ -14,7 +14,7 @@ module.exports = {
   productionSourceMap: active,
 
 
-  outputDir: "./dist/" + process.env.VUE_APP_PJT + "_" + process.env.VUE_APP_MODE,
+  outputDir: "c:/kokasin_build/" + process.env.VUE_APP_MODE + "/" + process.env.VUE_APP_PJT,
   //outputDir: "D:/usr/local/tomcat/9.0.36/webapps/ROOT/" + process.env.VUE_APP_PJT,
   //indexPath: "./index.html",
   // publicPath : "/" + process.env.VUE_APP_PJT + "/",

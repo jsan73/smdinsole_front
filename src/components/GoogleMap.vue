@@ -2,7 +2,7 @@
 <!--  <div>-->
     <GmapMap :center='center' :zoom='zoom' :options='options' :style='styles' id="gmap">
       <GmapMarker v-if="!custom" :key="index" v-for="(m, index) in markers" :icon="m.icon" :position="m.position"
-                  :draggable=true :label="m.label" @click="toggleInfoWindow(m, index)" @dragend="ondragend($event.latLng)"
+                  :draggable=false :label="m.label" @click="toggleInfoWindow(m, index)" @dragend="ondragend($event.latLng)"
       />
       <gmap-custom-marker v-if="custom"
           :key="index" v-for="(m, index) in markers"

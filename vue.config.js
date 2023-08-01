@@ -1,5 +1,6 @@
 const fs = require('fs');
 const webpack = require('webpack');
+const os = require('os')
 // const CompressionPlugin = require("compression-webpack-plugin");
 //const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i;
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -9,12 +10,16 @@ if(process.env.VUE_APP_MODE === 'prod') {
   //active = false;
 }
 
+var osDir = "c:/kokasin_build/"
+if (os.platform() === "darwin") {
+  osDir = "/Users/jsan/kokasin/kokasin_build/"
+}
 module.exports = {
 
   productionSourceMap: active,
 
 
-  outputDir: "c:/kokasin_build/" + process.env.VUE_APP_MODE + "/" + process.env.VUE_APP_PJT,
+  outputDir: osDir + process.env.VUE_APP_MODE + "/" + process.env.VUE_APP_PJT,
   //outputDir: "D:/usr/local/tomcat/9.0.36/webapps/ROOT/" + process.env.VUE_APP_PJT,
   //indexPath: "./index.html",
   // publicPath : "/" + process.env.VUE_APP_PJT + "/",

@@ -9,7 +9,7 @@
         </a>
       </il>
       <il class="col text-center pt-2">
-        <a @click="reqCurrentLocation" >
+        <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom3" aria-controls="offcanvasBottom3">
           <img src="/static/images/refresh.svg" alt="">
           <p class="pt-1 text-white mb-2" >현재위치</p>
         </a>
@@ -50,13 +50,38 @@
 
     </div>
   </div>
+
+    <div class="offcanvas offcanvas-bottom" data-bs-backdrop="false" tabindex="-1" id="offcanvasBottom3" aria-labelledby="offcanvasBottomLabel3">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasBottomLabel">현재위치</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="p-5">
+          <p class="pb-3 text-center">현재 위치를 요청하겠습니까?</p>
+
+          <div class="pt-3">
+            <div class="row">
+              <div class="col">
+                <button type="submit" class="btn btn-style-1 btn-style-1-gray" @click="reqCurrentLocationCancel">취소</button>
+              </div>
+              <div class="col">
+                <button type="submit" class="btn btn-style-1 " @click="reqCurrentLocation">확인</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
   </footer>
 </template>
 
 <script>
 import {mapState} from "vuex";
 import api from "@/api/api";
-import NoticeLayer from "@/components/common/NoticeLayer";
+import NoticeLayer from "@/views/device/NoticeLayer.vue";
 
 export default {
   name: "Footer",
@@ -76,16 +101,22 @@ export default {
       $('.offcanvas').offcanvas('hide');
       this.$router.push(url);
     },
+    reqCurrentLocationCancel() {
+      $('.offcanvas').offcanvas('hide');
+
+      this.$emit("reload")
+    },
     async reqCurrentLocation() {
       $('.offcanvas').offcanvas('hide');
 
       const res = await api.reqCurrentLocation(this.choiceDevice.deviceIMEI);
       if(res.data.status === "SUCCESS") {
         if (res.data.data > 0)
-          this.openPopup("현재 위치를 요청하였습니다.", true, false, this.hideAlert);
+          this.openPopup("현재 위치를 요청 하였습니다.", true, false, this.hideAlert);
         else
-          this.openPopup("현재 위치 요청에<br> 실패 하였습니다.", true, false, this.hideAlert);
+          this.openPopup("현재 위치 정보가 없습니다.<br>잠시 후에 다시 요청해주세요.", true, false, this.hideAlert);
       }
+      this.$emit("reqloc")
     },
     openNotice(){
       this.toggleNotice = !this.toggleNotice;

@@ -3,10 +3,11 @@
 import DefaultLayout from "./layout/DefaultLayout.vue"
 //import LayerLayout from "./layout/LayerLayout.vue"
 import Header from "./common/Header.vue"
-import Footer from "./common/Footer.vue"
+import Footer from "../views/device/Footer.vue"
 import GoogleMap from "./GoogleMap.vue"
 import GoogleMap2 from "./GoogleMap2.vue"
 import Alert from "./common/Alert.vue"
+import Loading from "./common/Loading.vue"
 //import Gnb from "./common/Gnb.vue"
 
 
@@ -43,6 +44,7 @@ export default {
 		Vue.component("GoogleMap", GoogleMap);
 		Vue.component("GoogleMap2", GoogleMap2);
 		Vue.component("Alert", Alert);
+		Vue.component("Loading", Loading)
 //		Vue.component("Gnb", Gnb);
 
 		//Component

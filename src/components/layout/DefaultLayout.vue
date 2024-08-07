@@ -2,7 +2,7 @@
   <main id="wrap">
     <Header ref="header" :title="menu_title" :logout="logout" :menuId="menuId"></Header>
     <router-view v-on:change="setChange"></router-view>
-    <Footer ref="footer" v-if="is_footer"></Footer>
+<!--    <Footer ref="footer" v-if="is_footer"></Footer>-->
   </main>
 
 </template>

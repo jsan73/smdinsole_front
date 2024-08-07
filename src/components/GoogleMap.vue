@@ -1,5 +1,4 @@
 <template>
-<!--  <div>-->
     <GmapMap :center='center' :zoom='zoom' :options='options' :style='styles' id="gmap">
       <GmapMarker v-if="!custom" :key="index" v-for="(m, index) in markers" :icon="m.icon" :position="m.position"
                   :draggable=false :label="m.label" @click="toggleInfoWindow(m, index)" @dragend="ondragend($event.latLng)"
@@ -9,9 +8,7 @@
           :marker="m.position"
           @click.native="toggleInfoWindow(m, index)"
       >
-<!--        <img :src="m.icon.url" />-->
         <div class='Gpoint_OK' :style="{'background-image':'url(' + m.icon.url + ')'}" >{{ index +1}}</div>
-<!--        <my-component></my-component>-->
       </gmap-custom-marker>
 
       <gmap-info-window
@@ -33,7 +30,6 @@
       </gmap-polyline>
     </GmapMap>
 
-<!--  </div>-->
 </template>
 
 <script>
@@ -63,19 +59,19 @@ export default {
     // console.log(this.center);
     // console.log("Circle");
     // console.log(this.circles);
-    if(utils.isEmpty(this.styles)) this.styles = "width:100%;  height: 500px;"
+    if(utils.isEmpty(this.styles)) this.styles = "width:100%;  height: 100%;"
   },
   methods: {
-    geolocate() {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.geoCenter = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-      }, error => {
-        console.log(error);
-      });
-    },
+    // geolocate() {
+    //   navigator.geolocation.getCurrentPosition(position => {
+    //     this.geoCenter = {
+    //       lat: position.coords.latitude,
+    //       lng: position.coords.longitude,
+    //     };
+    //   }, error => {
+    //     console.log(error);
+    //   });
+    // },
     toggleInfoWindow: function (marker, idx) {
       this.infoWindowPos = marker.position;
       //this.infoContent = this.getInfoWindowContent(marker.position);

@@ -66,6 +66,14 @@ export default {
         }
         return rst;
     },
+    getTimeDiff(date1, date2) {
+        let d1 = new Date(date1);
+        let d2 = new Date(date2);
+        let diff = d2.getTime() - d1.getTime();
+
+        // 분차이 계산
+        return Math.abs(diff  / (60 * 1000));
+    },
     getNowDateToStr() {
         let d = new Date();
 
@@ -143,17 +151,17 @@ export default {
     getPinImage(status) {
         // GPS:4, CELL:5, SAVE-WIFI:6
         let iconUrl = "/static/images/Pin_NET.svg"
-        switch (status) {
-            case 4:
-                iconUrl = "/static/images/Pin_GPS.svg"
-                break;
-            case 5:
-                iconUrl = "/static/images/Pin_Cell.svg"
-                break;
-            case 6:
-                iconUrl = "/static/images/Pin_WiFi.svg"
-                break;
-        }
+        // switch (status) {
+        //     case 4:
+        //         iconUrl = "/static/images/Pin_GPS.svg"
+        //         break;
+        //     case 5:
+        //         iconUrl = "/static/images/Pin_Cell.svg"
+        //         break;
+        //     case 6:
+        //         iconUrl = "/static/images/Pin_WiFi.svg"
+        //         break;
+        // }
 
         return iconUrl;
     },
@@ -201,7 +209,8 @@ export default {
         return {lat:lat3, lng:lon3}
     },
 
-    getBatteryImage(battery) {
+
+    getBatteryImage(battery, reportDate) {
         let batteryImg = '';
         switch (battery) {
             case 0:
@@ -223,24 +232,33 @@ export default {
             default:
                 batteryImg = "/static/images/battery/0.svg";
         }
+        let date1 = this.convertFromStrToDate(reportDate)
+        let date2 = new Date()
+        const diff = this.getTimeDiff(date1, date2);
+        if(diff > 90) {
+            // cell = "icon_none.svg";
+            batteryImg = "/static/images/battery/0.svg"
+        }
         return batteryImg
     },
-    getNetImg(status) {
+    getNetImg(status, reportDate) {
         //(GPS:4, CELL:5, SAVE-WIFI:6,없음:7)
-        let netImg = '';
+        let netImg = "/static/images/none.svg";
         switch (status) {
             case 4:
-                netImg = "/static/images/GPS/NET.svg";
+                netImg = "/static/images/GPS.svg";
                 break;
             case 5:
-            case 6:
-                netImg = "/static/images/GPS/OK.svg";
-                break;
-            case 7:
-                netImg = "/static/images/GPS/NO.svg";
+                netImg = "/static/images/Cell.svg";
                 break;
             default:
-                netImg = "/static/images/GPS/NO.svg";
+                netImg = "/static/images/WIFI.svg";
+        }
+        let date1 = this.convertFromStrToDate(reportDate)
+        let date2 = new Date()
+        const diff = this.getTimeDiff(date1, date2);
+        if(diff > 90) {
+            netImg = "/static/images/none.svg"
         }
         return netImg
     },

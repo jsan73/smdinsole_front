@@ -21,8 +21,8 @@
 export default {
   name: "Alert",
   props: {
-    btnC:false,
-    btnO:false,
+    btnC: false,
+    btnO: false,
     msg:"",
     // callback함수 인자
     doActionParam:[String, Number, Boolean, Array, Object],

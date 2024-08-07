@@ -63,16 +63,16 @@ export default {
   },
   watch: {
     status() {
-      this.batteryImg = utils.getBatteryImage(this.status.battery);
-      this.gpsImg = utils.getNetImg(this.status.status);
+      this.batteryImg = utils.getBatteryImage(this.status.battery, this.status.reportDate);
+      this.gpsImg = utils.getNetImg(this.status.status, this.status.reportDate);
     }
   },
   methods:{
     getBatteryImg() {
-      return utils.getBatteryImage(this.status.battery);
+      return utils.getBatteryImage(this.status.battery, this.status.reportDate);
     },
     getNetImg() {
-      return utils.getNetImg(this.status.status);
+      return utils.getNetImg(this.status.status, this.status.reportDate);
 
     },
     move(){

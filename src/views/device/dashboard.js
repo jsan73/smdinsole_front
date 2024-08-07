@@ -1,11 +1,13 @@
 import api from '@/api/api';
 import {mapState, mapActions} from 'vuex';
 import DeviceHeader from "@/views/device/DeviceHeader";
+import Footer from "@/views/device/Footer.vue"
 import utils from "@/utils/utils";
+import Loading from "@/components/common/Loading.vue";
 
 export default {
     name: "Dashboard",
-    components: {DeviceHeader},
+    components: {Loading, DeviceHeader, Footer},
     data() {
         return {
             deviceList : "",
@@ -21,13 +23,26 @@ export default {
             styles:'width:100%;  height: 500px;',
             auto_reload:false,
             auto_reload_delay: 60 * 1000,
-            auto_reload_func:null
+            auto_reload_func:null,
+            request_loc_time:0,
+            request_interval:null,
+            loading_yn: "N"
         };
     },
     methods: {
         ...mapActions("guardStore", ['commitChoiceDevice']),
         addMarker(marker, icon, content) {
-            this.markers.push({position: marker, icon: icon, content:content});
+            // console.log(this.markers.length)
+            // if(this.markers.length > 0) this.markers.pop()
+            let is_same = false;
+            for(let center of this.markers) {
+                console.log(center.position)
+                if(center.position === marker) is_same = true;
+            }
+            if(!is_same)
+                this.markers.push({position: marker, icon: icon, content:content});
+            console.log(this.markers)
+
         },
         addCircle(center, radius) {
             let option ={
@@ -65,6 +80,8 @@ export default {
             }
         },
         async getLastLocation(deviceNo) {
+            this.center.lat = 0;
+            this.center.lng = 0;
             const res = await api.getLocation(deviceNo);
             console.log("GET : " + deviceNo);
             if(res.data.status === "SUCCESS") {
@@ -74,7 +91,7 @@ export default {
                     this.center.lat = this.location.lat;
                     this.center.lng = this.location.lng;
                     //this.location.battery = Math.floor(Math.random() * 5);
-                    console.log(this.location.battery)
+                    console.log(this.center)
 
                     const icon = {
                         url : utils.getPinImage(this.location.status)
@@ -125,10 +142,12 @@ export default {
                 }
             }
         },
-        moveControl(url) {
+        moveControl() {
             this.$router.push('devicecontrol');
         },
-        requestLocation(data) {
+        requestLocation() {
+            clearInterval(this.request_interval)
+            this.loading_yn = "N"
             this.getLastLocation(this.choiceDevice.deviceNo)
         },
         sendLocation() {
@@ -164,6 +183,31 @@ export default {
             console.log("stop!!");
             this.auto_reload = false;
             clearInterval(this.auto_reload_func);
+        },
+        reload() {
+            // this.$router.go(0)
+            this.loading_yn = "N"
+            this.getLastLocation(this.choiceDevice.deviceNo);
+        },
+
+        start_timer(){
+            this.request_interval = setInterval(() => {
+                // console.log(new Date())
+                let now_time = new Date()
+                let diff = utils.getTimeDiff(now_time, this.request_loc_time)
+                if (diff > 5) {
+                    this.openPopup("현재 위치 정보가 없습니다.<br>잠시 후에 다시 요청해주세요.", true, false, this.hideAlert);
+                    clearInterval(this.request_interval)
+                    this.loading_yn = "N"
+                }
+                console.log(diff)
+                // clearInterval(this.request_interval)
+            }, 2000)
+        },
+        reqloc() {
+            this.request_loc_time = new Date()
+            this.start_timer()
+            this.loading_yn = "Y"
         }
     },
     created() {
@@ -178,8 +222,10 @@ export default {
         ...mapState("guardStore", ['choiceDevice'] ),
 
     },
+
     beforeMount() {
         window['InterfaceLocation'] = {
+            // 위치 정보 요청후 push로 위치 수신 받으면 실행
             components   : this,
             requestLocation: (data) => this.requestLocation(data),
         };
@@ -189,6 +235,7 @@ export default {
     },
     destroyed() {
         this.stop_auto_reload();
+        clearInterval(this.request_interval)
     }
 
 }

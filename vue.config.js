@@ -9,7 +9,8 @@ let active = true;
 if(process.env.VUE_APP_MODE === 'prod') {
   //active = false;
 }
-var osDir = "c:/kokasin_build/"
+
+var osDir = "d:/workspaces/kokasin/build/"
 if (os.platform() === "darwin") {
   osDir = "/Users/jsan/kokasin/kokasin_build/"
 }

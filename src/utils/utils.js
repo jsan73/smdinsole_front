@@ -251,8 +251,8 @@ export default {
             case 5:
                 netImg = "/static/images/Cell.svg";
                 break;
-            default:
-                netImg = "/static/images/WIFI.svg";
+            case 6:
+                netImg = "/static/images/WiFi.svg";
         }
         let date1 = this.convertFromStrToDate(reportDate)
         let date2 = new Date()

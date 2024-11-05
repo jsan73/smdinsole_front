@@ -55,14 +55,16 @@ export default {
         return Object.prototype.toString.call(trgt).slice(8, -1).toLowerCase();
     },
     // 문자형을 날짜형으로 데이터 변환
-    convertFromStrToDate(trgt) {
+    convertFromStrToDate(trgt, type=1) {
         let rst = "";
-        if (this.getType(trgt) === `string`) {
+        if (this.getType(trgt) === `string` && type === 1) {
             if (/^\d{8}$/.test(trgt)) {
                 rst = trgt.replace(/^(\d{4})(\d{2})(\d{2})$/, "$1/$2/$3");
             } else {
                 rst = trgt.replace(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1/$2/$3 $4:$5:$6");
             }
+        }else if(type === 2){
+            rst = trgt.replace(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, "$2월 $3일 $4:$5");
         }
         return rst;
     },
@@ -151,17 +153,17 @@ export default {
     getPinImage(status) {
         // GPS:4, CELL:5, SAVE-WIFI:6
         let iconUrl = "/static/images/Pin_NET.svg"
-        // switch (status) {
-        //     case 4:
-        //         iconUrl = "/static/images/Pin_GPS.svg"
-        //         break;
-        //     case 5:
-        //         iconUrl = "/static/images/Pin_Cell.svg"
-        //         break;
-        //     case 6:
-        //         iconUrl = "/static/images/Pin_WiFi.svg"
-        //         break;
-        // }
+        switch (status) {
+            case 4:
+                iconUrl = "/static/images/GPS.svg"
+                break;
+            case 5:
+                iconUrl = "/static/images/Cell.svg"
+                break;
+            case 6:
+                iconUrl = "/static/images/WiFi.svg"
+                break;
+        }
 
         return iconUrl;
     },

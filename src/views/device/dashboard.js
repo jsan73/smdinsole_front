@@ -20,7 +20,7 @@ export default {
             },
             markers:[],
             circles:[],
-            styles:'width:100%;  height: 500px;',
+            styles:'width:100%;  height: 75vh;',
             auto_reload:false,
             auto_reload_delay: 60 * 1000,
             auto_reload_func:null,

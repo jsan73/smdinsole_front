@@ -1,7 +1,7 @@
 <template>
   <div class="sticky-top shadow w-100">
     <div class="list-group userlist">
-      <a @click="move" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <a @click="move" class="list-group-item list-group-item-action d-flex gap-3 py-3" style="height:10vh;" aria-current="true">
         <img :src="gpsImg" width="44" height="56" class=" flex-shrink-0">
         <div class="d-flex gap-2 w-100 justify-content-between">
           <div>

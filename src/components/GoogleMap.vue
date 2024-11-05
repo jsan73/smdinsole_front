@@ -59,7 +59,7 @@ export default {
     // console.log(this.center);
     // console.log("Circle");
     // console.log(this.circles);
-    if(utils.isEmpty(this.styles)) this.styles = "width:100%;  height: 100%;"
+    if(utils.isEmpty(this.styles)) this.styles = "width:100%;  height: 75vh;"
   },
   methods: {
     // geolocate() {
@@ -74,9 +74,9 @@ export default {
     // },
     toggleInfoWindow: function (marker, idx) {
       this.infoWindowPos = marker.position;
-      //this.infoContent = this.getInfoWindowContent(marker.position);
+      this.infoContent = marker.date.map + "<br>" + marker.addr;
       // console.log(marker);
-      this.getInfoWindowContent(marker.position, marker.content);
+      // this.getInfoWindowContent(marker);
 
       //check if its the same marker that was selected if yes toggle
       if (this.currentMidx == idx) {
@@ -93,7 +93,7 @@ export default {
       this.$emit("markerPosition", event);
     },
 
-    getInfoWindowContent(map, content) {
+    // getInfoWindowContent(marker) {
 //        this.getAddress(map.lat, map.lng);
 //       const service = new window.google.maps.places.PlacesService(document.getElementById("map"));
 // //      return "aaaaa"
@@ -104,26 +104,25 @@ export default {
 //
 //         }
 //       })
+//       var geocoder = new window.google.maps.Geocoder();
+//       var rel = new window.google.maps.LatLng(map.lat, map.lng);
+//       geocoder.geocode({'latLng':rel}, async function(results, status) {
+//         if (status == 'OK') {
+//           // let addr0 = results[0]['address_components'][4]['long_name']
+//           // let addr1 = results[0]['address_components'][3]['long_name']
+//           // let addr2 = results[0]['address_components'][2]['long_name']
+//           // let addr3 = results[0]['address_components'][1]['long_name']
+//           // let addr4 = results[0]['address_components'][0]['long_name']
+//           // //this.activeRange.rangeAddress = addr1 + " " + addr2;
+//           // this.infoContent = addr0 + " " + addr1 + " " + addr2 + " " + addr3 + " " + addr4;
+// //          this.infoContent = "<a class='Gpoint_OK' data-bs-toggle='tooltip'  data-bs-placement='bottom' data-bs-html='true' title='2021-03-09 13:36:23 </br> 경기도 일산동구 고봉로 32-19 40호1'>1</a>"
+//           this.infoContent = content + "<br>" + results[0]['formatted_address'].replace("대한민국 ", '');
+//         }else{
+//           this.$toast.bottom("주소 정보가 없습니다.");
+//         }
+//       }.bind(this));
 
-      var geocoder = new window.google.maps.Geocoder();
-      var rel = new window.google.maps.LatLng(map.lat, map.lng);
-      geocoder.geocode({'latLng':rel}, async function(results, status) {
-        if (status == 'OK') {
-          // let addr0 = results[0]['address_components'][4]['long_name']
-          // let addr1 = results[0]['address_components'][3]['long_name']
-          // let addr2 = results[0]['address_components'][2]['long_name']
-          // let addr3 = results[0]['address_components'][1]['long_name']
-          // let addr4 = results[0]['address_components'][0]['long_name']
-          // //this.activeRange.rangeAddress = addr1 + " " + addr2;
-          // this.infoContent = addr0 + " " + addr1 + " " + addr2 + " " + addr3 + " " + addr4;
-//          this.infoContent = "<a class='Gpoint_OK' data-bs-toggle='tooltip'  data-bs-placement='bottom' data-bs-html='true' title='2021-03-09 13:36:23 </br> 경기도 일산동구 고봉로 32-19 40호1'>1</a>"
-          this.infoContent = content + "<br>" + results[0]['formatted_address'].replace("대한민국 ", '');
-        }else{
-          this.$toast.bottom("주소 정보가 없습니다.");
-        }
-      }.bind(this));
-
-    },
+    // },
 
   },
   data() {

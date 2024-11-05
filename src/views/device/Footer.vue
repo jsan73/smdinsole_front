@@ -1,6 +1,6 @@
 <template>
   <footer id="footer">
-  <div class="fixed-bottom" style="background-color: #2CBBB6; z-index: 2000; min-height: 72px;">
+  <div class="fixed-bottom" style="background-color: #2CBBB6; z-index: 2000; min-height: 8vh;">
     <ul class="d-flex ps-0 mb-0 justify-content-evenly">
       <il class="col text-center pt-2">
         <a @click="move('/device/range')">

@@ -18,7 +18,7 @@ var menu = [
 	// { menuId: "Root", parentId: 0, menuName: "메인", icon: "description", url:"/", redirect:"/device/dashboard" },
 	{ menuId: "Main", parentId: 0, menuName: "꼬까신", icon: "description", componentName: "Dashboard", pagePath:"views/device", url: "/", meta: { footer:true }},
 	{ menuId: "AppControl", parentId: 0, menuName: "설정", icon: "description", componentName: "AppControl", pagePath:"views/device", url: "/control", meta: {logout:false} },
-	{ menuId: "DeviceControl", parentId: 0, menuName: "사용 단말기 목록", icon: "description", componentName: "DeviceControl", pagePath:"views/device", url: "/devicecontrol", meta: {logout:false} },
+	{ menuId: "DeviceControl", parentId: 0, menuName: "사용 기기 목록", icon: "description", componentName: "DeviceControl", pagePath:"views/device", url: "/devicecontrol", meta: {logout:false} },
 	{ menuId: "Range", parentId: 0, menuName: "안심존", icon: "description", componentName: "ActiveRange", pagePath:"views/device",url: "/device/range" },
 	{ menuId: "RangeAdd", parentId: 0, menuName: "안심존 추가", icon: "description", componentName: "ActiveRangeAdd", pagePath:"views/device",url: "/device/rangeadd" },
 	{ menuId: "LocationHistory", parentId: 0, menuName: "위치기록 보기", icon: "description", componentName: "LocationHistory", pagePath:"views/device",url: "/device/location"},

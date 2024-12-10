@@ -64,7 +64,6 @@ export default {
       const res = await api.selDeviceList();
       if(res.data.status === "SUCCESS") {
         this.deviceList = res.data.data
-
         for(let device of this.deviceList) {
           if(this.choiceDeviceNo === 0 || device.deviceNo === this.choiceDeviceNo){
             this.choiceDeviceNo = device.deviceNo;

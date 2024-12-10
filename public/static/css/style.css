@@ -82,13 +82,6 @@
 }
 .userlist .addr{
   color: #999;
-  flex: 1;
-  display: -webkit-box;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  word-break: break-all;
 }
 .userlist .date{
   color: #999;
@@ -119,7 +112,6 @@
   position: fixed!important;
   bottom:2rem;
   width: 90%;
-  z-index: 99999;
   background-color: #ffffff;
 }
 .btn_wrap_btm{

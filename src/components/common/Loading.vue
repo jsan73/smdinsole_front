@@ -1,6 +1,10 @@
 <template>
-  <div class="loading_wrap">
-    <div class="loader"></div>
+  <div class="position-absolute loading_wrap" style="z-index: 210;">
+    <div class="spinner-border text-primary"
+         style="width: 5rem; height: 5rem; border:.5em solid currentColor; border-right-color: transparent; "
+         role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
   </div>
 </template>
 
@@ -11,11 +15,7 @@ export default {
 </script>
 
 <style>
-.loading_wrap {margin:auto;position:absolute;left:0;top:0;right:0;bottom:0;display:flex;width:26px;height:29px;z-index:99;}
-.loader {width:26px;height:29px;background-image:url("/public/static/images/loading_circle.svg");background-repeat:no-repeat;background-size:100% 100%;border:0;animation:spin 1.5s linear infinite;}
+.loading_wrap {margin:auto;position:absolute;left:0;top:0;right:0;bottom:0;display:flex;width: 5rem; height: 5rem;z-index:210;}
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+
 </style>

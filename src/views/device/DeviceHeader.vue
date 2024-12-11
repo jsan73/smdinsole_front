@@ -54,7 +54,6 @@ export default {
   },
   computed : {
     calRadius() {
-      console.log(this.range)
       if(this.range.radius) {
         return this.range.radius / 1000
       }else return 1
@@ -63,12 +62,14 @@ export default {
   },
   watch: {
     status() {
+      // console.log("battery : " + this.status.battery)
       this.batteryImg = utils.getBatteryImage(this.status.battery, this.status.reportDate);
       this.gpsImg = utils.getNetImg(this.status.status, this.status.reportDate);
     }
   },
   methods:{
     getBatteryImg() {
+      // console.log("battery : " + this.status.battery)
       return utils.getBatteryImage(this.status.battery, this.status.reportDate);
     },
     getNetImg() {

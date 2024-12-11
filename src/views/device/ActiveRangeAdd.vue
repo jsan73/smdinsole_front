@@ -193,10 +193,13 @@ export default {
 
     },
     geolocate() {
+      console.log("현재위치")
       navigator.geolocation.getCurrentPosition(position => {
         this.setMap(position.coords.latitude, position.coords.longitude);
         this.getAddress(position.coords.latitude, position.coords.longitude);
         this.displayGMap = true;
+      }, error=> {
+        console.log(error)
       });
     },
 

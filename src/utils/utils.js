@@ -213,6 +213,7 @@ export default {
 
 
     getBatteryImage(battery, reportDate) {
+
         let batteryImg = '';
         switch (battery) {
             case 0:
@@ -232,6 +233,7 @@ export default {
                 batteryImg = "/static/images/battery/Complete.svg";
                 break;
             default:
+                // console.log("battery : " + battery)
                 batteryImg = "/static/images/battery/0.svg";
         }
         let date1 = this.convertFromStrToDate(reportDate)

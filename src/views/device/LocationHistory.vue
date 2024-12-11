@@ -19,12 +19,12 @@
         <!-- 위치기록이 없을때-->
         <div class="list-group userlist rounded-0" v-if="this.markers.length === 0">
           <a href="" class="list-group-item d-flex gap-3 py-2">
-            <p class="w-100 text-center mt-2">위치기록이 없습니다.{{this.markers.length}}</p>
+            <p class="w-100 text-center mt-2">위치기록이 없습니다.</p>
           </a>
         </div>
         <!-- 위치기록이 없을때- //-->
 
-        <div class="list-group userlist rounded-0"  v-for="(marker, index) in this.markers">
+        <div class="list-group userlist rounded-0"  v-for="(marker, index) in this.markers" v-if="index < list_count ">
           <a @click="showMap(marker, index)" class="list-group-item d-flex gap-3 py-2">
             <div>
               <img :src="marker.icon.pinUrl" width="36" height="46" class=" flex-shrink-0">
@@ -80,30 +80,40 @@ export default {
       polyLines:[],
       locDate:'',
       displayDay:'',
-      location_mod: 3,
+      list_count: 3,
+      list_mod: 'LIMIT',
       location_class: 'locationlist-wrap',
       zoom:15,
-      styles:'width:100%;  height: 550px;'
+      styles:'width:100%; height: 55vh;'
     }
   },
   mounted() {
     this.locationDay = this.$route.query.locationDay;
   },
   watch: {
-    location_mod() {
-      this.markers = [];
-      this.selectHistory(this.device.deviceNo);
-      this.getLastLocation(this.device.deviceNo);
+    list_mod() {
+      if(this.locationDay == 0) {
+        this.markers = [];
+        this.selectHistory(this.device.deviceNo);
+        this.getLastLocation(this.device.deviceNo);
+      }else{
+        if(this.list_mod === 'LIMIT'){
+          this.list_count = 3;
+        }else {
+          this.list_count = this.markers.length;
+        }
+      }
     }
   },
   methods: {
     changeClass() {
-      if(this.location_mod === 3){
+      if(this.list_mod === 'LIMIT'){
         this.location_class = 'locationlist-wrap locationlist-up'
-        this.location_mod = 0;
+        this.list_mod = 'FULL'
+        // this.list_count = this.markers.length;
       }else{
         this.location_class = 'locationlist-wrap'
-        this.location_mod = 3;
+        this.list_mod = 'LIMIT'
       }
     },
     showMap(marker, index) {
@@ -113,7 +123,7 @@ export default {
       this.markers.push({position: marker, icon:icon, date:date, reqLoc:reqLoc, addr:''});
     },
     async selectHistory(deviceNo) {
-      const params ={days: this.locationDay, limit: this.location_mod};
+      const params ={days: this.locationDay};
       let res = await api.selectHistory(deviceNo, params);
       if(res.data.status === "SUCCESS") {
         let lats = [];
@@ -121,7 +131,7 @@ export default {
         this.history = res.data.data;
 
         this.history.forEach((loc, index) =>{
-          console.log(loc)
+          // console.log(loc)
           if(index === 0) this.locDate = loc.reportDate.substring(0,8);
           let iconUrl = utils.getPinImage(loc.status);
           this.addMarker(
@@ -147,6 +157,13 @@ export default {
           lngs.push(loc.lng);
         })
         this.displayDay = this.makeDay()
+
+        if(this.list_mod === 'LIMIT'){
+          this.list_count = 3;
+        }else {
+          this.list_count = this.markers.length;
+        }
+
         if(this.markers.length > 0) {
           this.center = this.markers[this.markers.length - 1].position;
           // this.displayDay = this.makeDay();
@@ -161,7 +178,7 @@ export default {
 
             let zoomRadius = utils.getDistanceFromLatLonInKm(minLat, maxLng, maxLat, minLng);
             this.zoom = utils.getGmapZoomLevel((maxLat + minLat) / 2, zoomRadius / 2)
-            console.log("zoom ", this.zoom)
+            // console.log("zoom ", this.zoom)
             this.center = utils.getCenter(minLat, maxLng, maxLat, minLng);
           }
           this.getLocInfo()
@@ -249,7 +266,7 @@ export default {
         geocoder.geocode({'latLng': rel}, async function (results, status) {
           if (status == 'OK') {
             this.markers[i].addr = results[0]['formatted_address'].replace("대한민국 ", '');
-            console.log(this.markers[i].addr)
+            // console.log(this.markers[i].addr)
           } else {
             this.markers[i].addr = "주소 정보가 없습니다.";
           }

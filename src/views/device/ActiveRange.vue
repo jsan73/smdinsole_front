@@ -75,7 +75,10 @@ export default {
       const icon = {
         url : "/static/images/Pin_OK.svg"
       }
-      range.push({position: marker, icon: icon, content:content});
+      const date = {
+        map : content
+      }
+      range.push({position: marker, icon: icon, date:date});
     },
     addCercle(range, center, radius) {
       let option ={
@@ -105,11 +108,37 @@ export default {
 
           range["zoom"] = zl;
 
+          this.getLocInfo(range["markers"]);
           //range["markers"] = marker;
         });
 
         // this.rList = this.rangeList;
       }
+    },
+    getLocInfo(markers) {
+      var geocoder = new window.google.maps.Geocoder();
+      for(let i = 0; i < markers.length; i++) {
+        var rel = new window.google.maps.LatLng(markers[i].position.lat, markers[i].position.lng);
+        geocoder.geocode({'latLng': rel}, async function (results, status) {
+          if (status == 'OK') {
+            markers[i].addr = results[0]['formatted_address'].replace("대한민국 ", '');
+          } else {
+            markers[i].addr = "주소 정보가 없습니다.";
+          }
+        }.bind(this));
+      }
+      // this.markers.forEach(m => {
+      //
+      //   var rel = new window.google.maps.LatLng(m.position.lat, m.position.lng);
+      //   geocoder.geocode({'latLng': rel}, async function (results, status) {
+      //     if (status == 'OK') {
+      //       m.addr = results[0]['formatted_address'].replace("대한민국 ", '');
+      //       console.log(this.markers)
+      //     } else {
+      //       m.addr = "주소 정보가 없습니다.";
+      //     }
+      //   }.bind(this));
+      // });
     },
     async getDeviceInfo() {
       let res = await api.getDeviceInfo(this.choiceDevice.deviceIMEI);

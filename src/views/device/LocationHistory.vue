@@ -84,7 +84,7 @@ export default {
       list_mod: 'LIMIT',
       location_class: 'locationlist-wrap',
       zoom:15,
-      styles:'width:100%; height: 55vh;'
+      styles:'width:100%; height: 52vh;'
     }
   },
   mounted() {

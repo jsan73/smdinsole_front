@@ -71,6 +71,7 @@ export default {
                 if(res.data.status === "SUCCESS") {
                     if(res.data.data === 0) {
                         api.login(params).then(res => {
+                            console.log(res.data)
                             if(res.data.status === "SUCCESS") {
                                 let tokenData = res.data.data.token
                                 let refreshToken = res.data.data.refreshToken;
@@ -89,7 +90,9 @@ export default {
                             }
                         }).catch(e => {
                             // 로그인 실패
+                            // this.openPopup(e.response.data.message, true, false);
                             this.$toast.bottom(e.response.data.message);
+
                         });
                     }else{
                         // 비밀번호 등록 및 가입

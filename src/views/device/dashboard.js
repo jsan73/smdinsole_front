@@ -31,17 +31,17 @@ export default {
     },
     methods: {
         ...mapActions("guardStore", ['commitChoiceDevice']),
-        addMarker(marker, icon, content) {
+        addMarker(marker, icon, date) {
             // console.log(this.markers.length)
             // if(this.markers.length > 0) this.markers.pop()
             let is_same = false;
             for(let center of this.markers) {
-                console.log(center.position)
+                // console.log(center.position)
                 if(center.position === marker) is_same = true;
             }
             if(!is_same)
-                this.markers.push({position: marker, icon: icon, content:content});
-            console.log(this.markers)
+                this.markers.push({position: marker, icon: icon, date:date});
+            // console.log(this.markers)
 
         },
         addCircle(center, radius) {
@@ -83,26 +83,47 @@ export default {
             this.center.lat = 0;
             this.center.lng = 0;
             const res = await api.getLocation(deviceNo);
-            console.log("GET : " + deviceNo);
+            // console.log("GET : " + deviceNo);
             if(res.data.status === "SUCCESS") {
+                if(utils.isNotEmpty(this.location) && utils.isNotEmpty(res.data.data) && this.location.reportDate < res.data.data.reportDate) {
+                    clearInterval(this.request_interval)
+                    this.loading_yn = "N"
+                }
+
                 this.location = res.data.data
-                console.log(this.location)
                 if(utils.isNotEmpty(this.location)) {
                     this.center.lat = this.location.lat;
                     this.center.lng = this.location.lng;
                     //this.location.battery = Math.floor(Math.random() * 5);
-                    console.log(this.center)
 
                     const icon = {
                         url : utils.getPinImage(this.location.status)
                     }
-                    this.addMarker(this.center, icon, utils.convertFromStrToDate(this.location.reportDate));
+                    const date = {
+                        map : utils.convertFromStrToDate(this.location.reportDate)
+                    }
+                    this.addMarker(this.center, icon, date);
+                    this.getLocInfo();
                 }else{
                     this.location = {
                         battery:0,
                         status:0,
                     }
                 }
+            }
+        },
+        getLocInfo() {
+            var geocoder = new window.google.maps.Geocoder();
+            for (let i = 0; i < this.markers.length; i++) {
+                var rel = new window.google.maps.LatLng(this.markers[i].position.lat, this.markers[i].position.lng);
+                geocoder.geocode({'latLng': rel}, async function (results, status) {
+                    if (status == 'OK') {
+                        this.markers[i].addr = results[0]['formatted_address'].replace("대한민국 ", '');
+                        // console.log(this.markers[i].addr)
+                    } else {
+                        this.markers[i].addr = "주소 정보가 없습니다.";
+                    }
+                }.bind(this));
             }
         },
         async getActiveRange(deviceNo) {
@@ -118,7 +139,10 @@ export default {
                         const icon = {
                             url: "/static/images/Pin_OK.svg"
                         }
-                        this.addMarker(activeMarker, icon, range.rangeName);
+                        const date = {
+                            map : range.rangeName
+                        }
+                        this.addMarker(activeMarker, icon, date);
 
                         this.addCircle(activeMarker, range.radius);
                     //}
@@ -184,6 +208,7 @@ export default {
             this.auto_reload = false;
             clearInterval(this.auto_reload_func);
         },
+        // 현재위치 요청
         reload() {
             // this.$router.go(0)
             this.loading_yn = "N"
@@ -200,7 +225,7 @@ export default {
                     clearInterval(this.request_interval)
                     this.loading_yn = "N"
                 }
-                console.log(diff)
+                // console.log(diff)
                 // clearInterval(this.request_interval)
             }, 2000)
         },

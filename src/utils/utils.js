@@ -152,7 +152,8 @@ export default {
     },
     getPinImage(status) {
         // GPS:4, CELL:5, SAVE-WIFI:6
-        let iconUrl = "/static/images/Pin_NET.svg"
+        let iconUrl = "/static/images/none.svg"
+        console.log(status)
         switch (status) {
             case 4:
                 iconUrl = "/static/images/GPS.svg"

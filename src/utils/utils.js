@@ -153,7 +153,6 @@ export default {
     getPinImage(status) {
         // GPS:4, CELL:5, SAVE-WIFI:6
         let iconUrl = "/static/images/none.svg"
-        console.log(status)
         switch (status) {
             case 4:
                 iconUrl = "/static/images/GPS.svg"
@@ -212,7 +211,19 @@ export default {
         return {lat:lat3, lng:lon3}
     },
 
+    getBatteryStatus(battery, reportDate) {
+        let status = battery;
 
+        let date1 = this.convertFromStrToDate(reportDate)
+        let date2 = new Date()
+        const diff = this.getTimeDiff(date1, date2);
+        if(diff > 90) {
+            // cell = "icon_none.svg";
+            status = 0
+        }
+
+        return status;
+    },
     getBatteryImage(battery, reportDate) {
 
         let batteryImg = '';

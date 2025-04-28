@@ -109,13 +109,13 @@ export default {
     async reqCurrentLocation() {
       $('.offcanvas').offcanvas('hide');
 
-      const res = await api.reqCurrentLocation(this.choiceDevice.deviceIMEI);
-      if(res.data.status === "SUCCESS") {
-        if (res.data.data > 0)
-          this.openPopup("현재 위치를 요청 하였습니다.", true, false, this.hideAlert);
-        else
-          this.openPopup("현재 위치 정보가 없습니다.<br>잠시 후에 다시 요청해주세요.", true, false, this.hideAlert);
-      }
+      // const res = await api.reqCurrentLocation(this.choiceDevice.deviceIMEI);
+      // if(res.data.status === "SUCCESS") {
+      //   if (res.data.data > 0)
+      //     this.openPopup("현재 위치를 요청 하였습니다.", true, false, this.hideAlert);
+      //   else
+      //     this.openPopup("현재 위치 정보가 없습니다.<br>잠시 후에 다시 요청해주세요.", true, false, this.hideAlert);
+      // }
       this.$emit("reqloc")
     },
     openNotice(){

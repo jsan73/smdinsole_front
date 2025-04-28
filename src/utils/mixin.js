@@ -91,6 +91,7 @@ const mixin = {
 				}
 			}
 		},
+
 		showAlert(v) {
 
 			let _this = this;
@@ -150,6 +151,20 @@ const mixin = {
 				alertType:alertType
 			}
 			this.showAlert(v);
+		},
+		updatePopup(msg, ok, cancel, doAction, param, alertType) {
+			if(utils.isEmpty(alertType)) alertType =  0;
+			if(utils.isEmpty(doAction)) doAction =  this.hideAlert;
+			let v= {
+				msg: msg,
+				btnO:ok,
+				btnC:cancel,
+				doAction: doAction,
+				doActionParam: param,
+				alertType:alertType
+			}
+
+			this.$root.$children[0].alertData = {...this.$root.$children[0].alertData, ...v};
 		},
 		gotoBack() {
 			this.$router.go(-1);

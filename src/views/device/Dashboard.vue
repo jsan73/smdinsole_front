@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Loading v-if="loading_yn === 'Y'"></Loading>
+<!--    <Loading v-if="loading_yn === 'Y'"></Loading>-->
     <main class="container px-0 position-relative dash-map-h justify-content-center">
 
         <DeviceHeader :device="device" :status="location" :range="range" @clickAction="moveControl"></DeviceHeader>

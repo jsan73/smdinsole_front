@@ -26,7 +26,8 @@ export default {
             auto_reload_func:null,
             request_loc_time:0,
             request_interval:null,
-            loading_yn: "N"
+            loading_yn: "N",
+            device_status: 1
         };
     },
     methods: {
@@ -86,8 +87,11 @@ export default {
             // console.log("GET : " + deviceNo);
             if(res.data.status === "SUCCESS") {
                 if(utils.isNotEmpty(this.location) && utils.isNotEmpty(res.data.data) && this.location.reportDate < res.data.data.reportDate) {
-                    clearInterval(this.request_interval)
+                    // clearInterval(this.request_interval)
+                    this.$toast.bottom("새로운 위치가 수신 되었습니다.");
+                    this.hideAlert()
                     this.loading_yn = "N"
+                    // console.log("새로운 위치 수신")
                 }
 
                 this.location = res.data.data
@@ -104,6 +108,8 @@ export default {
                     }
                     this.addMarker(this.center, icon, date);
                     this.getLocInfo();
+
+                    this.device_status = utils.getBatteryStatus(this.location.status, this.location.reportDate)
                 }else{
                     this.location = {
                         battery:0,
@@ -172,6 +178,7 @@ export default {
         requestLocation() {
             clearInterval(this.request_interval)
             this.loading_yn = "N"
+            this.hideAlert()
             this.getLastLocation(this.choiceDevice.deviceNo)
         },
         sendLocation() {
@@ -216,23 +223,45 @@ export default {
         },
 
         start_timer(){
-            this.request_interval = setInterval(() => {
+            // this.request_interval = setInterval(() => {
                 // console.log(new Date())
                 let now_time = new Date()
                 let diff = utils.getTimeDiff(now_time, this.request_loc_time)
-                if (diff > 5) {
-                    this.openPopup("현재 위치 정보가 없습니다.<br>잠시 후에 다시 요청해주세요.", true, false, this.hideAlert);
-                    clearInterval(this.request_interval)
+                this.getLastLocation(this.choiceDevice.deviceNo);
+                if (diff > 1) {
+                    this.updatePopup("위치 요청을 다시 시도 하시겠습니까?", true, true, this.retry_ready, null,2);
+                    // clearInterval(this.request_interval)
                     this.loading_yn = "N"
                 }
                 // console.log(diff)
                 // clearInterval(this.request_interval)
-            }, 2000)
+            // }, 2000)
         },
-        reqloc() {
+        start_request_loc() {
             this.request_loc_time = new Date()
             this.start_timer()
             this.loading_yn = "Y"
+            // setTimeout(this.getLastLocation, 5000, this.choiceDevice.deviceNo)
+        },
+        retry_ready() {
+            console.log("위치 요청 다시 시작")
+            this.request_loc_time = new Date()
+            this.updatePopup("위치 요청 후 수신을 기다리고 있습니다.", false, true, this.start_timer, null, 3);
+        },
+        async reqloc() {
+            if (this.device_status === 0) {
+                this.openPopup("기기 전원이 꺼져 있어 위치 수신이 불가능 합니다.", true, false, this.hideAlert);
+                return;
+            }
+            const res = await api.reqCurrentLocation(this.choiceDevice.deviceIMEI);
+            if(res.data.status === "SUCCESS") {
+                if (res.data.data > 0)
+                    this.openPopup("위치 요청 후 수신을 기다리고 있습니다.", false, true, this.start_timer,null, 3);
+                else
+                    this.openPopup("현재 위치 정보가 없습니다.<br>잠시 후에 다시 요청해 주세요.", true, false, this.hideAlert);
+            }
+            this.start_request_loc();
+
         }
     },
     created() {

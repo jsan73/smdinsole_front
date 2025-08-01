@@ -4,7 +4,7 @@
       <DeviceHeader :device="device" :status="location" :range="range" ></DeviceHeader>
 
       <div id="find-location" class="container-fluid px-0  dash-map-h">
-        <GoogleMap ref="googleMap" :center="center" :markers="markers" :poly-lines="polyLines" :zoom="zoom" :styles="styles" :custom="true"/>
+        <GoogleMap ref="googleMap" :center="center" :markers="markers.slice().reverse()" :poly-lines="polyLines" :zoom="zoom" :styles="styles" :custom="true"/>
       </div>
     </main>
     <div :class="location_class"><!-- 확대시 클래스 class="locationlist-wrap locationlist-up" 로 추가함 -->

@@ -43,17 +43,18 @@ export default {
         {left:"취소", right:"다시 시도"},
         {left:"취소", right:"취소"},
       ],
+      retry_sec : 180,
       btn_retry : false,
       btn_cancel : false,
       retry_msg : '',
-      sec_count : 60,
+      sec_count : 0,
       timer_interval:null,
     };
   },
   watch: {
     alertType(val) {
       if(val === 3) {
-        this.sec_count = 60;
+        this.sec_count = this.retry_sec;
         this.start_timer();
       }
     },
@@ -99,6 +100,7 @@ export default {
   },
   created() {
     console.log("Alert Start")
+    this.sec_count = this.retry_sec;
     if(this.alertType === 3)
       this.start_timer();
   },

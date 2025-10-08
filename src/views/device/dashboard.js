@@ -228,7 +228,9 @@ export default {
                 let now_time = new Date()
                 let diff = utils.getTimeDiff(now_time, this.request_loc_time)
                 this.getLastLocation(this.choiceDevice.deviceNo);
-                if (diff > 1) {
+                // 위치 요청 후 Alert에서 3분 카운트 후 start_timer를 재 호출 함
+                // 재 요청 시간을 변경 해야 하는 경우에는 여기와 Alert에서 같이 변경 해주어야 한다.
+                if (diff > 3) {
                     this.updatePopup("위치 요청을 다시 시도 하시겠습니까?", true, true, this.retry_ready, null,2);
                     // clearInterval(this.request_interval)
                     this.loading_yn = "N"
